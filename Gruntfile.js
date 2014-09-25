@@ -51,14 +51,14 @@ module.exports = function (grunt) {
 			options: {
 				jshintrc: '.jshintrc',
 			},
-			all: ['<%= sourceDir %>/js/**/*.js', '!<%= sourceDir %>/js/vendor/**/*.js']
+			all: ['<%= sourceDir %>/js/**/*.js', '!<%= sourceDir %>/js/vendor/**/*.js', '!<%= sourceDir %>/js/modules/**/*.js']
 		},
 
 		spritesheet: {
 			assets: {
 				options: {
 					outputCss: '/less/assets.less',
-					selector: '.icon',
+					selector: '.assets',
 
 					output: {
 						legacy: {
@@ -134,7 +134,8 @@ module.exports = function (grunt) {
 		clean: {
 			css: ['<%= publicDir %>/css'],
 			js: ['<%= publicDir %>/js'],
-			img: ['<%= publicDir %>/img']
+			img: ['<%= publicDir %>/img'],
+			srcjs: ['<%= sourceDir %>/js/*.js.gz']
 		},
 
 		copy: {
@@ -220,6 +221,41 @@ module.exports = function (grunt) {
 					}
 				}
 			}
+		},
+
+		compress: {
+			js: {
+				options: {
+					mode: 'gzip',
+					pretty: true
+				},
+				files: [
+					// Each of the files in the pub/ folder will be output to
+					// the pub/ folder with the extension .gz
+					{
+						expand: true,
+						src: ['<%= publicDir %>/js/*.js']
+					},
+					{
+						expand: true,
+						src: ['<%= sourceDir %>/js/vendor/modernizr-*.js']
+					}
+				]
+			},
+			css: {
+				options: {
+					mode: 'gzip',
+					pretty: true
+				},
+				files: [
+					// Each of the files in the pub/ folder will be output to
+					// the pub/ folder with the extension .gz
+					{
+						expand: true,
+						src: ['<%= publicDir %>/css/*.css']
+					}
+				]
+			}
 		}
 
 	});
@@ -236,6 +272,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-filerev');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-compress');
 
 	grunt.registerTask('default', ['jshint']);
 	grunt.registerTask('sprite', ['spritesheet']);
@@ -245,16 +282,19 @@ module.exports = function (grunt) {
 		'less:production',
 		'useminPrepare:css',
 		'filerev:css',
-		'usemin:css'
+		'usemin:css',
+		'compress:css'
 	]);
 	grunt.registerTask('build-js', [
 		'clean:js',
+		'clean:srcjs',
 		'copy:js',
 		'useminPrepare:js',
 		'concat',
 		'uglify',
 		'filerev:js',
-		'usemin:js'
+		'usemin:js',
+		'compress:js'
 	]);
 	grunt.registerTask('rev-img', [
 		'clean:img',
