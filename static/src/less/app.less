@@ -1,0 +1,34 @@
+//
+// Put bootstrap-8.8.8/less/bootstrap.less file content instead this comment!
+// Default path: "static/src/less/vendor/bootstrap/*.less".
+//
+
+@import "variables-reset.less"; // Don't foger replace Bootstrap default variables.
+
+//
+// Deafault own *.less files components (can be removed if necessary).
+// !!! Must be inserted before Bootstrap utility to prevent their overwrite.
+//
+
+//
+// Own styles // (goes before Bootstrap "Utility classes")
+
+@import "default.less";
+@import "assets.less"; // Grunt spritesheet styles.
+// @import "icons.less"; // Rewrited spritesheet classes.
+
+// Site components
+@import "components/site-header.less";
+@import "components/site-footer.less";
+@import "components/page-home.less";
+// @import "components/";
+// @import "components/";
+// @import "components/";
+// @import "components/";
+// @import "components/";
+@import "responsive.less";
+
+@import "vendor/slider.less";
+
+// End own styles //
+//
