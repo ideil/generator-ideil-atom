@@ -181,8 +181,8 @@ module.exports = function (grunt) {
 		filerev: { // change versions (only if was chages!)
 			options: {
 				encoding: 'utf8',
-				algorithm: 'md5',
-				length: 8
+				algorithm: 'sha1',
+				length: 40
 			},
 			css: {
 				src: '<%= publicDir %>/css/*.css'
@@ -227,32 +227,43 @@ module.exports = function (grunt) {
 			js: {
 				options: {
 					mode: 'gzip',
-					pretty: true
+					pretty: true,
+					level: 9
 				},
 				files: [
 					// Each of the files in the pub/ folder will be output to
 					// the pub/ folder with the extension .gz
 					{
 						expand: true,
-						src: ['<%= publicDir %>/js/*.js']
+						src: ['<%= publicDir %>/js/*.js'],
+						rename: function (dest, src) {
+							return src + '.gz';
+						}
 					},
 					{
 						expand: true,
-						src: ['<%= sourceDir %>/js/vendor/modernizr-*.js']
+						src: ['<%= sourceDir %>/js/vendor/modernizr-*.js'],
+						rename: function (dest, src) {
+							return src + '.gz';
+						}
 					}
 				]
 			},
 			css: {
 				options: {
 					mode: 'gzip',
-					pretty: true
+					pretty: true,
+					level: 9
 				},
 				files: [
 					// Each of the files in the pub/ folder will be output to
 					// the pub/ folder with the extension .gz
 					{
 						expand: true,
-						src: ['<%= publicDir %>/css/*.css']
+						src: ['<%= publicDir %>/css/*.css'],
+						rename: function (dest, src) {
+							return src + '.gz';
+						}
 					}
 				]
 			}
@@ -276,6 +287,12 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['jshint']);
 	grunt.registerTask('sprite', ['spritesheet']);
+	grunt.registerTask('gzip-css', [
+		'compress:css'
+	]);
+	grunt.registerTask('gzip-js', [
+		'compress:js'
+	]);
 	grunt.registerTask('build-css', [
 		'clean:css',
 		'copy:css',
@@ -283,7 +300,6 @@ module.exports = function (grunt) {
 		'useminPrepare:css',
 		'filerev:css',
 		'usemin:css',
-		'compress:css'
 	]);
 	grunt.registerTask('build-js', [
 		'clean:js',
@@ -294,7 +310,6 @@ module.exports = function (grunt) {
 		'uglify',
 		'filerev:js',
 		'usemin:js',
-		'compress:js'
 	]);
 	grunt.registerTask('rev-img', [
 		'clean:img',
@@ -302,6 +317,6 @@ module.exports = function (grunt) {
 		'filerev:img',
 		'usemin:img'
 	]);
-	grunt.registerTask('build', ['build-css', 'rev-img', 'build-js']);
+	grunt.registerTask('build', ['build-css', 'rev-img', 'build-js', 'gzip-css', 'gzip-js']);
 	grunt.registerTask('live', ['watch']);
 };
