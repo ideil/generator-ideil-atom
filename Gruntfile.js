@@ -267,6 +267,23 @@ module.exports = function (grunt) {
 					}
 				]
 			}
+		},
+
+		chmod: {
+			staticDirs: {
+				options: {
+					mode: '755'
+				},
+				src: ['**/*', '!node_modules/**/*'],
+				filter: 'isDirectory'
+			},
+			staticFiles: {
+				options: {
+					mode: '644'
+				},
+				src: ['**/*', '!node_modules/**/*'],
+				filter: 'isFile'
+			}
 		}
 
 	});
@@ -284,6 +301,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-compress');
+	grunt.loadNpmTasks('grunt-chmod');
 
 	grunt.registerTask('default', ['jshint']);
 	grunt.registerTask('sprite', ['spritesheet']);
