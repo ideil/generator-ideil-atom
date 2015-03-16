@@ -1,0 +1,2 @@
+/*global */
+/*jshint devel:true */

@@ -37,11 +37,6 @@ Thumbs.db
 #################
 node_modules
 /var/*
-/static/content/*
 composer.lock
 static/.tmp
 static/src/img/zzz
-
-# evoAtom files #
-#################
-readme.html
