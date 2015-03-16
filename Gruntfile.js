@@ -2,22 +2,46 @@
 var path = require('path');
 
 // createConfig script for replacing Smarty {$STATIC_URL} references when building config for concat
-function createSmartyStaticConcatConfig(context, block) {
-	var cfg = {files: []};
-	var staticPattern = /\{\$\s*STATIC_URL\s*\}/;
+// function createSmartyStaticConcatConfig(context, block) {
+// 	var cfg = {files: []};
+// 	var staticPattern = /\{\$\s*STATIC_URL\s*\}/;
 
-	block.dest = block.dest.replace(staticPattern, '');
-	var outfile = path.join(context.outDir, block.dest);
+// 	block.dest = block.dest.replace(staticPattern, '');
+// 	var outfile = path.join(context.outDir, block.dest);
 
-	var files = {
-		dest: outfile,
-		src: []
+// 	var files = {
+// 		dest: outfile,
+// 		src: []
+// 	};
+// 	context.inFiles.forEach(function(f) {
+// 		files.src.push(path.join(context.inDir, f.replace(staticPattern, '')));
+// 	});
+// 	cfg.files.push(files);
+// 	context.outFiles = [block.dest];
+// 	return cfg;
+// };
+
+// createConfig script for replacing Twig references when building config for concat
+function createTwigStaticConcatConfig(context, block) {
+	var cfg = {
+		files: [
+			{
+				dest: path.join(context.outDir, block.dest),
+				src: []
+			}
+		]
 	};
-	context.inFiles.forEach(function(f) {
-		files.src.push(path.join(context.inDir, f.replace(staticPattern, '')));
-	});
-	cfg.files.push(files);
+
+	var matches = block.raw.join('').match(/\{\{ static_asset\(\'(.+?)\'\)/g) || [];
+
 	context.outFiles = [block.dest];
+
+	matches.forEach(function (el) {
+		cfg.files[0].src.push(path.join(context.inDir,
+			el.replace('{{ static_asset(\'', '').replace('\')', '')
+		));
+	});
+
 	return cfg;
 };
 
@@ -33,14 +57,17 @@ module.exports = function (grunt) {
 			options: {
 				livereload: true
 			},
+
 			less: {
 				files: ['<%= sourceDir %>/less/**/*.less'],
-				tasks: ['less:dev']
+				tasks: ['less:dev', 'autoprefixer:sourcemap']
 			},
+
 			includes: {
 				files: ['<%= baseDir %>/layouts/_includes/**/*'],
 				tasks: ['preprocess:html']
 			},
+
 			jshint: {
 				files: ['<%= sourceDir %>/js/**/*.js'],
 				tasks: ['jshint:all']
@@ -57,13 +84,13 @@ module.exports = function (grunt) {
 		spritesheet: {
 			assets: {
 				options: {
-					outputCss: '/less/assets.less',
-					selector: '.assets',
+					outputCss: '/less/~ui-icons.less',
+					selector: '.icon',
 
 					output: {
 						legacy: {
 							pixelRatio: 1,
-							outputImage: '/img/sprites/assets.png',
+							outputImage: '/img/sprites/ui-assets.png',
 							filter: function (fullpath) {
 								return fullpath.indexOf('@2x') === -1;
 							}
@@ -71,7 +98,7 @@ module.exports = function (grunt) {
 
 						retina: {
 							pixelRatio: 2,
-							outputImage: '/img/sprites/assets@2x.png',
+							outputImage: '/img/sprites/ui-assets@2x.png',
 							filter: function (fullpath) {
 								return fullpath.indexOf('@2x') >= 0;
 							}
@@ -82,8 +109,9 @@ module.exports = function (grunt) {
 						return name.split('@2x').join('');
 					}
 				},
+
 				files: {
-					'<%= sourceDir %>': '<%= sourceDir %>/img/assets/*.png'
+					'<%= sourceDir %>': '<%= sourceDir %>/img/ui-icons/*.png'
 				}
 			}
 		},
@@ -100,6 +128,7 @@ module.exports = function (grunt) {
 					'<%= sourceDir %>/css/app.css': ['<%= sourceDir %>/less/app.less']
 				}
 			},
+
 			production: {
 				options: {
 					sourceMap: false,
@@ -110,6 +139,23 @@ module.exports = function (grunt) {
 					'<%= publicDir %>/css/app.min.css': ['<%= sourceDir %>/less/app.less']
 				}
 			}
+		},
+
+		autoprefixer: {
+			options: {
+				browsers: ['last 3 versions', 'ie 9']
+			},
+
+			sourcemap: {
+				options: {
+					map: {
+						prev: '<%= sourceDir %>/css/'
+					}
+				},
+
+				src: '<%= sourceDir %>/css/app.css',
+				dest: '<%= sourceDir %>/css/app.css'
+			},
 		},
 
 		preprocess: {
@@ -141,35 +187,52 @@ module.exports = function (grunt) {
 		copy: {
 
 			css: {
-				src: 'engine/application/view/themes/_default/_sources/css-files.smt',
-				dest: 'engine/application/view/themes/_default/_sources/css-files.min.smt'
+				// SMARTY
+				// src: 'engine/application/view/themes/_default/_sources/css-files.smt',
+				// dest: 'engine/application/view/themes/_default/_sources/css-files.min.smt'
+
+				// TWIG
+				src: 'engine/app/views/_sources/css-file.twig',
+				dest: 'engine/app/views/_sources/css-file-min.twig'
 			},
 
 			js: {
-				src: 'engine/application/view/themes/_default/_sources/js-files.smt',
-				dest: 'engine/application/view/themes/_default/_sources/js-files.min.smt'
+				// SMARTY
+				// src: 'engine/application/view/themes/_default/_sources/js-files.smt',
+				// dest: 'engine/application/view/themes/_default/_sources/js-files.min.smt'
+
+				// TWIG
+				src: 'engine/app/views/_sources/js-files.twig',
+				dest: 'engine/app/views/_sources/js-files-min.twig'
 			},
 
 			img: {
-				cwd: '<%= sourceDir %>',																												// root to copy
-				src: ['img/**/*', '!img/assets/**', '!img/ignore/**', '!img/**/zzz*'],							// copy folder
+				cwd: '<%= sourceDir %>',																					// root to copy
+				src: ['img/**/*', '!img/assets/**', '!img/**/zzz*'],							// copy folder
 				dest: '<%= publicDir %>/',
-				expand: true																																		// required when using cwd
+				expand: true																											// required when using cwd
 			}
 		},
 
 		useminPrepare: {
-			js: 'engine/application/view/themes/_default/_sources/js-files.smt',
-			css: 'engine/application/view/themes/_default/_sources/css-files.smt',
+			// SMARTY
+			// js: 'engine/application/view/themes/_default/_sources/js-files.smt',
+			// css: 'engine/application/view/themes/_default/_sources/css-files.smt',
+
+			// TWIG
+			js: 'engine/app/views/_sources/js-files.twig',
+			css: 'engine/app/views/_sources/css-file.twig',
+
 			options: {
 				root: '<%= baseDir %>',
 				staging: '<%= baseDir %>/.tmp/',
 				dest: '<%= publicDir %>',
-				flow: { // remove {$STATIC} from *.smt
+				flow: {
 					steps: {
 						js: [{
 								name: 'concat',
-								createConfig: createSmartyStaticConcatConfig
+								// createConfig: createSmartyStaticConcatConfig
+								createConfig: createTwigStaticConcatConfig
 							},
 							'uglifyjs'
 						]},
@@ -181,8 +244,8 @@ module.exports = function (grunt) {
 		filerev: { // change versions (only if was chages!)
 			options: {
 				encoding: 'utf8',
-				algorithm: 'sha1',
-				length: 40
+				algorithm: 'md5',
+				length: 8
 			},
 			css: {
 				src: '<%= publicDir %>/css/*.css'
@@ -196,8 +259,14 @@ module.exports = function (grunt) {
 		},
 
 		usemin: {
-			css: 'engine/application/view/themes/_default/_sources/css-files.min.smt',
-			js: 'engine/application/view/themes/_default/_sources/js-files.min.smt',
+			// SMARTY
+			// css: 'engine/application/view/themes/_default/_sources/css-files.min.smt',
+			// js: 'engine/application/view/themes/_default/_sources/js-files.min.smt',
+
+			// TWIG
+			css: 'engine/app/views/_sources/css-file-min.twig',
+			js: 'engine/app/views/_sources/js-files-min.twig',
+
 			img: '<%= publicDir %>/css/**/*.css',
 			options: {
 				assetsDirs: ['<%= publicDir %>', '<%= publicDir %>/css', '<%= publicDir %>/js', '<%= publicDir %>/img/sprites'],
@@ -213,11 +282,20 @@ module.exports = function (grunt) {
 					]
 				},
 				blockReplacements: {
+					// SMARTY
+					// js: function (block) {
+					// 	return '<script src="{$STATIC_URL}pub' + block.dest + '"></script>';
+					// },
+					// css: function (block) {
+					// 	return '<link rel="stylesheet" href="{$STATIC_URL}pub' + block.dest + '">';
+					// }
+
+					// TWIG
 					js: function (block) {
-						return '<script src="{$STATIC_URL}pub' + block.dest + '"></script>';
+						return '<script src="{{ static_asset(\'pub' + block.dest + '\') }}"></script>';
 					},
 					css: function (block) {
-						return '<link rel="stylesheet" href="{$STATIC_URL}pub' + block.dest + '">';
+						return '<link rel="stylesheet" href="{{ static_asset(\'pub' + block.dest + '\') }}">';
 					}
 				}
 			}
@@ -301,6 +379,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-compress');
+	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-chmod');
 
 	grunt.registerTask('default', ['jshint']);
@@ -308,17 +387,19 @@ module.exports = function (grunt) {
 	grunt.registerTask('gzip-css', [
 		'compress:css'
 	]);
+
 	grunt.registerTask('gzip-js', [
 		'compress:js'
 	]);
+
 	grunt.registerTask('build-css', [
 		'clean:css',
 		'copy:css',
-		'less:production',
 		'useminPrepare:css',
 		'filerev:css',
 		'usemin:css',
 	]);
+
 	grunt.registerTask('build-js', [
 		'clean:js',
 		'clean:srcjs',
@@ -329,12 +410,14 @@ module.exports = function (grunt) {
 		'filerev:js',
 		'usemin:js',
 	]);
+
 	grunt.registerTask('rev-img', [
 		'clean:img',
 		'copy:img',
 		'filerev:img',
 		'usemin:img'
 	]);
+
 	grunt.registerTask('build', ['build-css', 'rev-img', 'build-js', 'gzip-css', 'gzip-js']);
 	grunt.registerTask('live', ['watch']);
 };
