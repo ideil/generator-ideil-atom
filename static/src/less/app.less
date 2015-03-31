@@ -1,19 +1,31 @@
-//
-// Put bootstrap-8.8.8/less/bootstrap.less file content instead this comment!
-// Default path: "static/src/less/vendor/bootstrap/*.less".
-//
-
-@import "variables-reset.less"; // Don't foger replace Bootstrap default variables.
+@import "vars-bootstrap.less"; // Don't foger replace Bootstrap default variables.
 
 //
+// Put your bootstrap.less file content instead this comment!
+// Default file path: "ideil-atom/static/src/less/vendor/bootstrap/**/*.less".
+// include example: @import "vendor/bootstrap/bootstrap.less"
+//
+
+//
+// Ideil Atom
+@import "vars-atom.less";
+// @import "atom/link.less";
+// @import "atom/unit-addon.less";
+// @import "atom/dl-extension.less";
+// @import "atom/close-css.less";
+// @import "atom/radio-checkbox.less";
+// @import "atom/pseudo-order.less";
+// End Ideil Atom
+//
+
 // Deafault own *.less files components (can be removed if necessary).
 // !!! Must be inserted before Bootstrap utility to prevent their overwrite.
-//
 
 //
-// Own styles // (goes before Bootstrap "Utility classes")
+// Own styles
 
-@import "variables-base.less";
+@import "vars-base.less";
+// @import "components/font.less";
 @import "default.less";
 @import "~ui-icons.less"; // Grunt spritesheet styles.
 @import "icons.less"; // Rewrited spritesheet classes.
@@ -22,10 +34,6 @@
 @import "components/site-header.less";
 @import "components/site-footer.less";
 @import "components/page-home.less";
-// @import "components/";
-// @import "components/";
-// @import "components/";
-// @import "components/";
 // @import "components/";
 @import "responsive.less";
 

@@ -1,13 +1,47 @@
+// Bootstrap customize
+
+// CUSTOM // Extra Small `.form-control` height
+// @input-height-xs:          (floor(@font-size-small * @line-height-small) + (@padding-xs-vertical * 2));
+// .input-xs {
+// 	height: @input-height-xs;
+// 	padding: @padding-xs-vertical @padding-xs-horizontal;
+// 	font-size: @font-size-small;
+// 	line-height: @line-height-small;
+// 	border-radius: @input-border-radius-small;
+// }
+
+// End Bootstrap customize
+
 html {
+	// Sticky footer
 	position: relative;
 	min-height: 100%;
+	// End Sticky footer
 }
 
 body {
-	margin-bottom: @site-footer-height;
+	// min-width: @wrap; // not responsive state for desctops
+	margin-bottom: @site-footer-height; // Sticky footer
 }
 
 .wrap {
-	width: @wrap;
 	margin: 0 auto;
+	padding: 0 @wrap-padding;
 }
+
+.nowrap { // use span.nowrap instead nobr tag
+	.text-overflow;
+}
+
+// .separate-top {
+// 	border-top: 1px solid @gray-lighter;
+// }
+
+// .separate-bottom {
+// 	border-bottom: 1px solid @gray-lighter;
+// }
+
+// abbr[title] { // reset to text
+// 	border-bottom: 0;
+// 	cursor: default;
+// }

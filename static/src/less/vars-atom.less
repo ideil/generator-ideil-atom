@@ -1,0 +1,37 @@
+// Text/Typography
+@light:     100;
+@normal:    300;
+@bold:      500;
+
+// Form (unit) addon
+@addon-width:     25px;
+@addon-space:     10px; // 10px to left & 10px to right
+
+// Determinate list
+@dl-sm-dt-width:  floor(@component-offset-horizontal * 2/3); // 120px
+@dl-lg-dt-width:  ceil(@component-offset-horizontal * 4/3); // 240px
+
+@dl-default-dt-margin:   floor(@line-height-computed / 3);
+@dl-default-dd-margin:   @line-height-computed;
+
+// Close css
+@close-length:    31px;
+@close-width:     1px;
+
+// Custom radio & checkbox
+// radio
+@radio-size:     26px;
+@radio-squeeze:  10px;
+@radio-indent:   7px;
+
+// checkbox
+@checkbox-size:     22px;
+@checkbox-indent:   7px;
+@check-width:       10px;
+@check-height:      24px;
+
+// Link
+@link-hover-transition:        .3s;
+
+@link-border-color:            fade(@brand-primary, 80%);
+@link-hover-border-color:      @link-hover-color;

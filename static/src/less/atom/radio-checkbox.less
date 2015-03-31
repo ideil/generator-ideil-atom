@@ -1,0 +1,114 @@
+.custom-radio,
+.custom-checkbox {
+	label,
+	input[type=radio],
+	input[type=checkbox] {
+		cursor: pointer;
+	}
+
+	label {
+		position: relative;
+		font-weight: @bold;
+	}
+
+	input[type=radio],
+	input[type=checkbox] {
+		opacity: 0; // visivility: hidden; && display: none; – has no focus state!
+
+		+ label {
+			&:before,
+			&:after {
+				content: '';
+				display: block;
+				position: absolute;
+				top: 50%;
+			}
+
+			&:before {
+				background-color: @body-bg;
+				border: 2px solid @text-color;
+			}
+
+			&:after {
+				opacity: 0;
+				transition: opacity @link-hover-transition;
+			}
+		}
+
+		&:checked + label:after {
+			opacity: 1;
+		}
+
+		&:focus + label:before {
+			border-width: 3px;
+		}
+	}
+}
+
+.custom-radio {
+	label {
+		margin-right: (@grid-gutter-width * 2);
+
+		+ .help-block {
+			margin-left: (@radio-size + @radio-indent + 1px); // 1px – fix pretty looks of input (check next comment)
+		}
+	}
+
+	input[type=radio] {
+		width: (@radio-size - 3px); // 4px space between inline-blocks, 3px cause looks prettier
+		margin-right: @radio-indent;
+
+		+ label {
+			&:before,
+			&:after {
+				left: -(@radio-size + @radio-indent);
+				border-radius: 50%;
+			}
+
+			&:before {
+				.square(@radio-size);
+				margin-top: -(floor(@radio-size / 2));
+			}
+
+			&:after {
+				.square(@radio-size - @radio-squeeze);
+				margin-top: -(floor((@radio-size - @radio-squeeze) / 2));
+				margin-left: (@radio-squeeze / 2);
+				background-color: @text-color;
+			}
+		}
+	}
+}
+
+.custom-checkbox {
+	label + .help-block {
+		margin-left: (@checkbox-size + @checkbox-indent + 1px); // 1px – fix pretty looks of input
+	}
+
+	input[type=checkbox] {
+		width: (@checkbox-size - 3px); // 4px space between inline-blocks, 3px cause looks prettier
+		margin-right: @checkbox-indent;
+
+		+ label {
+			&:before,
+			&:after {
+				left: -(@checkbox-size + @checkbox-indent);
+			}
+
+			&:before {
+				.square(@checkbox-size);
+				margin-top: -(floor((@checkbox-size / 2) * 1.2));
+			}
+
+			&:after {
+				.size(@check-width; @check-height);
+				transform: rotate(45deg);
+				border-bottom: 2px solid @text-color;
+				border-right: 2px solid @text-color;
+				margin-top: -(ceil(@check-height * .8));
+				margin-left: floor(@check-width * 1.1);
+				box-shadow: inset -2px 0 0 @body-bg, 2px -2px 0 @body-bg;
+			}
+		}
+	}
+}

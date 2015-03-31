@@ -1,0 +1,35 @@
+.close {
+	position: relative;
+	display: block;
+	&:extend(.text-hide);
+	.square(@close-length);
+
+	&:before,
+	&:after {
+		position: absolute;
+		top: floor(@close-length / 2);
+		display: block;
+		content: '';
+		width: 100%;
+		height: @close-width;
+		background-color: @text-color;
+		transition: background-color @link-hover-transition;
+	}
+
+	&:before {
+		transform: rotate(45deg);
+		transform-origin: ceil(@close-length / 2);
+	}
+
+	&:after {
+		transform: rotate(-45deg);
+		transform-origin: ceil(@close-length / 2);
+	}
+
+	&:hover {
+		&:before,
+		&:after {
+			background-color: @brand-danger;
+		}
+	}
+}

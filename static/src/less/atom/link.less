@@ -1,0 +1,38 @@
+a,
+button {
+	transition: @link-hover-transition;
+}
+
+a {
+	border-bottom: 1px solid @link-border-color;
+
+	&:hover,
+	&:active,
+	&.active {
+		color: @link-hover-color;
+		border-bottom-color: @link-hover-border-color;
+	}
+
+	&.link-unstyled {
+		color: @text-color;
+		border-bottom: 0;
+	}
+
+	&.has-action {
+		border-bottom: 0;
+
+		&.title,
+		.title {
+			border-bottom: 1px dotted @text-color;
+		}
+
+		&:hover,
+		&:active,
+		&.active {
+			&.title,
+			.title {
+				border-bottom-color: @link-hover-border-color;
+			}
+		}
+	}
+}

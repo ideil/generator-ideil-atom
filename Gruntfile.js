@@ -71,6 +71,11 @@ module.exports = function (grunt) {
 			jshint: {
 				files: ['<%= sourceDir %>/js/**/*.js'],
 				tasks: ['jshint:all']
+			},
+
+			spritesheet: {
+				files: ['<%= sourceDir %>/img/ui-icons/**/*.png'],
+				tasks: ['spritesheet']
 			}
 		},
 
@@ -211,6 +216,13 @@ module.exports = function (grunt) {
 				src: ['img/**/*', '!img/assets/**', '!img/**/zzz*'],							// copy folder
 				dest: '<%= publicDir %>/',
 				expand: true																											// required when using cwd
+			},
+
+			font: {
+				cwd: '<%= sourceDir %>',				// root to copy
+				src: ['font/**/*'],							// copy folder
+				dest: '<%= publicDir %>/',
+				expand: true										// required when using cwd
 			}
 		},
 
@@ -418,6 +430,6 @@ module.exports = function (grunt) {
 		'usemin:img'
 	]);
 
-	grunt.registerTask('build', ['build-css', 'rev-img', 'build-js', 'gzip-css', 'gzip-js']);
+	grunt.registerTask('build', ['build-css', 'rev-img', 'build-js', 'gzip-css', 'gzip-js', 'copy:font']);
 	grunt.registerTask('live', ['watch']);
 };

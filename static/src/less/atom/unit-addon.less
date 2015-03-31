@@ -1,0 +1,30 @@
+.unit-group { // addon wrapper
+	position: relative;
+
+	// addon to right of control
+	&.unit-addon-right .form-control {
+		padding-right: (@addon-width + (@addon-space * 2));
+	}
+
+	// addon to left of control
+	&.unit-addon-left .form-control {
+		padding-left: (@addon-width + (@addon-space * 2));
+	}
+
+	// unit (.form-control)
+	.unit-addon {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		margin: auto 0;
+		opacity: .2;
+
+		.unit-addon-right& {
+			right: (@addon-space + 2);
+		}
+
+		.unit-addon-left& {
+			left: (@addon-space + 2);
+		}
+	}
+}
