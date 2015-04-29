@@ -116,7 +116,7 @@ module.exports = function (grunt) {
 				},
 
 				files: {
-					'<%= sourceDir %>': '<%= sourceDir %>/img/ui-icons/*.png'
+					'<%= sourceDir %>': '<%= sourceDir %>/img/ui-icons/**/*.png'
 				}
 			}
 		},

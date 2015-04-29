@@ -12,25 +12,27 @@
 
 // End Bootstrap customize
 
-html {
-	// Sticky footer
-	position: relative;
-	min-height: 100%;
-	// End Sticky footer
+textarea {
+	resize: vertical;
 }
 
-body {
-	// min-width: @wrap; // not responsive state for desctops
-	margin-bottom: @site-footer-height; // Sticky footer
-}
+// html {}
+
+// body {
+// 	min-width: @wrap; // not responsive state for desctops
+// }
 
 .wrap {
 	margin: 0 auto;
 	padding: 0 @wrap-padding;
 }
 
-.nowrap { // use span.nowrap instead nobr tag
-	.text-overflow;
+.u-nowrap { // use span.nowrap instead nobr tag
+	.text-overflow();
+}
+
+.u-text-overflow {
+	.text-overflow();
 }
 
 // .separate-top {
