@@ -1,15 +1,15 @@
-.close {
-	position: relative;
+.o-close {
 	display: block;
+	position: relative;
 	&:extend(.text-hide);
 	.square(@close-length);
 
 	&:before,
 	&:after {
+		content: '';
+		display: block;
 		position: absolute;
 		top: floor(@close-length / 2);
-		display: block;
-		content: '';
 		width: 100%;
 		height: @close-width;
 		background-color: @text-color;

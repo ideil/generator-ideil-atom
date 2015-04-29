@@ -23,13 +23,11 @@
 	dd {
 		display: inline;
 	}
+}
 
-	dd {
-		&:after {
-			content: "\A";
-			white-space: pre;
-		}
-	}
+.dl-couple dd:after {
+	content: "\A";
+	white-space: pre;
 }
 
 .dl-default {
