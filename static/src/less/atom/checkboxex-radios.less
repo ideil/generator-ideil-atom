@@ -1,0 +1,125 @@
+//
+// Checkboxes and Radios
+// ------------------------------------------
+
+
+// Base styles
+// ---------------------
+
+.c-checkbox,
+.c-radio {
+	display: block;
+	position: relative;
+	margin-top: 10px;
+	margin-bottom: 10px;
+
+	> label {
+		margin-right: floor(@grid-gutter-width / 2);
+	}
+
+	input[type=radio],
+	input[type=checkbox] {
+		margin-right: @control-text-indent;
+		opacity: 0;
+
+		~ .o-control-indicator { // control wrapper
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 0;
+
+			&:before, // box
+			&:after { // indicator
+				content: '';
+				display: block;
+				position: absolute;
+			}
+
+			&:before {
+				background-color: @control-bg;
+				border: @control-indicator-border-width solid @control-border-color;
+			}
+
+			&:after {
+				opacity: 0;
+				transition: opacity @transition-duration-base;
+			}
+		}
+
+		&:checked ~ .o-control-indicator:after {
+			opacity: 1;
+		}
+
+		&:focus ~ .o-control-indicator:before {
+			.tab-focus();
+		}
+	}
+}
+
+
+// Checkboxes
+// ---------------------
+
+.c-checkbox {
+	input[type=checkbox] {
+		&,
+		~ .o-control-indicator {
+			width: (@checkbox-size - 4px); // ~4px space between inline-blocks
+		}
+
+		~ .o-control-indicator {
+			height: @checkbox-size;
+			margin-top: -(floor(@checkbox-size / 2));
+
+			&:before {
+				.square(@checkbox-size);
+				top: 0;
+				left: 0;
+				border-radius: @checkbox-radius;
+			}
+
+			&:after {
+				.size(@check-length-long; @check-length-short);
+				left: (floor(@checkbox-size / 2) + @check-shift-horizontal);
+				bottom: (@control-indicator-border-width + @check-space + @check-shift-bottom);
+				border-bottom: @check-width solid @check-color;
+				border-left: @check-width solid @check-color;
+				box-shadow: inset @check-space -@check-space 0 @control-bg, -@check-space @check-space 0 @control-bg;
+				transform: rotate(-45deg);
+				transform-origin: 0 100%;
+			}
+		}
+	}
+}
+
+
+// Radios
+// ---------------------
+
+.c-radio {
+	input[type=radio] {
+		&,
+		~ .o-control-indicator {
+			width: (@radio-size - 4px); // ~4px space between inline-blocks
+		}
+
+		~ .o-control-indicator {
+			&:before,
+			&:after {
+				border-radius: 50%;
+			}
+
+			&:before {
+				.square(@radio-size);
+				margin-top: -(floor(@radio-size / 2));
+			}
+
+			&:after {
+				.square(@radio-size - (@control-border-width * 2) - (@radio-indicator-space * 2));
+				margin-top: -(floor(@radio-size / 2) - @control-border-width - @radio-indicator-space);
+				margin-left: (@control-border-width + @radio-indicator-space);
+				background-color: @radio-indicator-color;
+			}
+		}
+	}
+}

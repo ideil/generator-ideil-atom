@@ -1,54 +1,8 @@
 // global module:false
 var path = require('path');
 
-// createConfig script for replacing Smarty {$STATIC_URL} references when building config for concat
-// function createSmartyStaticConcatConfig(context, block) {
-// 	var cfg = {files: []};
-// 	var staticPattern = /\{\$\s*STATIC_URL\s*\}/;
-
-// 	block.dest = block.dest.replace(staticPattern, '');
-// 	var outfile = path.join(context.outDir, block.dest);
-
-// 	var files = {
-// 		dest: outfile,
-// 		src: []
-// 	};
-// 	context.inFiles.forEach(function(f) {
-// 		files.src.push(path.join(context.inDir, f.replace(staticPattern, '')));
-// 	});
-// 	cfg.files.push(files);
-// 	context.outFiles = [block.dest];
-// 	return cfg;
-// };
-
-// createConfig script for replacing Twig references when building config for concat
-function createTwigStaticConcatConfig(context, block) {
-	var cfg = {
-		files: [
-			{
-				dest: path.join(context.outDir, block.dest),
-				src: []
-			}
-		]
-	};
-
-	var matches = block.raw.join('').match(/\{\{ static_asset\(\'(.+?)\'\)/g) || [];
-
-	context.outFiles = [block.dest];
-
-	matches.forEach(function (el) {
-		cfg.files[0].src.push(path.join(context.inDir,
-			el.replace('{{ static_asset(\'', '').replace('\')', '')
-		));
-	});
-
-	return cfg;
-};
-
 module.exports = function (grunt) {
-
 	grunt.initConfig({
-
 		baseDir: 'static',
 		sourceDir: '<%= baseDir %>/src',
 		publicDir: '<%= baseDir %>/pub',
@@ -64,7 +18,7 @@ module.exports = function (grunt) {
 			},
 
 			includes: {
-				files: ['<%= baseDir %>/layouts/_includes/**/*'],
+				files: ['<%= baseDir %>/layouts/_includes/**/*.html'],
 				tasks: ['preprocess:html']
 			},
 
@@ -75,7 +29,7 @@ module.exports = function (grunt) {
 
 			spritesheet: {
 				files: ['<%= sourceDir %>/img/ui-icons/**/*.png'],
-				tasks: ['spritesheet']
+				tasks: ['spritesheet', 'less:dev', 'autoprefixer:sourcemap']
 			}
 		},
 
@@ -83,11 +37,12 @@ module.exports = function (grunt) {
 			options: {
 				jshintrc: '.jshintrc',
 			},
-			all: ['<%= sourceDir %>/js/**/*.js', '!<%= sourceDir %>/js/vendor/**/*.js', '!<%= sourceDir %>/js/modules/**/*.js']
+
+			all: ['<%= sourceDir %>/js/**/*.js', '!<%= sourceDir %>/js/vendor/**/*.js']
 		},
 
 		spritesheet: {
-			assets: {
+			compile: {
 				options: {
 					outputCss: '/less/~ui-icons.less',
 					selector: '.icon',
@@ -95,7 +50,7 @@ module.exports = function (grunt) {
 					output: {
 						legacy: {
 							pixelRatio: 1,
-							outputImage: '/img/sprites/ui-assets.png',
+							outputImage: '/img/sprites/ui-icons.png',
 							filter: function (fullpath) {
 								return fullpath.indexOf('@2x') === -1;
 							}
@@ -103,7 +58,7 @@ module.exports = function (grunt) {
 
 						retina: {
 							pixelRatio: 2,
-							outputImage: '/img/sprites/ui-assets@2x.png',
+							outputImage: '/img/sprites/ui-icons@2x.png',
 							filter: function (fullpath) {
 								return fullpath.indexOf('@2x') >= 0;
 							}
@@ -129,6 +84,7 @@ module.exports = function (grunt) {
 					sourceMapBasepath: 'static',											// Deleting excessive prefixes
 					sourceMapRootpath: '/'														// Path prefix (*.map file)
 				},
+
 				files: {
 					'<%= sourceDir %>/css/app.css': ['<%= sourceDir %>/less/app.less']
 				}
@@ -140,6 +96,7 @@ module.exports = function (grunt) {
 					compress: true,
 					cleancss: true
 				},
+
 				files: {
 					'<%= publicDir %>/css/app.min.css': ['<%= sourceDir %>/less/app.less']
 				}
@@ -169,6 +126,7 @@ module.exports = function (grunt) {
 					DEBUG: true
 				}
 			},
+
 			html: {
 				files: [{
 					expand: true,
@@ -185,177 +143,84 @@ module.exports = function (grunt) {
 		clean: {
 			css: ['<%= publicDir %>/css'],
 			js: ['<%= publicDir %>/js'],
-			img: ['<%= publicDir %>/img'],
-			srcjs: ['<%= sourceDir %>/js/*.js.gz']
+			img: ['<%= publicDir %>/img']
 		},
 
 		copy: {
-
-			css: {
-				// SMARTY
-				// src: 'engine/application/view/themes/_default/_sources/css-files.smt',
-				// dest: 'engine/application/view/themes/_default/_sources/css-files.min.smt'
-
-				// TWIG
-				src: 'engine/app/views/_sources/css-file.twig',
-				dest: 'engine/app/views/_sources/css-file-min.twig'
-			},
-
-			js: {
-				// SMARTY
-				// src: 'engine/application/view/themes/_default/_sources/js-files.smt',
-				// dest: 'engine/application/view/themes/_default/_sources/js-files.min.smt'
-
-				// TWIG
-				src: 'engine/app/views/_sources/js-files.twig',
-				dest: 'engine/app/views/_sources/js-files-min.twig'
-			},
-
 			img: {
-				cwd: '<%= sourceDir %>',																					// root to copy
-				src: ['img/**/*', '!img/assets/**', '!img/**/zzz*'],							// copy folder
-				dest: '<%= publicDir %>/',
-				expand: true																											// required when using cwd
+				cwd: '<%= sourceDir %>/img/',
+				src: ['**/*',
+					'!ui-icons',
+					'!ui-icons/**/*',
+					'!zzz',
+					'!zzz/**/*',
+					'!atom',
+					'!atom/**/*'
+				],
+				dest: '<%= publicDir %>/img/',
+				expand: true // required when using cwd
 			},
 
 			font: {
-				cwd: '<%= sourceDir %>',				// root to copy
-				src: ['font/**/*'],							// copy folder
+				cwd: '<%= sourceDir %>',
+				src: ['font/**/*'],
 				dest: '<%= publicDir %>/',
-				expand: true										// required when using cwd
+				expand: true
 			}
 		},
 
-		useminPrepare: {
-			// SMARTY
-			// js: 'engine/application/view/themes/_default/_sources/js-files.smt',
-			// css: 'engine/application/view/themes/_default/_sources/css-files.smt',
-
-			// TWIG
-			js: 'engine/app/views/_sources/js-files.twig',
-			css: 'engine/app/views/_sources/css-file.twig',
-
-			options: {
-				root: '<%= baseDir %>',
-				staging: '<%= baseDir %>/.tmp/',
-				dest: '<%= publicDir %>',
-				flow: {
-					steps: {
-						js: [{
-								name: 'concat',
-								// createConfig: createSmartyStaticConcatConfig
-								createConfig: createTwigStaticConcatConfig
-							},
-							'uglifyjs'
-						]},
-					post: {} // REQUIRED! DO NOT REMOVE
-				}
-			}
-		},
-
-		filerev: { // change versions (only if was chages!)
-			options: {
-				encoding: 'utf8',
-				algorithm: 'md5',
-				length: 8
-			},
-			css: {
-				src: '<%= publicDir %>/css/*.css'
-			},
+		uglify: {
 			js: {
-				src: '<%= publicDir %>/js/*.js'
+				files: [
+					{
+						src: ['<%= sourceDir %>/js/**/*.js'],
+						dest: '<%= publicDir %>/js/app.min.js'
+					}
+				]
+			}
+		},
+
+		filerev: {
+			// 	options: {
+			// 		algorithm: 'md5', // init: md5
+			// 		length: 8         // init: 8
+			// 	},
+
+			js: {
+				src: ['<%= publicDir %>/js/app.min.js'],
+				dest: '<%= publicDir %>/js/'
 			},
+
+			css: {
+				src: ['<%= publicDir %>/css/app.min.css'],
+				dest: '<%= publicDir %>/css/'
+			},
+
 			img: {
 				src: '<%= publicDir %>/img/**/*.{jpg,jpeg,png}'
 			}
 		},
 
-		usemin: {
-			// SMARTY
-			// css: 'engine/application/view/themes/_default/_sources/css-files.min.smt',
-			// js: 'engine/application/view/themes/_default/_sources/js-files.min.smt',
-
-			// TWIG
-			css: 'engine/app/views/_sources/css-file-min.twig',
-			js: 'engine/app/views/_sources/js-files-min.twig',
-
-			img: '<%= publicDir %>/css/**/*.css',
-			options: {
-				assetsDirs: ['<%= publicDir %>', '<%= publicDir %>/css', '<%= publicDir %>/js', '<%= publicDir %>/img/sprites'],
-				patterns: {
-					css: [
-						[/(css\/app\.min\.css)/, 'Replace CSS references']
-					],
-					js: [
-						[/(js\/app\.min\.js)/, 'Replace JS references']
-					],
-					img: [
-						[/(img\/.*?\.(?:jpg|jpeg|png))/img, 'Image src replacement in css files']
-					]
-				},
-				blockReplacements: {
-					// SMARTY
-					// js: function (block) {
-					// 	return '<script src="{$STATIC_URL}pub' + block.dest + '"></script>';
-					// },
-					// css: function (block) {
-					// 	return '<link rel="stylesheet" href="{$STATIC_URL}pub' + block.dest + '">';
-					// }
-
-					// TWIG
-					js: function (block) {
-						return '<script src="{{ static_asset(\'pub' + block.dest + '\') }}"></script>';
-					},
-					css: function (block) {
-						return '<link rel="stylesheet" href="{{ static_asset(\'pub' + block.dest + '\') }}">';
-					}
+		filerev_assets: {
+			dist: {
+				options: {
+					prettyPrint: true,
+					dest: '<%= publicDir %>/manifest.json'
 				}
 			}
 		},
 
-		compress: {
-			js: {
-				options: {
-					mode: 'gzip',
-					pretty: true,
-					level: 9
-				},
-				files: [
-					// Each of the files in the pub/ folder will be output to
-					// the pub/ folder with the extension .gz
-					{
-						expand: true,
-						src: ['<%= publicDir %>/js/*.js'],
-						rename: function (dest, src) {
-							return src + '.gz';
-						}
-					},
-					{
-						expand: true,
-						src: ['<%= sourceDir %>/js/vendor/modernizr-*.js'],
-						rename: function (dest, src) {
-							return src + '.gz';
-						}
-					}
-				]
-			},
-			css: {
-				options: {
-					mode: 'gzip',
-					pretty: true,
-					level: 9
-				},
-				files: [
-					// Each of the files in the pub/ folder will be output to
-					// the pub/ folder with the extension .gz
-					{
-						expand: true,
-						src: ['<%= publicDir %>/css/*.css'],
-						rename: function (dest, src) {
-							return src + '.gz';
-						}
-					}
-				]
+		usemin: {
+			css: '<%= publicDir %>/**/*.css',
+
+			options: {
+				assetsDirs: ['<%= publicDir %>'],
+
+				patterns: {
+					css: [
+						[/(img\/.*?\.(?:png|jpe?g|gif))/gm, 'Replacing reference to *.png, *.jpg, *.jpeg']
+					]
+				}
 			}
 		},
 
@@ -367,6 +232,7 @@ module.exports = function (grunt) {
 				src: ['**/*', '!node_modules/**/*'],
 				filter: 'isDirectory'
 			},
+
 			staticFiles: {
 				options: {
 					mode: '644'
@@ -375,9 +241,9 @@ module.exports = function (grunt) {
 				filter: 'isFile'
 			}
 		}
-
 	});
 
+	// Load
 	grunt.loadTasks(path.join(__dirname, 'node_modules', 'node-spritesheet', 'tasks'));
 
 	grunt.loadNpmTasks('grunt-contrib-watch');
@@ -385,51 +251,30 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-preprocess');
 	grunt.loadNpmTasks('grunt-usemin');
-	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-filerev');
+	grunt.loadNpmTasks('grunt-filerev-assets');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-chmod');
 
-	grunt.registerTask('default', ['jshint']);
-	grunt.registerTask('sprite', ['spritesheet']);
-	grunt.registerTask('gzip-css', [
-		'compress:css'
+	// Register
+	grunt.registerTask('sprite', [
+		'spritesheet',
+		'less',
+		'autoprefixer:sourcemap'
 	]);
 
-	grunt.registerTask('gzip-js', [
-		'compress:js'
-	]);
-
-	grunt.registerTask('build-css', [
-		'clean:css',
-		'copy:css',
-		'useminPrepare:css',
-		'filerev:css',
-		'usemin:css',
-	]);
-
-	grunt.registerTask('build-js', [
-		'clean:js',
-		'clean:srcjs',
-		'copy:js',
-		'useminPrepare:js',
-		'concat',
-		'uglify',
-		'filerev:js',
-		'usemin:js',
-	]);
-
-	grunt.registerTask('rev-img', [
-		'clean:img',
+	grunt.registerTask('build', [
+		'clean',
+		'uglify', // minify js
+		'less:production', // minify css
+		'autoprefixer:sourcemap',
+		'filerev:js', 'filerev:css', 'filerev_assets',
 		'copy:img',
 		'filerev:img',
-		'usemin:img'
+		'usemin:css',
+		'copy:font'
 	]);
-
-	grunt.registerTask('build', ['build-css', 'rev-img', 'build-js', 'gzip-css', 'gzip-js', 'copy:font']);
-	grunt.registerTask('live', ['watch']);
 };

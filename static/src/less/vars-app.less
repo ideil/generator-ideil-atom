@@ -1,0 +1,41 @@
+//
+// Variables APP
+// ------------------------
+
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+//** Variables are better way to control `font-weight`, especially if you need change base font family
+@text-light:     300;
+@text-normal:    400;
+@text-bold:      700;
+
+
+//== Typography
+//
+//##
+
+@line-height-compudet-sm:     floor(@line-height-computed);
+
+
+//== Grid
+//
+//##
+
+@grid-gutter-width-sm:        floor(@grid-gutter-width / 2);
+@wrap-padding:                @grid-gutter-width-sm;
+
+
+//==
+//
+//##
+
+//** Fixed components
+// Insert the height of the finished component (necessarily)
+@banner-height:            auto;
+@contentinfo-height:       auto;
+//** Media queries breakpoints
+@screen-sticky-banner:            0px;
+@screen-sticky-contentinfo:       0px;

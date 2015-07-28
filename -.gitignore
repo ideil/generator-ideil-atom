@@ -1,19 +1,40 @@
-# OS generated files #
-######################
+### Ideil Atom ###
+
+## OSX
+
 .DS_Store
-.DS_Store?
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon\r\r
+
+# Thumbnails
 ._*
+
+# Files that might appear on external disk
 .Spotlight-V100
 .Trashes
-Icon?
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+
+## OS generated files
 ehthumbs.db
 Thumbs.db
 
+
+## Text editor
 *.sublime-project
 *.sublime-workspace
 
-# Compiled source #
-###################
+
+## Compiled source
 *.com
 *.class
 *.dll
@@ -21,8 +42,8 @@ Thumbs.db
 *.o
 *.so
 
-# Packages #
-############
+
+## Packages
 # it's better to unpack these files and commit the raw source
 # git has its own built in compression methods
 *.7z
@@ -33,10 +54,11 @@ Thumbs.db
 *.tar
 *.zip
 
-# Project files #
-#################
+
+## Atom files
+static/src/img/zzz/atom
+
+## Project files
 node_modules
 /var/*
 composer.lock
-static/.tmp
-static/src/img/zzz

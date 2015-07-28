@@ -1,0 +1,85 @@
+//
+// Links
+// ---------------------------------
+
+
+// Remove bootstrap default link hover decoration
+@link-hover-decoration:  none;
+
+// Default styles (CMS content links)
+//
+// Decorate links with `border-bottom` style.
+// So now we can apply custom dotted/dashed underlines.
+
+a,
+.c-link {
+	border-bottom: @link-border-width solid @link-border-color;
+
+	&:hover,
+	&:focus {
+		border-bottom-color: @link-hover-border-color;
+	}
+}
+
+// Uncolored links
+.c-link-text {
+	color: @text-color;
+	border-bottom-color: @link-text-border-color;
+
+	&:hover,
+	&:focus {
+		color: @link-color;
+		border-bottom-color: @link-color;
+	}
+}
+
+// Links with action
+.has-action {
+	border-bottom-style: @link-action-style;
+}
+
+// Links w/ title inside
+//
+// 1. Remove border from link.
+// 2. Add border only for link title (except for icon, caret etc).
+
+.c-link-title {
+	transition: @transition-duration-base;
+}
+
+.has-title {
+	border-bottom: 0;
+	transition: none; // prevent stucking of transitions
+
+	// Default slyles
+	> .icon {
+		vertical-align: middle;
+		margin-top: @link-icon-shift;
+	}
+
+	> .c-link-title {
+		border-bottom: @link-border-width solid @link-border-color;
+	}
+
+	&:hover > .c-link-title {
+		border-bottom-color: @link-hover-color;
+	}
+
+	// Styles of uncolored links w/ title inside
+	&.c-link-text {
+		> .c-link-title {
+			border-bottom-color: @link-text-border-color;
+		}
+
+		&:hover > .c-link-title {
+			border-bottom-color: @link-color;
+		}
+	}
+
+	// Styles of action links w/ title inside
+	&.has-action {
+		> .c-link-title {
+			border-bottom-style: @link-action-style;
+		}
+	}
+}

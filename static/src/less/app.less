@@ -1,47 +1,67 @@
-@import "vars-bootstrap.less"; // Don't foger replace Bootstrap default variables.
+//
+// Bootstrap
+// ----------------------
+@import "vars-bootstrap.less"; // replace Bootstrap variables
+// <%= Bootstrap %>
 
 //
-// Put your bootstrap.less file content instead this comment!
-// Default file path: "ideil-atom/static/src/less/vendor/bootstrap/**/*.less".
-// include example: @import "vendor/bootstrap/bootstrap.less"
-//
+// Vendor
+// ----------------------
+// @import "vendor/slick.less";
+
 
 //
 // Ideil Atom
+// ----------------------
+
+// Variables and mixins
 @import "vars-atom.less";
-// @import "atom/sticky-header.less";
-// @import "atom/sticky-footer.less";
-// @import "atom/link.less";
-// @import "atom/dl-extension.less";
-// @import "atom/object-components.less";
-// @import "atom/close-css.less";
-// @import "atom/radio-checkbox.less";
-// @import "atom/file-upload.less"; // file-upload.js is required
-// @import "atom/pseudo-order.less";
+@import "atom/mixins.less";
+
+// Bootstrap extensions
+// @import "atom/definition-lists.less";
+
+// CSS
+@import "atom/scaffolding.less";
+
+// Dependencies
 // @import "atom/rub.less";
-@import "atom/optional.less";
-// End Ideil Atom
+
+// Components
+// @import "atom/links.less";
+// @import "atom/checkboxex-radios.less";
+// @import "atom/labels.less";
+// @import "atom/addons.less";
+// @import "atom/close-css.less";
+
+// Themes
+// @import "atom/slick.less";
+
+// States
+// @import "atom/loading.less";
+
+// Objects & components w/ JasvaScript
+// @import "atom/file.less";
+
+
 //
+// App
+// ----------------------
+@import "vars-app.less";
+@import "~ui-icons.less"; // Spritesheet styles generated (Grunt)
 
-// Deafault own *.less files components (can be removed if necessary).
-// !!! Must be inserted before Bootstrap utility to prevent their overwrite.
-
-//
-// Own styles
-
-@import "vars-base.less";
-@import "default.less";
-@import "~ui-icons.less"; // Grunt spritesheet styles.
-@import "icons.less"; // Rewrited spritesheet classes.
-
-// Site components
-@import "components/site-header.less";
-@import "components/site-footer.less";
-@import "components/page-home.less";
+// App components
+// ----------------------
+@import "components/theme-bootstrap.less";
+@import "components/type.less";
+@import "components/grid.less";
+// @import "components/app-banner.less";
+@import "components/app-icons.less";
+@import "components/utilities.less";
 // @import "components/";
-@import "responsive.less";
+// @import "components/app-contentinfo.less";
 
-// @import "vendor/slider.less";
-
-// End own styles //
-//
+// App helpers
+// ----------------------
+// @import "components/app-banner-sticky.less";
+// @import "components/app-contentinfo-sticky.less";

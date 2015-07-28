@@ -1,5 +1,5 @@
 {
-  "name": "***PROJECT_NAME***",
+  "name": "*NAME*",
   "version": "2.0.0",
   "private": true,
   "engines": {
@@ -7,20 +7,19 @@
   },
   "scripts": {},
   "devDependencies": {
-    "grunt": "^0.4.4",
-    "grunt-autoprefixer": "^1.0.1",
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^3.0.3",
     "grunt-chmod": "^1.0.3",
     "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-compress": "^0.12.0",
-    "grunt-contrib-concat": "^0.4.0",
     "grunt-contrib-copy": "^0.5.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-less": "^0.11.0",
-    "grunt-contrib-uglify": "^0.5.0",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-less": "^1.0.0",
+    "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-filerev": "^0.2.1",
-    "grunt-preprocess": "^4.0.0",
-    "grunt-usemin": "^2.3.0",
-    "node-spritesheet": "^0.4.2"
+    "grunt-filerev": "^2.3.1",
+    "grunt-preprocess": "^5.0.1",
+    "grunt-usemin": "^3.0.0",
+    "node-spritesheet": "^0.4.2",
+    "grunt-filerev-assets": "^0.3.2"
   }
 }

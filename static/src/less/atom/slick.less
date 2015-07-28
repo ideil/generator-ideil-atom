@@ -1,0 +1,124 @@
+//
+// Slick carousel theme
+// --------------------------------------
+
+// Carousel
+.c-carousel {
+	.list-unstyled();
+	position: relative;
+	margin-bottom: @line-height-computed;
+
+	&:not(.slick-initialized) > *:first-child ~ * {
+		display: none;
+	}
+}
+
+// Arrows
+.c-btn-prev,
+.c-btn-next {
+	width: @btn-arrow-width;
+	height: @btn-arrow-height;
+	padding: 0;
+	position: absolute;
+	top: @btn-arrow-position-top;
+	background-color: @btn-arrow-bg;
+	border: 0;
+	text-align: center;
+	opacity: .5;
+
+	&:focus,
+	&:active,
+	&:hover {
+		opacity: 1;
+	}
+
+	> .icon {
+		vertical-align: middle;
+		.icon.i-arrow-ltr;
+	}
+}
+
+.c-btn-prev {
+	left: @btn-arrow-prev-position-left;
+
+	> .icon {
+		transform: rotate(180deg);
+	}
+}
+
+.c-btn-next {
+	right: @btn-arrow-next-position-right;
+}
+
+.c-btn-prev,
+.c-btn-next {
+	& when (@nav-dots = false) {
+		margin-top: -(ceil(@btn-arrow-height / 2));
+	}
+
+	& when (@nav-dots = true) {
+		margin-top: -(ceil((@btn-arrow-height / 2) + (@nav-dots-wrap-height / 2)));
+	}
+}
+
+// Dots
+.slick-dots {
+	.list-unstyled();
+	text-align: center;
+	height: @nav-dots-wrap-height;
+	line-height: @nav-dots-wrap-height;
+
+	> li {
+		display: inline-block;
+		height: @nav-dot-size;
+		vertical-align: middle;
+
+		+ li {
+			margin-left: @grid-gutter-width-sm;
+		}
+
+		> button {
+			color: transparent;
+			text-shadow: none;
+			padding: 0;
+			background-color: @nav-dot-bg;
+			.square(@nav-dot-size);
+			border-radius: @nav-dot-radius;
+
+		}
+
+		&.slick-active > button {
+			background-color: @nav-dot-active-bg;
+		}
+
+		& when (@nav-dot-active-contour = outside) {
+			> button {
+				border: 0;
+
+				&:hover,
+				&:active {
+					box-shadow: 0 0 0 2px @nav-dot-bg;
+				}
+			}
+
+			&.slick-active > button {
+				box-shadow: 0 0 0 2px @nav-dot-bg;
+			}
+		}
+
+		& when (@nav-dot-active-contour = inside) {
+			> button {
+				border: 2px solid transparent;
+
+				&:hover,
+				&:active {
+					border-color: @nav-dot-bg;
+				}
+			}
+
+			&.slick-active > button {
+				border-color: @nav-dot-bg;
+			}
+		}
+	}
+}

@@ -1,36 +1,43 @@
-.o-close {
-	display: block;
+//
+// Close icon css
+// -------------------
+
+// Base
+.c-close {
+	display: inline-block;
+	.square(@close-stick);
+	padding: 0;
 	position: relative;
 	&:extend(.text-hide);
-	.square(@close-length);
 
 	&:before,
 	&:after {
 		content: '';
 		display: block;
-		position: absolute;
-		top: floor(@close-length / 2);
 		width: 100%;
-		height: @close-width;
-		background-color: @text-color;
-		transition: background-color @link-hover-transition;
+		height: @close-weight;
+		background-color: @close-color;
+		position: absolute;
+		top: 50%;
+		transition: background-color @transition-duration-base;
+		transform-origin: 50%;
 	}
 
 	&:before {
 		transform: rotate(45deg);
-		transform-origin: ceil(@close-length / 2);
 	}
 
 	&:after {
 		transform: rotate(-45deg);
-		transform-origin: ceil(@close-length / 2);
 	}
 
-	a:hover &,
-	&:hover {
-		&:before,
-		&:after {
-			background-color: @brand-danger;
+	a& {
+		&:hover,
+		&:focus {
+			&:before,
+			&:after {
+				background-color: @close-color-active;
+			}
 		}
 	}
 }

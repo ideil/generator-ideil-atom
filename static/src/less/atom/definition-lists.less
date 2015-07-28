@@ -1,0 +1,35 @@
+//
+// Definition list (Bootstrap extension)
+// ------------------------
+
+// BS extension
+@media (min-width: @grid-float-breakpoint) {
+	.dl-horizontal-sm {
+		dt {
+			width: @dl-sm-dt-width;
+		}
+
+		dd {
+			margin-left: @dl-sm-dt-width + (@grid-gutter-width / 2);
+		}
+	}
+
+	.dl-horizontal-lg {
+		dt {
+			width: @dl-lg-dt-width;
+		}
+
+		dd {
+			margin-left: @dl-lg-dt-width + (@grid-gutter-width / 2);
+		}
+	}
+}
+
+// Pairwise definition list
+//
+// Breaking row after </dd> even if </dt>, </dd> are display: inline/inline-block;
+
+.dl-couple dd:after {
+	content: '\A';
+	white-space: pre;
+}

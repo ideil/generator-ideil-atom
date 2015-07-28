@@ -1,0 +1,21 @@
+//
+// Sticky contentinfo (footer)
+// ------------------------------------
+
+@media screen and (min-width: @screen-sticky-contentinfo) {
+	.s-contentinfo-sticky { // html
+		position: relative;
+		min-height: 100%;
+
+		body {
+			margin-bottom: @contentinfo-height;
+		}
+
+		.c-contentinfo {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			height: @contentinfo-height;
+		}
+	}
+}
