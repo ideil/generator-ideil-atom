@@ -1,14 +1,14 @@
 {
   "name": "generator-atom",
-  "version": "0.0.0",
-  "description": "Yeoman generator",
+  "version": "0.1.0",
+  "description": "Ideil atom generator",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "someuser/generator-atom",
+  "repository": "ideil/generator-atom",
   "author": {
     "name": "",
     "email": "",
-    "url": "https://github.com/someuser"
+    "url": "https://github.com/ideil/generator-atom"
   },
   "scripts": {
     "test": "mocha"
