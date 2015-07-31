@@ -8,6 +8,7 @@ var _s = require('underscore.string');
 module.exports = yeoman.generators.Base.extend({
 
   prompting: function () {
+
     var done = this.async();
 
     // Have Yeoman greet the user.
@@ -37,6 +38,7 @@ module.exports = yeoman.generators.Base.extend({
 
       done();
     }.bind(this));
+    
   },
 
   writing: {
@@ -97,7 +99,7 @@ module.exports = yeoman.generators.Base.extend({
         this.destinationPath('install/package.json')
       );
 
-    },
+    }
 
   },
 
@@ -125,18 +127,16 @@ module.exports = yeoman.generators.Base.extend({
   end: {
 
     task: function () {
+
       this.spawnCommand('grunt', ['bower', 'replace', 'concat', 'slick', 'clean']);
+
     },
 
     project: function () {
+
       process.chdir('..');
       this.installDependencies({ bower: false });
-    },
 
-    watch: function () {
-      this.on('end', function () {
-        this.spawnCommand('grunt', ['watch']);
-      });
     }
 
   }

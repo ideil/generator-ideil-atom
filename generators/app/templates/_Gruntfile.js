@@ -166,48 +166,8 @@ module.exports = function (grunt) {
 				src: ['font/**/*'],
 				dest: '<%= publicDir %>/',
 				expand: true
-			},
-
-			js_bootstrap: { 
-			  cwd: 'bower_components/components-bootstrap/js/',
-			  src: '**',
-			  dest: '<%= sourceDir %>/js/vendor/bootstrap/',
-			  expand: true
-			},
-
-			js_boilerplate: { 
-			  cwd: 'bower_components/html5-boilerplate/dist/js/vendor/',
-			  src: 'jquery*.js',
-			  dest: '<%= sourceDir %>/js/vendor/',
-			  expand: true
-			},
-
-			less_bootstrap: { 
-			  cwd: 'bower_components/components-bootstrap/less/',
-			  src: '**',
-			  dest: '<%= sourceDir %>/less/vendor/bootstrap/',
-			  expand: true,
-			},
-			less_slick: {
-				cwd: 'bower_components/slick-carousel/slick/',
-				src: 'slick.css',
-				dest: '<%= sourceDir %>/less/vendor/',
-				expand: true,
-				rename: function(dest, src) {
-				  return dest + src.replace('.css', '.less');
-				}
-			},
-			js_slick: {
-				cwd: 'bower_components/slick-carousel/slick/',
-				src: 'slick.js',
-				dest: '<%= sourceDir %>/js/vendor/',
-				expand: true
 			}
 
-			// html_boilerplate: {
-			// 	src: 'bower_components/html5-boilerplate/dist/index.html',
-			// 	dest: '<%= baseDir %>/layouts/index.html'
-			// }
 		},
 
 		uglify: {
@@ -281,30 +241,8 @@ module.exports = function (grunt) {
 				src: ['**/*', '!node_modules/**/*'],
 				filter: 'isFile'
 			}
-		},
-
-		replace: {
-			source: {
-				src: ['<%= sourceDir %>/less/vendor/bootstrap/bootstrap.less'],
-				overwrite: true,             
-				replacements: [{
-					from: '@import "',                   
-				  	to: '@import "vendor/bootstrap/'
-				},
-				{
-					from: 'vendor/bootstrap/variables.less',                   
-					to: 'vars-bootstrap.less'
-				}],
-			},
-
-		},
-
-		concat: {
-			dist: {
-		    	src: ['<%= sourceDir %>/less/vendor/bootstrap/bootstrap.less', '<%= sourceDir %>/less/app.less'],
-		    	dest: '<%= sourceDir %>/less/app.less',
-		    },
 		}
+
 	});
 
 	// Load
@@ -322,8 +260,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-chmod');
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-text-replace');
 
 	// Register
 	grunt.registerTask('sprite', [
@@ -342,19 +278,6 @@ module.exports = function (grunt) {
 		'filerev:img',
 		'usemin:css',
 		'copy:font'
-	]);
-
-	grunt.registerTask('bower', [
-		'copy:js_bootstrap', 
-		'copy:js_boilerplate', 
-		'copy:less_bootstrap',
-		'copy:less_slick',
-		'copy:js_slick'
-	]);
-
-	grunt.registerTask('slick', [
-		'copy:less_slick',
-		'copy:js_slick'
 	]);
 
 };
