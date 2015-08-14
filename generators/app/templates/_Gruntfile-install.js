@@ -33,6 +33,15 @@ module.exports = function (grunt) {
 			  dest: '<%= sourceDir %>/less/vendor/bootstrap/',
 			  expand: true,
 			},
+			variables_bootstrap: {
+				cwd: 'bower_components/components-bootstrap/less/',
+				src: 'variables.less',
+				dest: '<%= sourceDir %>/less/',
+				expand: true,
+				rename: function(dest, src) {
+				  return dest + src.replace('variables', 'vars-bootstrap');
+				}
+			},
 			less_slick: {
 				cwd: 'bower_components/slick-carousel/slick/',
 				src: 'slick.css',
@@ -85,7 +94,8 @@ module.exports = function (grunt) {
 	grunt.registerTask('bower', [
 		'copy:js_bootstrap', 
 		'copy:js_boilerplate', 
-		'copy:less_bootstrap'
+		'copy:less_bootstrap',
+		'copy:variables_bootstrap'
 	]);
 
 	grunt.registerTask('slick', [
