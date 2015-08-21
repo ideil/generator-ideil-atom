@@ -27,9 +27,9 @@ module.exports = function (grunt) {
 				tasks: ['jshint:all']
 			},
 
-			spritesheet: {
+			sprite: {
 				files: ['<%= sourceDir %>/img/ui-icons/**/*.png'],
-				tasks: ['spritesheet', 'less:dev', 'autoprefixer:sourcemap']
+				tasks: ['sprite', 'less:dev', 'autoprefixer:sourcemap']
 			}
 		},
 
@@ -41,37 +41,19 @@ module.exports = function (grunt) {
 			all: ['<%= sourceDir %>/js/**/*.js', '!<%= sourceDir %>/js/vendor/**/*.js']
 		},
 
-		spritesheet: {
+		sprite: {
 			compile: {
-				options: {
-					outputCss: '/less/~ui-icons.less',
-					selector: '.icon',
-
-					output: {
-						legacy: {
-							pixelRatio: 1,
-							outputImage: '/img/sprites/ui-icons.png',
-							filter: function (fullpath) {
-								return fullpath.indexOf('@2x') === -1;
-							}
-						},
-
-						retina: {
-							pixelRatio: 2,
-							outputImage: '/img/sprites/ui-icons@2x.png',
-							filter: function (fullpath) {
-								return fullpath.indexOf('@2x') >= 0;
-							}
-						}
-					},
-
-					resolveImageSelector: function (name, fullpath) {
-						return name.split('@2x').join('');
-					}
-				},
-
-				files: {
-					'<%= sourceDir %>': '<%= sourceDir %>/img/ui-icons/**/*.png'
+				src: '<%= sourceDir %>/img/ui-icons/**/*.png',
+				retinaSrcFilter: ['<%= sourceDir %>/img/ui-icons/**/*@2x.png'],
+				dest: '<%= sourceDir %>/img/sprites/ui-icons.png',
+				retinaDest: '<%= sourceDir %>/img/sprites/ui-icons@2x.png',
+				destCss: '<%= sourceDir %>/less/~ui-icons.less',
+				cssFormat: 'css_retina',
+				padding: 5,
+				cssOpts: {
+				    cssSelector: function (sprite) {
+				      return '.icon.' + sprite.name;
+				    }
 				}
 			}
 		},
@@ -246,8 +228,6 @@ module.exports = function (grunt) {
 	});
 
 	// Load
-	grunt.loadTasks(path.join(__dirname, 'node_modules', 'node-spritesheet', 'tasks'));
-
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -260,10 +240,11 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-chmod');
+	grunt.loadNpmTasks('grunt-spritesmith');
 
 	// Register
-	grunt.registerTask('sprite', [
-		'spritesheet',
+	grunt.registerTask('spritesheet', [
+		'sprite',
 		'less',
 		'autoprefixer:sourcemap'
 	]);
