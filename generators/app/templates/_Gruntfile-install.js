@@ -42,6 +42,12 @@ module.exports = function (grunt) {
 				  return dest + src.replace('variables', 'vars-bootstrap');
 				}
 			},
+			font_bootstrap: { 
+			  cwd: 'bower_components/components-bootstrap/fonts/',
+			  src: '**',
+			  dest: '<%= sourceDir %>/font/glyphicons/',
+			  expand: true
+			},
 			less_slick: {
 				cwd: 'bower_components/slick-carousel/slick/',
 				src: 'slick.css',
@@ -95,7 +101,8 @@ module.exports = function (grunt) {
 		'copy:js_bootstrap', 
 		'copy:js_boilerplate', 
 		'copy:less_bootstrap',
-		'copy:variables_bootstrap'
+		'copy:variables_bootstrap',
+		'copy:font_bootstrap'
 	]);
 
 	grunt.registerTask('slick', [
