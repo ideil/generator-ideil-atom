@@ -19,14 +19,12 @@ module.exports = function (grunt) {
 			  dest: '<%= sourceDir %>/js/vendor/bootstrap/',
 			  expand: true
 			},
-
 			js_boilerplate: { 
 			  cwd: 'bower_components/html5-boilerplate/dist/js/vendor/',
 			  src: 'jquery*.js',
 			  dest: '<%= sourceDir %>/js/vendor/',
 			  expand: true
 			},
-
 			less_bootstrap: { 
 			  cwd: 'bower_components/components-bootstrap/less/',
 			  src: '**',
@@ -63,7 +61,6 @@ module.exports = function (grunt) {
 				dest: '<%= sourceDir %>/js/vendor/',
 				expand: true
 			}
-
 		},
 
 		replace: {

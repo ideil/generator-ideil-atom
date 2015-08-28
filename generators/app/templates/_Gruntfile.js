@@ -1,6 +1,12 @@
 // global module:false
 var path = require('path');
 
+var jsList = [
+	'<%= sourceDir %>/js/vendor/jquery-1.11.3.min.js',
+	'<%= sourceDir %>/js/ui.js',
+	'<%= sourceDir %>/js/app.js'
+];
+
 module.exports = function (grunt) {
 	grunt.initConfig({
 		baseDir: 'static',
@@ -162,7 +168,7 @@ module.exports = function (grunt) {
 			js: {
 				files: [
 					{
-						src: ['<%= sourceDir %>/js/**/*.js'],
+						src: jsList,
 						dest: '<%= publicDir %>/js/app.min.js'
 					}
 				]
