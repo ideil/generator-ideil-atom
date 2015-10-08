@@ -59,6 +59,9 @@ Thumbs.db
 static/src/img/zzz/atom
 
 ## Project files
-node_modules
-/var/*
-composer.lock
+/vendor
+/node_modules
+/static/content
+Homestead.yaml
+Homestead.json
+.env
