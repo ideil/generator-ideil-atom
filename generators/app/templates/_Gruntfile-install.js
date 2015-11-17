@@ -7,11 +7,6 @@ module.exports = function (grunt) {
 		sourceDir: '<%= baseDir %>/src',
 		publicDir: '<%= baseDir %>/pub',
 
-		clean: {
-		  options: { force: true },
-		  remove: ['../install']
-		},
-
 		copy: {
 			js_bootstrap: { 
 			  cwd: 'bower_components/components-bootstrap/js/',
@@ -88,7 +83,6 @@ module.exports = function (grunt) {
 	});
 
 	// Load
-	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-text-replace');

@@ -2,6 +2,7 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var fs = require('fs-extra');
 var mkdirp = require('mkdirp');
 var _s = require('underscore.string');
 
@@ -10,11 +11,6 @@ module.exports = yeoman.generators.Base.extend({
   prompting: function () {
 
     var done = this.async();
-
-    // Have Yeoman greet the user.
-     this.log(yosay(
-       'Welcome to IDEIL ' + chalk.red('Atom') + ' generator!'
-     ));
 
     var prompts = [
       {
@@ -128,7 +124,7 @@ module.exports = yeoman.generators.Base.extend({
 
     task: function () {
 
-      this.spawnCommand('grunt', ['bower', 'replace', 'concat', 'slick', 'clean']);
+      this.spawnCommand('grunt', ['bower', 'replace', 'concat', 'slick']);
 
     },
 
@@ -136,6 +132,12 @@ module.exports = yeoman.generators.Base.extend({
 
       process.chdir('..');
       this.installDependencies({ bower: false });
+
+    },
+
+    clean: function () {
+    	
+    	fs.remove('install');
 
     }
 
