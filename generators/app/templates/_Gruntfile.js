@@ -55,11 +55,30 @@ module.exports = function (grunt) {
 				retinaDest: '<%= sourceDir %>/img/sprites/ui-icons@2x.png',
 				destCss: '<%= sourceDir %>/less/~ui-icons.less',
 				cssFormat: 'css_retina',
-				padding: 5,
-				cssOpts: {
-				    cssSelector: function (sprite) {
-				      return '.icon.' + sprite.name;
-				    }
+				padding: 1,
+				cssTemplate: function (data) { 
+				    var classMediaRespond = '.icon';
+				    var classNamespace = '.i-';
+
+				    var result = classMediaRespond +
+				                             '{background-image:url(' + data.spritesheet.image + ');}' +
+				                             '@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {' +
+				                             classMediaRespond + '{' +
+				                             'background-image:url(' + data.retina_spritesheet.image + ');' +
+				                             'background-size:' + data.spritesheet.px.width + ' ' + data.spritesheet.px.height +
+				                             ';}}';
+
+				    for (var i = 0; i < data.items.length; i++) {
+				        result += '@' + data.items[i].name + '-width:' + data.items[i].width + 'px;' +
+				                            '@' + data.items[i].name + '-height:' + data.items[i].height + 'px;' +
+				                            classNamespace + data.items[i].name + '{' +
+				                            'background-position:' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
+				                            'width:' + data.items[i].width + 'px;' +
+				                            'height:' + data.items[i].height + 'px;' +
+				                            '}';
+				    };
+
+				    return result;
 				}
 			}
 		},

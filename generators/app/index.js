@@ -24,6 +24,12 @@ module.exports = yeoman.generators.Base.extend({
         name: "slick",
         message: "Do you need slider?",
         default: true
+      },
+      {
+        type: "confirm",
+        name: "underscore",
+        message: "Do you need underscore.js?",
+        default: true
       }
     ];
 
@@ -31,6 +37,7 @@ module.exports = yeoman.generators.Base.extend({
       this.project_name = answers.project_name;
       // To access props later use this.props.someOption;
       this.slick = answers.slick;
+      this.underscore = answers.underscore;
 
       done();
     }.bind(this));
@@ -111,8 +118,13 @@ module.exports = yeoman.generators.Base.extend({
     bower: function () {
 
       this.bowerInstall(['components-bootstrap', 'git://github.com/h5bp/html5-boilerplate.git']);
+
       if (this.slick) { 
         this.bowerInstall(['slick-carousel']);
+      };
+
+      if (this.underscore) { 
+        this.bowerInstall(['underscore']);
       };
 
     }
@@ -124,7 +136,15 @@ module.exports = yeoman.generators.Base.extend({
 
     task: function () {
 
-      this.spawnCommand('grunt', ['bower', 'replace', 'concat', 'slick']);
+      this.spawnCommand('grunt', ['bower', 'replace', 'concat']);
+
+      if (this.slick) { 
+        this.spawnCommand('grunt', ['slick']);
+      };
+
+      if (this.underscore) { 
+        this.spawnCommand('grunt', ['underscore']);
+      };
 
     },
 

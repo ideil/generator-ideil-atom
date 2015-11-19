@@ -55,6 +55,12 @@ module.exports = function (grunt) {
 				src: 'slick.js',
 				dest: '<%= sourceDir %>/js/vendor/',
 				expand: true
+			},
+			underscore: { 
+				cwd: 'bower_components/underscore/',
+				src: '*min.js',
+				dest: '<%= sourceDir %>/js/vendor/',
+				expand: true
 			}
 		},
 
@@ -99,6 +105,10 @@ module.exports = function (grunt) {
 	grunt.registerTask('slick', [
 		'copy:less_slick',
 		'copy:js_slick'
+	]);
+
+	grunt.registerTask('underscore', [
+		'copy:underscore'
 	]);
 
 };

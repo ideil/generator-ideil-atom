@@ -4,6 +4,7 @@
 ## Features
 - [Bootstrap](http://getbootstrap.com/) in LESS, Modernizr
 - [Slick](https://github.com/kenwheeler/slick/) carousel (Optional)
+- [Underscore.js](http://underscorejs.org/) (Optional)
 - CSS [Autoprefixing](https://github.com/postcss/autoprefixer/) 
 - Built-in preview server with [LiveReload](http://livereload.com/)
 - Automagically compile [LESS](http://lesscss.org/)
