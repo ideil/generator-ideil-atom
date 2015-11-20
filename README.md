@@ -8,6 +8,7 @@
 - CSS [Autoprefixing](https://github.com/postcss/autoprefixer/) 
 - Built-in preview server with [LiveReload](http://livereload.com/)
 - Automagically compile [LESS](http://lesscss.org/)
+- Removing unused CSS with [UnCSS](https://github.com/giakki/uncss)
 - Automagically create sprite sheets
 
 For more information on what generator-ideil-atom can do for you, take a look at the [Grunt tasks](https://github.com/ideil/generator-ideil-atom/blob/master/generators/app/templates/_package.json) used in our `package.json`.

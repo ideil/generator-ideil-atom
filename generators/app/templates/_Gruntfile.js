@@ -7,7 +7,14 @@ var jsList = [
 	'<%= sourceDir %>/js/app.js'
 ];
 
+var ignorClass = [
+	'/^.is/',
+	'/^.has/',
+	'/^.slick/'
+];
+
 module.exports = function (grunt) {
+
 	grunt.initConfig({
 		baseDir: 'static',
 		sourceDir: '<%= baseDir %>/src',
@@ -61,21 +68,22 @@ module.exports = function (grunt) {
 				    var classNamespace = '.i-';
 
 				    var result = classMediaRespond +
-				                             '{background-image:url(' + data.spritesheet.image + ');}' +
-				                             '@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {' +
-				                             classMediaRespond + '{' +
-				                             'background-image:url(' + data.retina_spritesheet.image + ');' +
-				                             'background-size:' + data.spritesheet.px.width + ' ' + data.spritesheet.px.height +
-				                             ';}}';
+				        '{background-image:url(' + data.spritesheet.image + ');}' +
+				        '@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {' +
+				        classMediaRespond + '{' +
+				        'background-image:url(' + data.retina_spritesheet.image + ');' +
+				        'background-size:' + data.spritesheet.px.width + ' ' + data.spritesheet.px.height +
+				        ';}}';
 
 				    for (var i = 0; i < data.items.length; i++) {
-				        result += '@' + data.items[i].name + '-width:' + data.items[i].width + 'px;' +
-				                            '@' + data.items[i].name + '-height:' + data.items[i].height + 'px;' +
-				                            classNamespace + data.items[i].name + '{' +
-				                            'background-position:' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
-				                            'width:' + data.items[i].width + 'px;' +
-				                            'height:' + data.items[i].height + 'px;' +
-				                            '}';
+				        result += '@' + data.items[i].name + '-bg-position:' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
+				        	'@' + data.items[i].name + '-width:' + data.items[i].width + 'px;' +
+				            '@' + data.items[i].name + '-height:' + data.items[i].height + 'px;' +
+				            classNamespace + data.items[i].name + '{' +
+				            'background-position:' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
+				            'width:' + data.items[i].width + 'px;' +
+				            'height:' + data.items[i].height + 'px;' +
+				            '}';
 				    };
 
 				    return result;
@@ -98,14 +106,34 @@ module.exports = function (grunt) {
 			},
 
 			production: {
-				options: {
-					sourceMap: false,
-					compress: true,
-					cleancss: true
-				},
-
 				files: {
 					'<%= publicDir %>/css/app.min.css': ['<%= sourceDir %>/less/app.less']
+				}
+			}
+		},
+
+		cssmin: {
+			options: {
+			 	roundingPrecision: -1
+			},
+
+			target: {
+				files: {
+					'<%= publicDir %>/css/app.min.css': ['<%= publicDir %>/css/app.min.css']
+				}
+			}
+		},
+
+		uncss: {
+			dist: {
+				options: {
+					ignore: ignorClass,
+					csspath: '../../',
+					stylesheets: ['<%= publicDir %>/css/app.min.css']
+				},
+				
+				files: {
+				  '<%= publicDir %>/css/app.min.css': ['<%= baseDir %>/layouts/*.html']
 				}
 			}
 		},
@@ -324,6 +352,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-chmod');
 	grunt.loadNpmTasks('grunt-spritesmith');
+	grunt.loadNpmTasks('grunt-uncss');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 
 	// Register
 	grunt.registerTask('spritesheet', [
@@ -336,6 +366,8 @@ module.exports = function (grunt) {
 		'clean',
 		'uglify', // minify js
 		'less:production', // minify css
+		'uncss',
+		'cssmin',
 		'autoprefixer:pub',
 		'copy:img',
 		'filerev:img',
