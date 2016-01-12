@@ -1,59 +1,43 @@
+//## Vendor
 //
-// Vendor
-// ----------------------
+//*
+
 // @import "vendor/slick.less";
 
 
+//## Ideil Atom
 //
-// Ideil Atom
-// ----------------------
+//* Bootstrap 3+ required
 
-// Variables and mixins
+//** Variables and mixins
 @import "vars-atom.less";
 @import "atom/mixins.less";
 
-// Bootstrap extensions
+
 // @import "atom/definition-lists.less";
-
-// Dependencies
-// @import "atom/rub.less";
-
-// Components
+// @import "atom/rub.less"; // including font
 // @import "atom/links.less";
-// @import "atom/checkboxex-radios.less";
+// @import "atom/checkbox-radio.less";
 // @import "atom/labels.less";
 // @import "atom/addons.less";
 // @import "atom/close-css.less";
-
-// Themes
-// @import "atom/slick.less";
-
-// States
+// @import "atom/slick.less"; // vendor carousel custom styling
 // @import "atom/loading.less";
-
-// Objects & components w/ JasvaScript
-// @import "atom/file.less";
+// @import "atom/file.less"; // include `file.js` for getting filenames
 
 
+//## Application
 //
-// App
-// ----------------------
+//*
+
 @import "vars-app.less";
 @import "~ui-icons.less"; // Spritesheet styles generated (Grunt)
-
-// App components
-// ----------------------
-@import "components/theme-bs.less";
+@import "components/bootstrap-theme.less";
 @import "components/scaffolding.less";
-@import "components/type.less";
+// @import "components/type.less"; // is reserved
 @import "components/grid.less";
 // @import "components/app-banner.less";
 @import "components/app-icons.less";
 @import "components/utilities.less";
 // @import "components/";
 // @import "components/app-footer.less";
-
-// App helpers
-// ----------------------
-// @import "components/app-banner-sticky.less";
-// @import "components/app-contentinfo-sticky.less";

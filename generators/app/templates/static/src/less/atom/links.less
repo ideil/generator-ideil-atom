@@ -1,85 +1,87 @@
+//# Links
 //
-// Links
-// ---------------------------------
+//* By decorate links with `border-bottom` we can apply custom dotted/dashed underlines instead.
 
 
-// Remove bootstrap default link hover decoration
-@link-hover-decoration:  none;
-
-// Default styles (CMS content links)
-//
-// Decorate links with `border-bottom` style.
-// So now we can apply custom dotted/dashed underlines.
+//## Base
 
 a,
 .c-link {
-	border-bottom: @link-border-width solid @link-border-color;
+    border-bottom: @link-border-width solid @link-border-color;
 
-	&:hover,
-	&:focus {
-		border-bottom-color: @link-hover-border-color;
-	}
+    &:hover,
+    &:focus {
+        border-bottom-color: @link-hover-border-color;
+    }
 }
 
-// Uncolored links
+
+//## Uncolored links
+
 .c-link-text {
-	color: @text-color;
-	border-bottom-color: @link-text-border-color;
+    color: @text-color;
+    border-bottom-color: @link-text-border-color;
 
-	&:hover,
-	&:focus {
-		color: @link-color;
-		border-bottom-color: @link-color;
-	}
+    &:hover,
+    &:focus {
+        color: @link-color;
+        border-bottom-color: @link-color;
+    }
 }
 
-// Links with action
+
+//## Links with action (dotted by default)
+
 .has-action {
-	border-bottom-style: @link-action-style;
+    border-bottom-style: @link-action-style;
 }
 
-// Links w/ title inside
+
+//## Links w/ title inside.
 //
-// 1. Remove border from link.
-// 2. Add border only for link title (except for icon, caret etc).
+//* Necessary for applying `border-bottom` only for text (i.e.: `span.c-link-title`)
+//*
+//* What we do?
+//* — removeing border from link (`a.has-title`);
+//* — giving border only for link title (`.c-link-title`).
 
 .c-link-title {
-	transition: @transition-duration-base;
+    transition: @transition-base;
 }
 
 .has-title {
-	border-bottom: 0;
-	transition: none; // prevent stucking of transitions
+    border-bottom: 0;
+    transition: none; // prevent stucking of transitions
 
-	// Default slyles
-	> .icon {
-		vertical-align: middle;
-		margin-top: @link-icon-shift;
-	}
+    // Default slyles
+    > .icon {
+        vertical-align: middle;
+        margin-top: @link-icon-shift;
+    }
 
-	> .c-link-title {
-		border-bottom: @link-border-width solid @link-border-color;
-	}
+    > .c-link-title {
+        border-bottom: @link-border-width solid @link-border-color;
+    }
 
-	&:hover > .c-link-title {
-		border-bottom-color: @link-hover-color;
-	}
+    &:hover > .c-link-title {
+        border-bottom-color: @link-hover-color;
+    }
 
-	// Styles of uncolored links w/ title inside
-	&.c-link-text {
-		> .c-link-title {
-			border-bottom-color: @link-text-border-color;
-		}
+    // Styles of uncolored links w/ title inside
+    &.c-link-text {
+        > .c-link-title {
+            border-bottom-color: @link-text-border-color;
+        }
 
-		&:hover > .c-link-title {
-			border-bottom-color: @link-color;
-		}
-	}
+        &:hover > .c-link-title {
+            border-bottom-color: @link-color;
+        }
+    }
 
-	// Styles of action links w/ title inside
-	&.has-action {
-		> .c-link-title {
-			border-bottom-style: @link-action-style;
-		}
-	}
+    // Styles of action links w/ title inside
+    &.has-action {
+        > .c-link-title {
+            border-bottom-style: @link-action-style;
+        }
+    }
 }
