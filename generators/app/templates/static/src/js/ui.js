@@ -2,7 +2,9 @@
 /*jshint devel:true */
 
 (function ($, window, document, undefined) {
-    console.log('Hi world!');
+    'use strict';
+
+    // console.log('Hi world!');
 
     //## Crousel
     //

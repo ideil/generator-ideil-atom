@@ -3,6 +3,8 @@
 //* Get title of uploaded file for use in custom `input[type="file"]`
 
 (function ($, window, undefined) {
+    'use strict';
+
     function getFilename($upload) {
         $('.js-file').on('change', function() {
             var fullPath = $upload.val();
@@ -18,7 +20,7 @@
                 $upload.siblings('.js-file-name').text(filename);
             }
         });
-    };
+    }
 
     getFilename($('.js-file'));
 })(jQuery, window);
