@@ -9,11 +9,21 @@ var jsList = [
 ];
 
 var uncssIgnoreClass = [
-    '/^.active/',
-    '/^.open/',
-    '/^.is/',
-    '/^.has/',
-    '/^.slick/'
+    /^.o-/,
+    /^.u-/,
+    /^.c-/,
+    /^.t-/,
+    /^.s-/,
+    /^.is-/,
+    /^.has-/,
+    /^.js-/,
+    /^.i-/,
+    /^.active/, /*bootstrap*/
+    /^.open/,
+    /^.modal/,
+    /^.in/,
+    /^.fade/,
+    /^.slick/, /*slick*/
 ];
 
 module.exports = function (grunt) {
