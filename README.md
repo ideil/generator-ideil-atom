@@ -10,6 +10,7 @@
 - Automagically compile [LESS](http://lesscss.org/)
 - Removing unused CSS with [UnCSS](https://github.com/giakki/uncss)
 - Automagically create sprite sheets
+- [Browsersync](https://www.browsersync.io/)
 
 For more information on what generator-ideil-atom can do for you, take a look at the [Grunt tasks](https://github.com/ideil/generator-ideil-atom/blob/master/generators/app/templates/_package.json) used in our `package.json`.
 
@@ -37,7 +38,7 @@ $ npm install
 ```
 To build your webapp for production, run :
 ```sh
-$ npm grunt watch
+$ npm grunt
 ```
 ## License
 [MIT License](https://en.wikipedia.org/wiki/MIT_License)

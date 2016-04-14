@@ -376,10 +376,30 @@ module.exports = function (grunt) {
                 options: {
                     mode: '644'
                 },
-                src: ['**/*', '!node_modules/**/*'],
+                src: ['**/*', '!node_modules/**/*', '!artisan'],
                 filter: 'isFile'
             }
+        },
+
+        browserSync: {
+            dev: {
+                bsFiles: {
+                    src : [
+                        '<%= sourceDir %>/css/*.css',
+                        '<%= sourceDir %>/js/*.js',
+                        '<%= baseDir %>/layouts/*.html'
+                    ]
+                },
+                options: {
+                    watchTask: true,
+                    server: {
+                        baseDir: '<%= baseDir %>',
+                        directory: true
+                    }
+                }
+            }
         }
+
     });
 
     // Load tasks
@@ -401,8 +421,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-spritesmith');
     grunt.loadNpmTasks('grunt-uncss');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-browser-sync');
 
     // Register tasks
+    grunt.registerTask('default', [
+        'browserSync',
+        'watch'
+    ]);
+
     grunt.registerTask('spritesheet', [
         'sprite',
         'less',

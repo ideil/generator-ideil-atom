@@ -27,7 +27,8 @@
         "grunt-spritesmith": "^5.0.0",
         "grunt-text-replace": "^0.4.0",
         "grunt-uncss": "^0.4.4",
-        "grunt-usemin": "^3.0.0"
+        "grunt-usemin": "^3.0.0",
+        "grunt-browser-sync": "^2.2.0"
     }
 }
 
