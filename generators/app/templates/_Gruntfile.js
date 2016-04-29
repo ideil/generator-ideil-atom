@@ -94,23 +94,23 @@ module.exports = function (grunt) {
                     var classMediaRespond = '.icon';
                     var classNamespace = '.i-';
 
-                    var result = classMediaRespond +
-                        '{background-image:url(' + data.spritesheet.image + ');}' +
-                        '@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {' +
-                        classMediaRespond + '{' +
-                        'background-image:url(' + data.retina_spritesheet.image + ');' +
-                        'background-size:' + data.spritesheet.px.width + ' ' + data.spritesheet.px.height +
-                        ';}}';
+                    var result = 
+                        classMediaRespond + ' {\n\tbackground-image: url(' + data.spritesheet.image + ');\n}' +
+                        '\n\n@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {' +
+                        '\n\t' + classMediaRespond + ' {' +
+                        '\n\t\tbackground-image: url(' + data.retina_spritesheet.image + ');' +
+                        '\n\t\tbackground-size: ' + data.spritesheet.px.width + ' ' + data.spritesheet.px.height + ';\n\t}\n}';
 
                     for (var i = 0; i < data.items.length; i++) {
-                        result += '@' + data.items[i].name + '-bg-position:' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
-                            '@' + data.items[i].name + '-width:' + data.items[i].width + 'px;' +
-                            '@' + data.items[i].name + '-height:' + data.items[i].height + 'px;' +
-                            classNamespace + data.items[i].name + '{' +
-                            'background-position:' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
-                            'width:' + data.items[i].width + 'px;' +
-                            'height:' + data.items[i].height + 'px;' +
-                            '}';
+                        result += 
+                            '\n\n@' + data.items[i].name + '-bg-position: ' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
+                            '\n@' + data.items[i].name + '-width: ' + data.items[i].width + 'px;' +
+                            '\n@' + data.items[i].name + '-height: ' + data.items[i].height + 'px;' +
+                            '\n' + classNamespace + data.items[i].name + ' {' +
+                            '\n\tbackground-position: ' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
+                            '\n\twidth: ' + data.items[i].width + 'px;' +
+                            '\n\theight: ' + data.items[i].height + 'px;' +
+                            '\n}';
                     }
 
                     return result;
