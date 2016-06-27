@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html class="no-js">
     <head>
-        <!-- @include app-head.html -->
+        {% include '_app-head.twig' %}
     </head>
 
-    <body>
-        <!-- @include app-banner.html -->
+    <body class="container-fluid">
+        {% include '_app-banner.twig' %}
 
         <div class="o-wrap">
             <div class="well">
@@ -196,8 +196,8 @@
             </div>
         </div>
 
-        <!-- @include app-footer.html -->
+        {% include '_app-footer.twig' %}
 
-        <!-- @include app-js.html -->
+        {% include '_app-js.twig' %}
     </body>
 </html>

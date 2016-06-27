@@ -29,6 +29,11 @@ var uncssIgnoreClass = [
 module.exports = function (grunt) {
     'use strict';
 
+    require('jit-grunt')(grunt, {
+        sprite: 'grunt-spritesmith'
+    });
+    require('time-grunt')(grunt);
+
     grunt.initConfig({
         baseDir: 'static',
         sourceDir: '<%= baseDir %>/src',
@@ -44,9 +49,9 @@ module.exports = function (grunt) {
                 tasks: ['less:dev', 'autoprefixer:sourcemap']
             },
 
-            includes: {
+            twig: {
                 files: ['<%= baseDir %>/layouts/_includes/**/*'],
-                tasks: ['preprocess:html']
+                tasks: ['twigRender', 'prettify']
             },
 
             jshint: {
@@ -187,23 +192,29 @@ module.exports = function (grunt) {
             },
         },
 
-        preprocess: {
-            options: {
-                context : {
-                    DEBUG: true
-                }
-            },
-
+        twigRender: {
             html: {
-                files: [{
+                files : [{
+                    data: '<%= baseDir %>/layouts/_includes/datafile.yml',
                     expand: true,
-                    cwd: '<%= baseDir %>/layouts/_includes',
-                    src: 'tpl.*',
+                    cwd: '<%= baseDir %>/layouts/_includes/',
+                    src: ['*.twig', '!_*.twig'],
                     dest: '<%= baseDir %>/layouts/',
-                    rename: function (dest, src) {
-                        return dest + src.replace('tpl.', '');
-                    }
+                    ext: '.html'
                 }]
+            }
+        },
+
+        prettify: {
+            options: {
+                "indent": 4,
+            },
+            all: {
+                expand: true,
+                cwd: '<%= baseDir %>/layouts/',
+                ext: '.html',
+                src: ['*.html'],
+                dest: '<%= baseDir %>/layouts/'
             }
         },
 
@@ -399,29 +410,7 @@ module.exports = function (grunt) {
                 }
             }
         }
-
     });
-
-    // Load tasks
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-preprocess');
-    grunt.loadNpmTasks('grunt-usemin');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-filerev');
-    grunt.loadNpmTasks('grunt-filerev-assets');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-autoprefixer');
-    grunt.loadNpmTasks('grunt-jscs');
-    grunt.loadNpmTasks('grunt-modernizr');
-    grunt.loadNpmTasks('grunt-chmod');
-    grunt.loadNpmTasks('grunt-spritesmith');
-    grunt.loadNpmTasks('grunt-uncss');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-browser-sync');
 
     // Register tasks
     grunt.registerTask('default', [

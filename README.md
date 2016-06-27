@@ -2,15 +2,16 @@
 > [Yeoman](http://yeoman.io/) generator that scaffolds out a front-end web app using [Grunt](http://gruntjs.com/) for the build process
 
 ## Features
-- [Bootstrap](http://getbootstrap.com/) in LESS, Modernizr
-- [Slick](https://github.com/kenwheeler/slick/) carousel (Optional)
-- [Underscore.js](http://underscorejs.org/) (Optional)
-- CSS [Autoprefixing](https://github.com/postcss/autoprefixer/) 
+- [Twig](http://twig.sensiolabs.org/), the flexible, fast, and secure template engine
+- [Bootstrap](http://getbootstrap.com/) in LESS, [Modernizr](https://modernizr.com/)
+- [Browsersync](https://www.browsersync.io/)
 - Built-in preview server with [LiveReload](http://livereload.com/)
+- CSS [Autoprefixing](https://github.com/postcss/autoprefixer/) 
 - Automagically compile [LESS](http://lesscss.org/)
 - Removing unused CSS with [UnCSS](https://github.com/giakki/uncss)
 - Automagically create sprite sheets
-- [Browsersync](https://www.browsersync.io/)
+- [Slick](https://github.com/kenwheeler/slick/) carousel (Optional)
+- [Underscore.js](http://underscorejs.org/) (Optional)
 
 For more information on what generator-ideil-atom can do for you, take a look at the [Grunt tasks](https://github.com/ideil/generator-ideil-atom/blob/master/generators/app/templates/_package.json) used in our `package.json`.
 
@@ -32,11 +33,7 @@ Run:
 ```sh
 $ yo ideil-atom
 ```
-If install the required dependencies fails, try run:
-```sh
-$ npm install
-```
-To build your webapp for production, run :
+To build your webapp for production, run:
 ```sh
 $ npm grunt
 ```

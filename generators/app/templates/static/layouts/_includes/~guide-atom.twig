@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js">
     <head>
-        <!-- @include app-head.html -->
+        {% include '_app-head.twig' %}
 
         <style>
             .c-addon-group {
@@ -11,7 +11,7 @@
 
             .icon.i-puzzle {
                 display: inline-block;
-                background: url(../src/img/atom/zzz/puzzle-20x22.png) no-repeat;
+                background: url('/src/img/zzz/atom/puzzle-20x22.png') no-repeat;
                 background-size: 20px 22px;
             }
 
@@ -28,8 +28,8 @@
         </style>
     </head>
 
-    <body>
-        <!-- @include app-banner.html -->
+    <body class="container-fluid">
+        {% include '_app-banner.twig' %}
 
         <div class="o-wrap">
             <h1>Atom Guide</h1>
@@ -46,7 +46,7 @@
 
             <h4>Addons based on BS form controls</h4>
             <div class="c-addon-group c-addon-right">
-                <img src="/src/img/atom/zzz/puzzle-20x22.png" alt="" class="c-addon" role="presentation">
+                <img src="/src/img/zzz/atom/puzzle-20x22.png" alt="" class="c-addon" role="presentation">
                 <input class="form-control"></input>
             </div>
             <hr>
@@ -152,8 +152,8 @@
             </ul>
         </div>
 
-        <!-- @include app-footer.html -->
+        {% include '_app-footer.twig' %}
 
-        <!-- @include app-js.html -->
+        {% include '_app-js.twig' %}
     </body>
 </html>
