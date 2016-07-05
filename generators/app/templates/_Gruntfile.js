@@ -195,7 +195,7 @@ module.exports = function (grunt) {
         twigRender: {
             html: {
                 files : [{
-                    data: '<%= baseDir %>/layouts/_includes/datafile.yml',
+                    data: '<%= baseDir %>/layouts/_includes/__datafile.yml',
                     expand: true,
                     cwd: '<%= baseDir %>/layouts/_includes/',
                     src: ['*.twig', '!_*.twig'],
