@@ -1,14 +1,21 @@
 // global module:false
 
-// var path = require('path');
-
 var jsList = [
-    '<%= sourceDir %>/js/vendor/jquery-1.11.3.min.js',
-    '<%= sourceDir %>/js/ui.js',
-    '<%= sourceDir %>/js/app.js'
+    // '<%= sourceDir %>/js/vendor/jquery-1.11.3.min.js',
+    // '<%= sourceDir %>/js/app.js',
+    // '<%= sourceDir %>/js/carousel.js'
 ];
 
 var uncssIgnoreClass = [
+    //* Bootstrap
+    /^.active/,
+    /^.open/,
+    /^.modal/,
+    /^.in/,
+    /^.fade/,
+    //* Vendor
+    /^.slick/, //* Carousel
+    //* App
     /^.o-/,
     /^.u-/,
     /^.c-/,
@@ -17,13 +24,7 @@ var uncssIgnoreClass = [
     /^.is-/,
     /^.has-/,
     /^.js-/,
-    /^.i-/,
-    /^.active/, /*bootstrap*/
-    /^.open/,
-    /^.modal/,
-    /^.in/,
-    /^.fade/,
-    /^.slick/, /*slick*/
+    /^.i-/
 ];
 
 module.exports = function (grunt) {
@@ -54,14 +55,16 @@ module.exports = function (grunt) {
                 tasks: ['twigRender', 'prettify']
             },
 
-            jshint: {
-                files: ['<%= sourceDir %>/js/ui.js'],
-                tasks: ['jshint:all']
-            },
-
-            jscs: {
-                files: ['<%= sourceDir %>/js/*.js'],
-                tasks: ['jscs:src']
+            js: {
+                files: [
+                    '<%= sourceDir %>/js/**/*.js',
+                    '!<%= sourceDir %>/js/vendor/**/*',
+                    '!<%= sourceDir %>/js/atom/**/*'
+                ],
+                tasks: [
+                    'jshint:src',
+                    'jscs:src'
+                ]
             },
 
             sprite: {
@@ -71,7 +74,11 @@ module.exports = function (grunt) {
         },
 
         jshint: {
-            all: ['<%= sourceDir %>/js/ui.js'],
+            src: [
+                '<%= sourceDir %>/js/**/*.js',
+                '!<%= sourceDir %>/js/vendor/**/*',
+                '!<%= sourceDir %>/js/atom/**/*'
+            ],
 
             options: {
                 jshintrc: '.jshintrc',
@@ -79,7 +86,11 @@ module.exports = function (grunt) {
         },
 
         jscs: {
-            src: '<%= sourceDir %>/js/*.js',
+            src: [
+                '<%= sourceDir %>/js/**/*.js',
+                '!<%= sourceDir %>/js/vendor/**/*',
+                '!<%= sourceDir %>/js/atom/**/*'
+            ],
 
             options: {
                 config: '.jscsrc'
@@ -96,10 +107,10 @@ module.exports = function (grunt) {
                 cssFormat: 'css_retina',
                 padding: 1,
                 cssTemplate: function (data) {
-                    var classMediaRespond = '.icon';
+                    var classMediaRespond = '.i-icon';
                     var classNamespace = '.i-';
 
-                    var result = 
+                    var result =
                         classMediaRespond + ' {\n\tbackground-image: url(' + data.spritesheet.image + ');\n}' +
                         '\n\n@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {' +
                         '\n\t' + classMediaRespond + ' {' +
@@ -107,7 +118,7 @@ module.exports = function (grunt) {
                         '\n\t\tbackground-size: ' + data.spritesheet.px.width + ' ' + data.spritesheet.px.height + ';\n\t}\n}';
 
                     for (var i = 0; i < data.items.length; i++) {
-                        result += 
+                        result +=
                             '\n\n@' + data.items[i].name + '-bg-position: ' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
                             '\n@' + data.items[i].name + '-width: ' + data.items[i].width + 'px;' +
                             '\n@' + data.items[i].name + '-height: ' + data.items[i].height + 'px;' +
@@ -172,7 +183,7 @@ module.exports = function (grunt) {
 
         autoprefixer: {
             options: {
-                browsers: ['last 3 versions', 'ie 9']
+                browsers: ['last 3 versions']
             },
 
             sourcemap: {
@@ -198,8 +209,8 @@ module.exports = function (grunt) {
                     data: '<%= baseDir %>/layouts/_includes/__datafile.yml',
                     expand: true,
                     cwd: '<%= baseDir %>/layouts/_includes/',
-                    src: ['*.twig', '!_*.twig'],
-                    dest: '<%= baseDir %>/layouts/',
+                    src: ['*.twig'],
+                    dest: '<%= baseDir %>/layouts/render/',
                     ext: '.html'
                 }]
             }
@@ -207,8 +218,9 @@ module.exports = function (grunt) {
 
         prettify: {
             options: {
-                "indent": 4,
+                'indent': 4
             },
+
             all: {
                 expand: true,
                 cwd: '<%= baseDir %>/layouts/',
@@ -387,7 +399,12 @@ module.exports = function (grunt) {
                 options: {
                     mode: '644'
                 },
-                src: ['**/*', '!node_modules/**/*', '!artisan'],
+                src: [
+                    '**/*',
+                    '!node_modules/**/*',
+                    '!artisan',
+                    '!*.json' //* g.sus: for some reason `chmod:staticFiles` return error (Mac OSX)
+                ],
                 filter: 'isFile'
             }
         },
@@ -398,9 +415,10 @@ module.exports = function (grunt) {
                     src : [
                         '<%= sourceDir %>/css/*.css',
                         '<%= sourceDir %>/js/*.js',
-                        '<%= baseDir %>/layouts/*.html'
+                        '<%= baseDir %>/layouts/render/*.html'
                     ]
                 },
+
                 options: {
                     watchTask: true,
                     server: {
@@ -412,7 +430,7 @@ module.exports = function (grunt) {
         }
     });
 
-    // Register tasks
+    //* Register tasks
     grunt.registerTask('default', [
         'browserSync',
         'watch'

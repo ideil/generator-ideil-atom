@@ -1,0 +1,149 @@
+{% extends '_templates/base.twig' %}
+
+{% block content %}
+    <style>
+        .c-addon-group {
+            max-width: 100%;
+            width: 300px;
+        }
+
+        .i-icon.i-puzzle {
+            display: inline-block;
+            background: url('/src/img/zzz/atom/puzzle-20x22.png') no-repeat;
+            background-size: 20px 22px;
+        }
+
+        .i-puzzle {
+            width: 20px;
+            height: 22px;
+            background-position: 0 0;
+        }
+
+        .is-loading {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+
+    <div class="o-box">
+        <h1>Atom Guide</h1>
+
+
+        <h2>Close icon CSS</h2>
+
+        <span class="c-close" role="presentation"></span>
+        <a href="#" class="c-close" aria-title="Close"></a>
+        <hr>
+
+
+        <h2>Addons</h2>
+
+        <h4>Addons based on BS form controls</h4>
+        <div class="c-addon-group c-addon-right">
+            <img src="/src/img/zzz/atom/puzzle-20x22.png" alt="" class="c-addon" role="presentation">
+            <input class="form-control"></input>
+        </div>
+        <hr>
+
+
+        <h2>Links</h2>
+        <h3>Standart links</h3>
+
+        <h4>Default (CMS content) link</h4>
+        <a href="#">Default</a>
+
+        <h4>Text link</h4>
+        <p>Looks like underlined (w/ `border-bottom`) text.</p>
+        <a href="#" class="c-link-text">Text</a>
+
+        <h4>Link with JavaScrip action</h4>
+        <a href="#" class="has-action">Action</a>
+
+        <h3>Titled links w/ title inside</h3>
+        <h4>Default titled link</h4>
+        <a href="#" class="has-title">
+            <span class="icon i-puzzle" role="presentation"></span>
+            <span class="c-link-title">Default (w/ title)</span>
+        </a>
+
+        <h4>Text titled link</h4>
+        <a href="#" class="c-link-text has-title">
+            <span class="icon i-puzzle" role="presentation"></span>
+            <span class="c-link-title">Text (w/ title)</span>
+        </a>
+
+        <h4>Titled link with JavaScrip action</h4>
+        <a href="#" class="has-action has-title">
+            <span class="icon i-puzzle" role="presentation"></span>
+            <span class="c-link-title">Action (w/ title)</span>
+        </a>
+        <hr>
+
+
+        <h2>Forms</h2>
+
+        <h4>Custom checbox</h4>
+        <form action="">
+            <label class="c-checkbox">
+                <input type="checkbox">
+                <span class="c-control-indicator"></span>
+                Custom checkbox
+            </label>
+
+            <label class="c-checkbox">
+                <input type="checkbox" checked>
+                <span class="c-control-indicator"></span>
+                Checked custom checkbox
+            </label>
+        </form>
+
+        <h4>Custom radio</h4>
+
+        <form action="">
+            <label class="c-radio">
+                <input type="radio" name="radio" value="" checked> Radio 1
+                <span class="c-control-indicator" role="presentation"></span>
+            </label>
+
+            <label class="c-radio">
+                <input type="radio" name="radio" value=""> Radio 2
+                <span class="c-control-indicator" role="presentation"></span>
+            </label>
+        </form>
+
+        <h4>Custom file upload</h4>
+        <form action="">
+            <div class="form-group">
+                <label for="fileUpload">Add file</label>
+
+                <div class="c-file">
+                    <input type="file" id="fileUpload" class="js-file" accept="" value="">
+                    <span class="btn btn-default btn-sm">Upload file</span>
+                    <span class="c-file-name js-file-name">file is not selected…</span>
+                </div>
+            </div>
+        </form>
+        <hr>
+
+        <h2>RUB symbol (₽)</h2>
+        <span class="c-rub" aria-label="рубль"></span>
+        <hr>
+
+        <h2>Required label</h2>
+        <lable class="is-required">Required control's lalbe</lable>
+        <hr>
+
+        <h2>Loading</h2>
+            <div class="is-loading">
+                <span class="c-loader" role="presentation"></span>
+            </div>
+        <hr>
+
+        <h2>Slick</h2>
+        <ul class="c-carousel js-carousel">
+            <li class="c-slide">First slide…</li>
+            <li class="c-slide">…some slide…</li>
+            <li class="c-slide">…last slide</li>
+        </ul>
+    </div>
+{% endblock %}

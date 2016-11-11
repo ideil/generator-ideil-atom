@@ -7,44 +7,29 @@
 //
 //* Gray and brand colors for use across Bootstrap.
 
-@text-color-light:      (#fff - @text-color);
-
-
-//## Scaffolding
-//
-//* Settings for some of the most global styles.
-
-//** User accessibility
-@tappable-size:         44px;
-@link-indent-inline:    4px;
-
-//** Global/default transition-duration for links, buttons, controls etc.
-@transition-base:       .3s;
-
-
-//## Typography
-//
-//*
-
-@line-height-compudet-sm:       floor(@line-height-computed / 2);
-@line-height-compudet-lg:       (@line-height-computed + @line-height-compudet-sm);
+@text-color-light:      @body-bg;
 
 
 //## Grid
 //
 //*
 
-@grid-gutter-width-sm:      floor(@grid-gutter-width / 2);
-@grid-gutter-width-lg:      (@grid-gutter-width + @grid-gutter-width-sm);
+@layout-padding-x:      @gutter;
+
+@content-max-width:     @screen-lg;
 
 
-//## Helpers
+//## Banner
 //
 //*
 
-//** Components dimensions
-// @banner-height:              auto; // reserved
-// @app-footer-height:          auto; // reserved
-//** Media queries breakpoints
-// @screen-sticky-banner:       0px; // reserved
-// @screen-sticky-footer:       0px; // reserved
+// @banner-height:         auto;           // reserved
+// @screen-sticky-banner:  @screen-md-min; // reserved
+
+
+//## Footer
+//
+//*
+
+// @app-footer-height:         auto;           // reserved
+// @screen-sticky-footer:      @screen-md-min; // reserved

@@ -2,24 +2,16 @@
 //
 //*
 
-
-//# Global
-//
-//* Base classes
-
 body {
-    max-width: 1920px;
+    max-width: @layout-max-width;
     margin-left: auto;
     margin-right: auto;
 }
 
-// .o-wrap {}
+.o-box {
+    &:extend(.center-block);
 
-
-//## Media
-//
-//*
-
-// @media screen and (max-width: @screen-sm-max) {}
-
-// @media screen and (min-width: @screen-md-min) {}
+    max-width: @content-max-width;
+    padding-left: @layout-padding-x;
+    padding-right: @layout-padding-x;
+}

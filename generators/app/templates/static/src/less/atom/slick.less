@@ -3,10 +3,17 @@
 //* Customize styles of slick carousel: http://kenwheeler.github.io/slick/
 
 
-//## Carousel wrapper custom
+//## Carousel box
 //
-//* Wrap carousel to use custom styles
-//* TODO: this section
+//*
+
+.c-carousel-box {
+    overflow: hidden;
+
+    .slick-list {
+        overflow: visible;
+    }
+}
 
 
 //## Carousel wrapper generated
@@ -14,13 +21,27 @@
 //*
 
 .c-carousel {
-    .list-unstyled();
-    position: relative;
-    margin-bottom: @line-height-computed;
+    &:extend(.list-unstyled);
 
-    &:not(.slick-initialized) > *:first-child ~ * {
-        display: none;
+    position: relative;
+    margin-bottom: @spacer;
+
+    &:not(.slick-initialized) {
+        .c-slide ~ .c-slide,
+        .c-btn-prev,
+        .c-btn-next {
+            display: none;
+        }
     }
+}
+
+
+//## Carousel slide
+//
+//*
+
+.c-slide {
+    outline: none !important;
 }
 
 
@@ -47,9 +68,8 @@
         opacity: 1;
     }
 
-    > .icon {
+    > .i-icon {
         vertical-align: middle;
-        .i-arrow-ltr();
     }
 
     .c-carousel:not(.slick-initialized) & {
@@ -60,7 +80,7 @@
 .c-btn-prev {
     left: @btn-arrow-prev-position-left;
 
-    > .icon {
+    > .i-icon {
         transform: rotate(180deg);
     }
 }
@@ -82,6 +102,7 @@
     }
 }
 
+//* Disabled slick button (next/prev) class
 .slick-disabled { // TODO: work around
     display: none !important;
 }
@@ -92,9 +113,10 @@
 //* Pagination
 
 .slick-dots {
-    .list-unstyled();
-    text-align: center;
+    &:extend(.list-unstyled);
+
     height: @nav-dots-wrap-height;
+    text-align: center;
     line-height: @nav-dots-wrap-height;
 
     > li {
@@ -103,17 +125,17 @@
         vertical-align: middle;
 
         + li {
-            margin-left: @grid-gutter-width-sm;
+            margin-left: @gutter-sm;
         }
 
         > button {
+            .square(@nav-dot-size);
+
             color: transparent;
             text-shadow: none;
             padding: 0;
             background-color: @nav-dot-bg;
-            .square(@nav-dot-size);
             border-radius: @nav-dot-radius;
-
         }
 
         &.slick-active > button {

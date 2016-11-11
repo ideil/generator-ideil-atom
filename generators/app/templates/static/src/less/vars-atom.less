@@ -7,10 +7,59 @@
 //
 //* Settings for some of the most global styles.
 
+//** User accessibility
+@tappable-size:         44px;
+
+//* approximate width for `font-size: 14px`;
+@space-width:           3.23px;
+
+//** Global/default transition-duration for links, buttons, controls etc.
+@transition-base:       .3s;
+
+
+//## Typography
+//
+//*
+
+@spacer:        @line-height-computed;
+@spacer-xs:     floor(@spacer / 3);
+@spacer-sm:     floor(@spacer / 2);
+@spacer-md:     (@spacer-sm * 3);
+@spacer-lg:     (@spacer-sm * 4);
+
+
+//## Grid
+//
+//*
+
+@gutter:        @grid-gutter-width;
+@gutter-xs:     floor(@gutter / 3);
+@gutter-sm:     floor(@gutter / 2);
+@gutter-md:     (@gutter-sm * 3);
+@gutter-lg:     (@gutter-sm * 4);
+
+@layout-min-width:      320px;
+@layout-max-width:      1920px;
+
+
+//## Definition Lists
+//
+//*
+
+//### Dl horizontal sizing
+// BS by default: `@component-offset-horizontal:  180px;`
+@dl-sm-dt-width:        floor(@component-offset-horizontal * 2/3); // 120px
+@dl-lg-dt-width:        ceil(@component-offset-horizontal * 4/3); // 240px
+
+
+//## Links
+//
+//*
+
 //** Link border width
-@link-border-width:         1px;
+@link-border-width:             1px;
 //** Link border color
-@link-border-color:         fade(@brand-primary, 50%);
+@link-border-color:             fade(@brand-primary, 50%);
 //** Link hover border color
 @link-hover-border-color:       @link-hover-color;
 //** Text link border-color
@@ -18,7 +67,10 @@
 //** Link with action border style
 @link-action-style:             dotted;
 //** Top shift of icon inside link w/ title
-@link-icon-shift:           -7px;
+@link-icon-shift:               -7px;
+
+@link-hover-border-color:      @link-hover-color;
+@link-border-color:            fade(@brand-primary, 50%);
 
 
 //## Close
@@ -38,42 +90,24 @@
 //*
 
 @addon-width:      20px;
-@addon-indent:     5px; // addon indent on both sides (left, right)
+@addon-indent:     @padding-base-vertical; // addon indent on both sides (left, right)
 @addon-opacity:    .3;
-
-
-//## Type
-//
-//*
-
-//### Dl horizontal sizing
-// BS by default: `@component-offset-horizontal:  180px;`
-@dl-sm-dt-width:        floor(@component-offset-horizontal * 2/3); // 120px
-@dl-lg-dt-width:        ceil(@component-offset-horizontal * 4/3); // 240px
-
-//### Links
-@link-hover-border-color:      @link-hover-color;
-@link-border-color:            fade(@brand-primary, 50%);
 
 
 //## Forms
 //
 //*
 
-
-//### Base
-
-@control-border-width:     1px; // default border-width for bootstrap controls and buttons
-@control-text-indent:      (10px - @link-indent-inline);
-
+//* Default border-width for bootstrap controls and buttons
+@control-border-width:     1px;
+@control-text-indent:      (10px - ceil(@space-width));
 
 //### Required state (label)
 
 @required-mark:                 '*';
 @required-mark-color:           @brand-danger;
-@required-mark-indent:          (10px - @link-indent-inline);
+@required-mark-indent:          (10px - ceil(@space-width));
 @required-mark-position:        right; // available: right, left
-
 
 //### Checkboxes & Radios (customize)
 
@@ -81,38 +115,35 @@
 @control-indicator-border-width:   @control-border-width;
 @control-border-color:             @input-border;
 
-
 //### Checkboxes
 
-@checkbox-size:           22px;
-@checkbox-radius:         4px;
+@checkbox-size:         22px;
+@checkbox-radius:       4px;
 // CSS checkmark (✔) options
-@check-color:            @brand-primary;
+@check-color:           @brand-primary;
 // CSS checkmark appearance
-@check-width:              1px; // weigh of checkmark
-@check-length-short:       10px;
-@check-length-long:        24px;
+@check-width:           1px; // weigh of checkmark
+@check-length-short:    10px;
+@check-length-long:     24px;
 // Outline of checkmark
 // IMPORTANT: 1. Color of outline and background color of ballot box are the same.
 //            2. If checkmark crosses ballot box then the background color of parent element must match the outline color (ballot background color).
 //            3. If background color of ballot box and color of the checkmark outline (ballot box background) is different, you have to fit checkmark in the ballot box.
-@check-space:              0;
+@check-space:               0;
 // Checkmark positionig
-@check-shift-bottom:       2px; // can't be a negative value
-@check-shift-horizontal:   0;
+@check-shift-bottom:        2px; // can't be a negative value
+@check-shift-horizontal:    0;
 
+//### Radios
 
-//## Radios
+@radio-size:                @checkbox-size;
+@radio-indicator-space:     2px;
+@radio-indicator-color:     @check-color;
 
-@radio-size:                 @checkbox-size;
-@radio-indicator-space:      2px;
-@radio-indicator-color:      @check-color;
+//### Files (upload)
 
-
-//## Files (upload)
-
-@file-focus-space:     3px;
-@file-name-color:      @text-color;
+@file-focus-space:      3px;
+@file-name-color:       @text-color;
 
 
 //## Russian ruble symbol (₽)
@@ -155,7 +186,6 @@
 //
 //*
 
-
 //### arrows
 
 @arrows-fullscreen:                false;
@@ -165,7 +195,6 @@
 @btn-arrow-position-top:           50%;
 @btn-arrow-prev-position-left:     0;
 @btn-arrow-next-position-right:    0;
-
 
 //### dots
 

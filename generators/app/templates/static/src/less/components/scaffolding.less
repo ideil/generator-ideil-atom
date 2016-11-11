@@ -3,14 +3,26 @@
 //* Reset
 
 
-//## Controls and links
+//## Trsnsitions
 //
 //*
 
 button,
+.btn,
 a {
     transition: @transition-base;
+    // outline: none !important;
 }
+
+
+//## Text
+//
+//*
+
+//** text selection
+// ::selection {
+//     background-color: lighten(@brand-primary, 50%);
+// }
 
 
 //## Forms
@@ -20,12 +32,3 @@ a {
 textarea {
     resize: vertical;
 }
-
-
-//## Media
-//
-//*
-
-// @media screen and (max-width: @screen-sm-max) {}
-
-// @media screen and (min-width: @screen-md-min) {}

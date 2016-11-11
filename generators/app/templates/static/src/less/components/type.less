@@ -3,10 +3,62 @@
 //*
 
 
-//## Media
+//## Headings
 //
 //*
 
-// @media screen and (max-width: @screen-sm-max) {}
+// h1, .h1,
+// h2, .h2,
+// h3, .h3 {
+//     margin-top: @spacer-lg;
+//     margin-bottom: @spacer;
+// }
 
-// @media screen and (min-width: @screen-md-min) {}
+
+//## Text
+//
+//*
+
+// p {
+//     margin-bottom: @spacer;
+// }
+
+
+//## Lists
+//
+//*
+
+//### Unordered and Ordered lists
+
+// ul,
+// ol {
+//     margin-bottom: @spacer;
+// }
+
+//### Determination list
+
+// dl {
+//     margin-bottom: @spacer;
+// }
+
+
+//## Forms
+//
+//*
+
+textarea {
+    resize: vertical;
+}
+
+
+//## Misc
+//
+//*
+
+abbr[title] {
+    border-bottom: 0;
+
+    a & {
+        cursor: inherit;
+    }
+}

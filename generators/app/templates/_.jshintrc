@@ -5,6 +5,7 @@
      * ENVIRONMENTS
      * =================
      */
+
     // Define globals exposed by modern browsers.
     "browser": true,
 
