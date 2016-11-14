@@ -1,5 +1,12 @@
 {% extends '_templates/base.twig' %}
 
+{% set pageId = '00-home' %}
+{% set title = '00 Home' %}
+
 {% block content %}
     <h1>Page heading</h1>
+
+    <a href="{% include '_path' with { pageId: '00-home' } %}">Link Home</a>
+
+    {% include '_parts/modal-btn.twig' with { text: 'Launch Demo Modal'} %}
 {% endblock %}

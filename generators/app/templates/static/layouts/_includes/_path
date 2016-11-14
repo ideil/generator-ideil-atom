@@ -1,0 +1,7 @@
+{% spaceless %}
+    {% for link in pages %}
+        {% if link.id == pageId %}
+            {{ link.href }}
+        {% endif %}
+    {% endfor %}
+{% endspaceless %}

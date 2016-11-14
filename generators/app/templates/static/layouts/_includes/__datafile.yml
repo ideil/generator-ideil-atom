@@ -1,1 +1,7 @@
-title: Site Title
+metaTitle: Website Name
+
+pages:
+  - id:       00-home
+    isNav:    true
+    href:     00-home.html
+    navTitle: Home
