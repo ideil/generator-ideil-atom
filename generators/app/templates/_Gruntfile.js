@@ -171,12 +171,12 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     ignore: uncssIgnoreClass,
-                    csspath: '../../',
+                    csspath: '../../../',
                     stylesheets: ['<%= publicDir %>/css/app.min.css']
                 },
 
                 files: {
-                    '<%= publicDir %>/css/app.min.css': ['<%= baseDir %>/layouts/*.html']
+                    '<%= publicDir %>/css/app.min.css': ['<%= baseDir %>/layouts/render/*.html']
                 }
             }
         },
