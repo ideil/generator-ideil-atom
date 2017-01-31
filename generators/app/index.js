@@ -23,7 +23,13 @@ module.exports = yeoman.generators.Base.extend({
             {
                 type: 'confirm',
                 name: 'slick',
-                message: 'Do you need slider?',
+                message: 'Do you need carousel?',
+                default: true
+            },
+            {
+                type: 'confirm',
+                name: 'photoswipe',
+                message: 'Do you need gallery?',
                 default: true
             },
             {
@@ -38,6 +44,7 @@ module.exports = yeoman.generators.Base.extend({
             this.projectName = answers.projectName;
             // To access props later use this.props.someOption;
             this.slick = answers.slick;
+            this.photoswipe = answers.photoswipe;
             this.underscore = answers.underscore;
 
             done();
@@ -91,9 +98,9 @@ module.exports = yeoman.generators.Base.extend({
             );
 
             this.fs.copyTpl(
-                    this.templatePath('_package.json'),
-                    this.destinationPath('package.json'),
-                    { project: _s.slugify(this.projectName) }  // Put this.name in the title attribute
+                this.templatePath('_package.json'),
+                this.destinationPath('package.json'),
+                { project: _s.slugify(this.projectName) }  // Put this.name in the title attribute
             );
 
             this.fs.copy(
@@ -115,10 +122,14 @@ module.exports = yeoman.generators.Base.extend({
         },
 
         bower: function () {
-            this.bowerInstall(['components-bootstrap', 'git://github.com/h5bp/html5-boilerplate.git']);
+            this.bowerInstall(['bootstrap', 'jquery#1.12.4']);
 
             if (this.slick) {
                 this.bowerInstall(['slick-carousel']);
+            }
+
+            if (this.photoswipe) {
+                this.bowerInstall(['https://github.com/dimsemenov/PhotoSwipe.git']);
             }
 
             if (this.underscore) {
@@ -130,10 +141,14 @@ module.exports = yeoman.generators.Base.extend({
 
     end: {
         task: function () {
-            this.spawnCommand('grunt', ['bower', 'replace', 'concat', 'modernizr']);
+            this.spawnCommand('grunt', ['bower', 'replace:bootstrap', 'concat', 'modernizr']);
 
             if (this.slick) {
                 this.spawnCommand('grunt', ['slick']);
+            }
+
+            if (this.photoswipe) {
+                this.spawnCommand('grunt', ['photoswipe']);
             }
 
             if (this.underscore) {

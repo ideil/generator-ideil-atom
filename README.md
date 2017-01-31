@@ -11,6 +11,7 @@
 - Removing unused CSS with [UnCSS](https://github.com/giakki/uncss)
 - Automagically create sprite sheets
 - [Slick](https://github.com/kenwheeler/slick/) carousel (Optional)
+- [PhotoSwipe](http://photoswipe.com/) gallery (Optional)
 - [Underscore.js](http://underscorejs.org/) (Optional)
 
 For more information on what generator-ideil-atom can do for you, take a look at the [Grunt tasks](https://github.com/ideil/generator-ideil-atom/blob/master/generators/app/templates/_package.json) used in our `package.json`.
