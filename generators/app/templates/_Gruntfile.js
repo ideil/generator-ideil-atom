@@ -421,6 +421,7 @@ module.exports = function (grunt) {
 
                 options: {
                     watchTask: true,
+                    ghostMode: false,
                     server: {
                         baseDir: '<%= baseDir %>',
                         directory: true

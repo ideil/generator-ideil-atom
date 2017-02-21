@@ -16,6 +16,13 @@ module.exports = function (grunt) {
                 expand: true
             },
 
+            jsBootstrapFull: {
+                cwd: 'bower_components/bootstrap/dist/js/',
+                src: 'bootstrap*.js',
+                dest: '<%= sourceDir %>/js/vendor/bootstrap/',
+                expand: true
+            },
+
             jsBoilerplate: {
                 cwd: 'bower_components/jquery/dist/',
                 src: 'jquery.min.js',
@@ -148,6 +155,7 @@ module.exports = function (grunt) {
     // Register tasks
     grunt.registerTask('bower', [
         'copy:jsBootstrap',
+        'copy:jsBootstrapFull',
         'copy:jsBoilerplate',
         'copy:lessBootstrap',
         'copy:variablesBootstrap'
