@@ -42,7 +42,8 @@ module.exports = function (grunt) {
 
         watch: {
             options: {
-                livereload: true
+                livereload: true,
+                spawn: false
             },
 
             less: {
@@ -223,10 +224,10 @@ module.exports = function (grunt) {
 
             all: {
                 expand: true,
-                cwd: '<%= baseDir %>/layouts/',
+                cwd: '<%= baseDir %>/layouts/render/',
                 ext: '.html',
                 src: ['*.html'],
-                dest: '<%= baseDir %>/layouts/'
+                dest: '<%= baseDir %>/layouts/render/'
             }
         },
 
