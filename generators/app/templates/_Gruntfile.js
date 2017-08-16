@@ -53,7 +53,7 @@ module.exports = function (grunt) {
 
             twig: {
                 files: ['<%= baseDir %>/layouts/_includes/**/*'],
-                tasks: ['twigRender', 'prettify']
+                tasks: ['twigRender']
             },
 
             js: {
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
             ],
 
             options: {
-                jshintrc: '.jshintrc',
+                jshintrc: '.jshintrc'
             }
         },
 
@@ -445,6 +445,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('build', [
+        'prettify',
         'clean',
         'uglify', // minify js
         'less:production', // minify css
