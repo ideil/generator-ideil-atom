@@ -189,16 +189,16 @@ module.exports = yeoman.generators.Base.extend({
             }
         },
 
-        // project: function () {
-        //     process.chdir('..');
-        //
-        //     this.installDependencies({
-        //         bower: false
-        //     });
-        // },
-        //
-        // clean: function () {
-        //     fs.remove('install');
-        // }
+        project: function () {
+            process.chdir('..');
+
+            this.installDependencies({
+                bower: false
+            });
+        },
+
+        clean: function () {
+            fs.remove('install');
+        }
     }
 });
