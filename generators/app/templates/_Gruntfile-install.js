@@ -34,7 +34,7 @@ module.exports = function (grunt) {
                 cwd: 'bower_components/bootstrap/less/',
                 src: '**',
                 dest: '<%= sourceDir %>/less/vendor/bootstrap/',
-                expand: true,
+                expand: true
             },
 
             variablesBootstrap: {
@@ -94,6 +94,13 @@ module.exports = function (grunt) {
                 src: '*min.js',
                 dest: '<%= sourceDir %>/js/vendor/',
                 expand: true
+            },
+
+            lodash: {
+                cwd: 'bower_components/lodash/dist/',
+                src: 'lodash.min.js',
+                dest: '<%= sourceDir %>/js/vendor/',
+                expand: true
             }
         },
 
@@ -123,9 +130,9 @@ module.exports = function (grunt) {
 
         concat: {
             dist: {
-                    src: ['<%= sourceDir %>/less/vendor/bootstrap/bootstrap.less', '<%= sourceDir %>/less/app.less'],
-                    dest: '<%= sourceDir %>/less/app.less',
-                },
+                src: ['<%= sourceDir %>/less/vendor/bootstrap/bootstrap.less', '<%= sourceDir %>/less/app.less'],
+                dest: '<%= sourceDir %>/less/app.less'
+            }
         },
 
         modernizr: {
@@ -175,5 +182,9 @@ module.exports = function (grunt) {
 
     grunt.registerTask('underscore', [
         'copy:underscore'
+    ]);
+
+    grunt.registerTask('lodash', [
+        'copy:lodash'
     ]);
 };

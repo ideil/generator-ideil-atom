@@ -1,7 +1,6 @@
-metaTitle: Website Name
+brandName: 'Website Name'
 
 pages:
-  - id:       00-home
-    isNav:    true
-    href:     00-home.html
-    navTitle: Home
+  - id:       '00'
+    href:     '00-home.html'
+    title:    'Home'

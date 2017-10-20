@@ -16,4 +16,6 @@ var App = {
 //
 //*
 
-App.transition = 300;
+App.transition = {
+    base: 300
+};

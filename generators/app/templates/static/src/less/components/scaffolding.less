@@ -3,14 +3,22 @@
 //* Reset
 
 
-//## Trsnsitions
+body {
+    fill: @text-color;
+}
+
+//## Transitions
 //
 //*
 
 button,
 .btn,
 a {
-    transition: @transition-base;
+    transition:
+        color @transition-base,
+        background @transition-base,
+        border-color @transition-base,
+        fill @transition-base;
     // outline: none !important;
 }
 

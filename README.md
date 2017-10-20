@@ -3,16 +3,19 @@
 
 ## Features
 - [Twig](http://twig.sensiolabs.org/), the flexible, fast, and secure template engine
-- [Bootstrap](http://getbootstrap.com/) in LESS, [Modernizr](https://modernizr.com/)
+- [JQuery](https://jquery.com/) 
+- [Bootstrap](http://getbootstrap.com/) in LESS
+- [Modernizr](https://modernizr.com/)
 - [Browsersync](https://www.browsersync.io/)
 - Built-in preview server with [LiveReload](http://livereload.com/)
-- CSS [Autoprefixing](https://github.com/postcss/autoprefixer/) 
+- CSS [Autoprefixing](https://github.com/postcss/autoprefixer/)
 - Automagically compile [LESS](http://lesscss.org/)
 - Removing unused CSS with [UnCSS](https://github.com/giakki/uncss)
 - Automagically create sprite sheets
 - [Slick](https://github.com/kenwheeler/slick/) carousel (Optional)
 - [PhotoSwipe](http://photoswipe.com/) gallery (Optional)
 - [Underscore.js](http://underscorejs.org/) (Optional)
+- [Lodash](https://lodash.com/) (Optional)
 
 For more information on what generator-ideil-atom can do for you, take a look at the [Grunt tasks](https://github.com/ideil/generator-ideil-atom/blob/master/generators/app/templates/_package.json) used in our `package.json`.
 

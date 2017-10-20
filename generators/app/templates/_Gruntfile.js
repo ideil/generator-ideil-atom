@@ -1,31 +1,33 @@
 // global module:false
 
 var jsList = [
-    // '<%= sourceDir %>/js/vendor/jquery-1.11.3.min.js',
-    // '<%= sourceDir %>/js/app.js',
-    // '<%= sourceDir %>/js/carousel.js'
-];
-
-var uncssIgnoreClass = [
-    //* Bootstrap
-    /^.active/,
-    /^.open/,
-    /^.modal/,
-    /^.in/,
-    /^.fade/,
-    //* Vendor
-    /^.slick/, //* Carousel
-    //* App
-    /^.o-/,
-    /^.u-/,
-    /^.c-/,
-    /^.t-/,
-    /^.s-/,
-    /^.is-/,
-    /^.has-/,
-    /^.js-/,
-    /^.i-/
-];
+        // '<%= sourceDir %>/js/vendor/jquery-1.11.3.min.js',
+        // '<%= sourceDir %>/js/app.js',
+        // '<%= sourceDir %>/js/carousel.js'
+    ],
+    uncssIgnoreClass = [
+        /^textarea/,
+        //* Bootstrap
+        /^.active/,
+        /^.open/,
+        /^.modal/,
+        /^.in/,
+        /^.fade/,
+        //* App
+        /^.o-/,
+        /^.u-/,
+        /^.c-/,
+        /^.t-/,
+        /^.s-/,
+        /^.is-/,
+        /^.has-/,
+        /^.i-/,
+        //* Plugins
+        /^.slick/,      // slick
+        /^.lg/,         // light gallery
+        /^.clndr/,      // clndr
+        /^.table-clndr/
+    ];
 
 module.exports = function (grunt) {
     'use strict';
@@ -318,56 +320,6 @@ module.exports = function (grunt) {
             }
         },
 
-        compress: {
-            js: {
-                options: {
-                    mode: 'gzip',
-                    pretty: true,
-                    level: 9
-                },
-
-                files: [
-                    // Each of the files in the pub/ folder will be output to
-                    // the pub/ folder with the extension .gz
-                    {
-                        expand: true,
-                        src: ['<%= publicDir %>/js/*.js'],
-                        rename: function (dest, src) {
-                            return src + '.gz';
-                        }
-                    },
-
-                    {
-                        expand: true,
-                        src: ['<%= sourceDir %>/js/vendor/modernizr-*.js'],
-                        rename: function (dest, src) {
-                            return src + '.gz';
-                        }
-                    }
-                ]
-            },
-
-            css: {
-                options: {
-                    mode: 'gzip',
-                    pretty: true,
-                    level: 9
-                },
-
-                files: [
-                    // Each of the files in the pub/ folder will be output to
-                    // the pub/ folder with the extension .gz
-                    {
-                        expand: true,
-                        src: ['<%= publicDir %>/css/*.css'],
-                        rename: function (dest, src) {
-                            return src + '.gz';
-                        }
-                    }
-                ]
-            }
-        },
-
         modernizr: {
             dist: {
                 'crawl': false,
@@ -457,13 +409,5 @@ module.exports = function (grunt) {
         'filerev:js', 'filerev:css', 'filerev_assets',
         'usemin:css',
         'copy:font'
-    ]);
-
-    grunt.registerTask('gzip-css', [
-        'compress:css'
-    ]);
-
-    grunt.registerTask('gzip-js', [
-        'compress:js'
     ]);
 };

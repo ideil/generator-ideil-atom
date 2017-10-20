@@ -33,10 +33,23 @@ module.exports = yeoman.generators.Base.extend({
                 default: true
             },
             {
-                type: 'confirm',
-                name: 'underscore',
-                message: 'Do you need underscore.js?',
-                default: true
+                type: 'list',
+                name: 'library',
+                message: 'Do you need JavaScript library?',
+                choices: [
+                    {
+                        name: 'No',
+                        value: 0
+                    },
+                    {
+                        name: 'Lodash',
+                        value: 1
+                    },
+                    {
+                        name: 'Underscore.js',
+                        value: 2
+                    }
+                ]
             }
         ];
 
@@ -45,8 +58,7 @@ module.exports = yeoman.generators.Base.extend({
             // To access props later use this.props.someOption;
             this.slick = answers.slick;
             this.photoswipe = answers.photoswipe;
-            this.underscore = answers.underscore;
-
+            this.library = answers.library;
             done();
         }.bind(this));
     },
@@ -112,6 +124,20 @@ module.exports = yeoman.generators.Base.extend({
                 this.templatePath('_package-install.json'),
                 this.destinationPath('install/package.json')
             );
+
+            if (this.slick) {
+                this.fs.copy(
+                    this.templatePath('plugins/slick/*.js'),
+                    this.destinationPath('static/src/js/')
+                );
+            }
+
+            if (this.photoswipe) {
+                this.fs.copy(
+                    this.templatePath('plugins/photoswipe/*.js'),
+                    this.destinationPath('static/src/js/')
+                );
+            }
         }
     },
 
@@ -122,7 +148,7 @@ module.exports = yeoman.generators.Base.extend({
         },
 
         bower: function () {
-            this.bowerInstall(['bootstrap', 'jquery#1.12.4']);
+            this.bowerInstall(['bootstrap', 'jquery#3.2.1']);
 
             if (this.slick) {
                 this.bowerInstall(['slick-carousel']);
@@ -132,12 +158,15 @@ module.exports = yeoman.generators.Base.extend({
                 this.bowerInstall(['https://github.com/dimsemenov/PhotoSwipe.git']);
             }
 
-            if (this.underscore) {
+            if (this.library == 1) {
+                this.bowerInstall(['lodash']);
+            }
+
+            if (this.library == 2) {
                 this.bowerInstall(['underscore']);
             }
         }
     },
-
 
     end: {
         task: function () {
@@ -151,21 +180,25 @@ module.exports = yeoman.generators.Base.extend({
                 this.spawnCommand('grunt', ['photoswipe']);
             }
 
-            if (this.underscore) {
+            if (this.library == 1) {
+                this.spawnCommand('grunt', ['lodash']);
+            }
+
+            if (this.library == 2) {
                 this.spawnCommand('grunt', ['underscore']);
             }
         },
 
-        project: function () {
-            process.chdir('..');
-
-            this.installDependencies({
-                bower: false
-            });
-        },
-
-        clean: function () {
-            fs.remove('install');
-        }
+        // project: function () {
+        //     process.chdir('..');
+        //
+        //     this.installDependencies({
+        //         bower: false
+        //     });
+        // },
+        //
+        // clean: function () {
+        //     fs.remove('install');
+        // }
     }
 });

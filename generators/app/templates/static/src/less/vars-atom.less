@@ -12,6 +12,7 @@
 
 //* approximate width for `font-size: 14px`;
 @space-width:           3.23px;
+@space-w:               floor(@space-width);
 
 //** Global/default transition-duration for links, buttons, controls etc.
 @transition-base:       .3s;
@@ -23,9 +24,13 @@
 
 @spacer:        @line-height-computed;
 @spacer-xs:     floor(@spacer / 3);
+@spacer-xs-2:   (@spacer-xs * 2);
 @spacer-sm:     floor(@spacer / 2);
 @spacer-md:     (@spacer-sm * 3);
 @spacer-lg:     (@spacer-sm * 4);
+
+@spacer-small:  (@font-size-small * @line-height-small);
+@spacer-large:  (@font-size-large * @line-height-large);
 
 
 //## Grid
@@ -34,6 +39,7 @@
 
 @gutter:        @grid-gutter-width;
 @gutter-xs:     floor(@gutter / 3);
+@gutter-xs-2:   (@gutter-xs * 2);
 @gutter-sm:     floor(@gutter / 2);
 @gutter-md:     (@gutter-sm * 3);
 @gutter-lg:     (@gutter-sm * 4);
@@ -100,7 +106,6 @@
 
 //* Default border-width for bootstrap controls and buttons
 @control-border-width:     1px;
-@control-text-indent:      (10px - ceil(@space-width));
 
 //### Required state (label)
 
