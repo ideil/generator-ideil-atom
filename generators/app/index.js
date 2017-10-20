@@ -137,6 +137,10 @@ module.exports = yeoman.generators.Base.extend({
                     this.templatePath('plugins/photoswipe/*.js'),
                     this.destinationPath('static/src/js/')
                 );
+                this.fs.copy(
+                    this.templatePath('plugins/photoswipe/*.twig'),
+                    this.destinationPath('static/layouts/_includes/_parts/')
+                );
             }
         }
     },

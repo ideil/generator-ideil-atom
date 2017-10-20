@@ -6,7 +6,6 @@ module.exports = function (grunt) {
     grunt.initConfig({
         baseDir: '../static',
         sourceDir: '<%= baseDir %>/src',
-        publicDir: '<%= baseDir %>/pub',
 
         copy: {
             jsBootstrap: {
