@@ -32,6 +32,8 @@ Thumbs.db
 ## Text editor
 *.sublime-project
 *.sublime-workspace
+.vscode
+.history
 
 
 ## Compiled source
