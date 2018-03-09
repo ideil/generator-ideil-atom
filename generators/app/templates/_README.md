@@ -9,13 +9,13 @@ ATTENTION! GO AHEAD!
 - Non processed initial HTML document templates path: "ideil-atom/static/layouts/includes/tpl.*.html".
 - Rewrite excess default demo includes: "ideil-atom/static/layouts/includes/*.html".
 
-# Chek (replace) default *.less files constructor in app.less file: "ideil-atom/static/src/less/app.less".
+# Chek (replace) default *.scss files constructor in app.scss file: "ideil-atom/static/src/scss/app.scss".
 
-- Default *.less files path: ideil-atom/static/src/less/**/*.less.
+- Default *.scss files path: ideil-atom/static/src/scss/**/*.scss.
 
-# Download and install latest Bootstrap (*.less, *.js files): https://github.com/twbs/bootstrap/archive/.
+# Download and install latest Bootstrap (*.scss, *.js files): https://github.com/twbs/bootstrap/archive/.
 
-- Bootstrap *.less files path: ideil-atom/static/src/less/vendor/bootstrap/**/*.less.
+- Bootstrap *.scss files path: ideil-atom/static/src/scss/vendor/bootstrap/**/*.scss.
 - Bootstrap *.js files path: ideil-atom/static/src/js/vendor/bootstrap/*.js.
 
 # Update all default *.js files to stabel versions: ideil-atom/static/src/js/vendor/**/*.js.

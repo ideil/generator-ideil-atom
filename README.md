@@ -4,12 +4,12 @@
 ## Features
 - [Twig](http://twig.sensiolabs.org/), the flexible, fast, and secure template engine
 - [JQuery](https://jquery.com/)
-- [Bootstrap](http://getbootstrap.com/) in LESS
+- [Bootstrap](http://getbootstrap.com/) in SASS
 - [Modernizr](https://modernizr.com/)
 - [Browsersync](https://www.browsersync.io/)
 - Built-in preview server with [LiveReload](http://livereload.com/)
 - CSS [Autoprefixing](https://github.com/postcss/autoprefixer/)
-- Automagically compile [LESS](http://lesscss.org/)
+- Automagically compile [SASS](https://github.com/sindresorhus/grunt-sass)
 - Removing unused CSS with [UnCSS](https://github.com/giakki/uncss)
 - Automagically create sprite sheets
 - [Social.js](https://github.com/ideil) - simple social sharing plugin

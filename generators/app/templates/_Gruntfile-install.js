@@ -9,7 +9,7 @@ module.exports = function (grunt) {
 
         copy: {
             jsBootstrap: {
-                cwd: 'bower_components/bootstrap/js/',
+                cwd: 'bower_components/bootstrap/js/src/',
                 src: '**',
                 dest: '<%= sourceDir %>/js/vendor/bootstrap/',
                 expand: true
@@ -29,30 +29,30 @@ module.exports = function (grunt) {
                 expand: true
             },
 
-            lessBootstrap: {
-                cwd: 'bower_components/bootstrap/less/',
+            scssBootstrap: {
+                cwd: 'bower_components/bootstrap/scss/',
                 src: '**',
-                dest: '<%= sourceDir %>/less/vendor/bootstrap/',
+                dest: '<%= sourceDir %>/scss/vendor/bootstrap/',
                 expand: true
             },
 
             variablesBootstrap: {
-                cwd: 'bower_components/bootstrap/less/',
-                src: 'variables.less',
-                dest: '<%= sourceDir %>/less/',
+                cwd: 'bower_components/bootstrap/scss/',
+                src: '_variables.scss',
+                dest: '<%= sourceDir %>/scss/',
                 expand: true,
                 rename: function(dest, src) {
-                    return dest + src.replace('variables', 'vars-bootstrap');
+                    return dest + src.replace('_variables', 'vars-bootstrap');
                 }
             },
 
-            lessSlick: {
+            scssSlick: {
                 cwd: 'bower_components/slick-carousel/slick/',
                 src: 'slick.css',
-                dest: '<%= sourceDir %>/less/vendor/',
+                dest: '<%= sourceDir %>/scss/vendor/',
                 expand: true,
                 rename: function(dest, src) {
-                    return dest + src.replace('.css', '.less');
+                    return dest + src.replace('.css', '.scss');
                 }
             },
 
@@ -70,14 +70,14 @@ module.exports = function (grunt) {
                 expand: true
             },
 
-            lessPs: {
+            scssPs: {
                 cwd: 'bower_components/photoswipe/dist/',
                 src: '**/*.css',
-                dest: '<%= sourceDir %>/less/vendor/',
+                dest: '<%= sourceDir %>/scss/vendor/',
                 expand: true,
                 flatten: true,
                 rename: function(dest, src) {
-                    return dest + src.replace('.css', '.less');
+                    return dest + src.replace('.css', '.scss');
                 }
             },
 
@@ -105,20 +105,20 @@ module.exports = function (grunt) {
 
         replace: {
             bootstrap: {
-                src: ['<%= sourceDir %>/less/vendor/bootstrap/bootstrap.less'],
+                src: ['<%= sourceDir %>/scss/vendor/bootstrap/bootstrap.scss'],
                 overwrite: true,
                 replacements: [{
                     from: '@import "',
                     to: '@import "vendor/bootstrap/'
                 },
                 {
-                    from: 'vendor/bootstrap/variables.less',
-                    to: 'vars-bootstrap.less'
+                    from: 'vendor/bootstrap/variables',
+                    to: 'vars-bootstrap'
                 }]
             },
 
             photoswipe: {
-                src: ['<%= sourceDir %>/less/vendor/default-skin.less'],
+                src: ['<%= sourceDir %>/scss/vendor/default-skin.scss'],
                 overwrite: true,
                 replacements: [{
                     from: 'url(',
@@ -129,8 +129,8 @@ module.exports = function (grunt) {
 
         concat: {
             dist: {
-                src: ['<%= sourceDir %>/less/vendor/bootstrap/bootstrap.less', '<%= sourceDir %>/less/app.less'],
-                dest: '<%= sourceDir %>/less/app.less'
+                src: ['<%= sourceDir %>/scss/vendor/bootstrap/bootstrap.scss', '<%= sourceDir %>/scss/app.scss'],
+                dest: '<%= sourceDir %>/scss/app.scss'
             }
         },
 
@@ -163,17 +163,17 @@ module.exports = function (grunt) {
         'copy:jsBootstrap',
         'copy:jsBootstrapFull',
         'copy:jsBoilerplate',
-        'copy:lessBootstrap',
+        'copy:scssBootstrap',
         'copy:variablesBootstrap'
     ]);
 
     grunt.registerTask('slick', [
-        'copy:lessSlick',
+        'copy:scssSlick',
         'copy:jsSlick'
     ]);
 
     grunt.registerTask('photoswipe', [
-        'copy:lessPs',
+        'copy:scssPs',
         'copy:jsPs',
         'copy:imgPs',
         'replace:photoswipe'

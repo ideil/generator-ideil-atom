@@ -48,9 +48,9 @@ module.exports = function (grunt) {
                 spawn: false
             },
 
-            less: {
-                files: ['<%= sourceDir %>/less/**/*.less'],
-                tasks: ['less:dev', 'autoprefixer:sourcemap']
+            sass: {
+                files: ['<%= sourceDir %>/scss/**/*.scss'],
+                tasks: ['sass:dev', 'autoprefixer:sourcemap']
             },
 
             twig: {
@@ -72,7 +72,7 @@ module.exports = function (grunt) {
 
             sprite: {
                 files: ['<%= sourceDir %>/img/ui-icons/**/*.png'],
-                tasks: ['sprite', 'less:dev', 'autoprefixer:sourcemap']
+                tasks: ['sprite', 'sass:dev', 'autoprefixer:sourcemap']
             }
         },
 
@@ -106,12 +106,12 @@ module.exports = function (grunt) {
                 retinaSrcFilter: ['<%= sourceDir %>/img/ui-icons/**/*@2x.png'],
                 dest: '<%= sourceDir %>/img/sprites/ui-icons.png',
                 retinaDest: '<%= sourceDir %>/img/sprites/ui-icons@2x.png',
-                destCss: '<%= sourceDir %>/less/~ui-icons.less',
+                destCss: '<%= sourceDir %>/scss/~ui-icons.scss',
                 cssFormat: 'css_retina',
                 padding: 1,
                 cssTemplate: function (data) {
                     var classMediaRespond = '.i-icon';
-                    var classNamespace = '.i-';
+                    var namespace = 'i-';
 
                     var result =
                         classMediaRespond + ' {\n\tbackground-image: url(' + data.spritesheet.image + ');\n}' +
@@ -122,10 +122,10 @@ module.exports = function (grunt) {
 
                     for (var i = 0; i < data.items.length; i++) {
                         result +=
-                            '\n\n@' + data.items[i].name + '-bg-position: ' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
-                            '\n@' + data.items[i].name + '-width: ' + data.items[i].width + 'px;' +
-                            '\n@' + data.items[i].name + '-height: ' + data.items[i].height + 'px;' +
-                            '\n' + classNamespace + data.items[i].name + ' {' +
+                            '\n\n$' + namespace + data.items[i].name + '-bg-position: ' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
+                            '\n$' + namespace + data.items[i].name + '-width: ' + data.items[i].width + 'px;' +
+                            '\n$' + namespace + data.items[i].name + '-height: ' + data.items[i].height + 'px;' +
+                            '\n.' + namespace + data.items[i].name + ' {' +
                             '\n\tbackground-position: ' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
                             '\n\twidth: ' + data.items[i].width + 'px;' +
                             '\n\theight: ' + data.items[i].height + 'px;' +
@@ -137,7 +137,7 @@ module.exports = function (grunt) {
             }
         },
 
-        less: {
+        sass: {
             dev: {
                 options: {
                     sourceMap: true,
@@ -147,13 +147,13 @@ module.exports = function (grunt) {
                 },
 
                 files: {
-                    '<%= sourceDir %>/css/app.css': ['<%= sourceDir %>/less/app.less']
+                    '<%= sourceDir %>/css/app.css': '<%= sourceDir %>/scss/app.scss'
                 }
             },
 
             production: {
                 files: {
-                    '<%= publicDir %>/css/app.min.css': ['<%= sourceDir %>/less/app.less']
+                    '<%= publicDir %>/css/app.min.css': '<%= sourceDir %>/scss/app.scss'
                 }
             }
         },
@@ -322,7 +322,7 @@ module.exports = function (grunt) {
 
         modernizr: {
             dist: {
-                'crawl': false,
+                'crawl': false,
                 'dest': '<%= sourceDir %>/js/vendor/modernizr.min.js',
                 'tests': [
                     // 'touchevents'
@@ -392,7 +392,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('spritesheet', [
         'sprite',
-        'less',
+        'sass',
         'autoprefixer:sourcemap'
     ]);
 
@@ -400,7 +400,7 @@ module.exports = function (grunt) {
         'prettify',
         'clean',
         'uglify', // minify js
-        'less:production', // minify css
+        'sass:production', // minify css
         'uncss',
         'cssmin',
         'autoprefixer:pub',

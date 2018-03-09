@@ -4,7 +4,7 @@
 
 
 body {
-    fill: @text-color;
+    fill: $body-color;
 }
 
 //## Transitions
@@ -15,10 +15,10 @@ button,
 .btn,
 a {
     transition:
-        color @transition-base,
-        background @transition-base,
-        border-color @transition-base,
-        fill @transition-base;
+        color $transition,
+        background $transition,
+        border-color $transition,
+        fill $transition;
     // outline: none !important;
 }
 
@@ -29,7 +29,7 @@ a {
 
 //** text selection
 // ::selection {
-//     background-color: lighten(@brand-primary, 50%);
+//     background-color: lighten(theme-color("primary"), 50%);
 // }
 
 

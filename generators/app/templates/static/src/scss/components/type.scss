@@ -10,8 +10,8 @@
 // h1, .h1,
 // h2, .h2,
 // h3, .h3 {
-//     margin-top: @spacer-lg;
-//     margin-bottom: @spacer;
+//     margin-top: offset(lg);
+//     margin-bottom: $offset;
 // }
 
 
@@ -20,7 +20,7 @@
 //*
 
 // p {
-//     margin-bottom: @spacer;
+//     margin-bottom: $offset;
 // }
 
 
@@ -32,13 +32,13 @@
 
 // ul,
 // ol {
-//     margin-bottom: @spacer;
+//     margin-bottom: $offset;
 // }
 
 //### Determination list
 
 // dl {
-//     margin-bottom: @spacer;
+//     margin-bottom: $offset;
 // }
 
 

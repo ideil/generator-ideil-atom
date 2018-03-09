@@ -8,15 +8,15 @@
 //*
 
 .u-spacer-b {
-    margin-bottom: @spacer !important;
+    margin-bottom: $spacer !important;
 }
 
 .u-spacer-b-sm {
-    margin-bottom: @spacer-sm !important;
+    margin-bottom: $spacer-sm !important;
 }
 
 .u-spacer-b-lg {
-    margin-bottom: @spacer-lg !important;
+    margin-bottom: $spacer-lg !important;
 }
 
 
@@ -25,16 +25,16 @@
 //*
 
 .u-gutter-x-sm {
-    padding-left: @gutter-sm !important;
-    padding-right: @gutter-sm !important;
+    padding-left: $gutter-sm !important;
+    padding-right: $gutter-sm !important;
 }
 
 .u-gutter-l-sm {
-    padding-left: @gutter-sm !important;
+    padding-left: $gutter-sm !important;
 }
 
 .u-gutter-r-lg {
-    padding-right: @gutter-sm !important;
+    padding-right: $gutter-sm !important;
 }
 
 
@@ -80,5 +80,5 @@
 }
 
 .u-ellipsis {
-    .text-overflow();
+    @include text-truncate;
 }

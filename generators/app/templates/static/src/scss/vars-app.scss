@@ -1,0 +1,42 @@
+// Application variables
+//
+//
+
+
+
+// Grid
+//
+//
+
+$layout-min-width:      320px;
+$layout-max-width:      1920px;
+
+$content-max-width:     container(xl);
+
+
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$gutter: $grid-gutter-width;
+$gutters: () !default;
+$gutters: map-merge((
+  xs:   round($gutter * 0.33),
+  xs-2: round($gutter * 0.66),
+  sm:   round($gutter * 0.5),
+  md:   round($gutter * 1.5),
+  lg:   round($gutter * 2),
+), $gutters);
+
+$offset: $spacer;
+$offsets: () !default;
+$offsets: map-merge((
+  xs:   ($offset * 0.33),
+  xs-2: ($offset * 0.66),
+  sm:   ($offset * 0.5),
+  md:   ($offset * 1.5),
+  lg:   ($offset * 2),
+), $offsets);
+
+$transition:            .3s;

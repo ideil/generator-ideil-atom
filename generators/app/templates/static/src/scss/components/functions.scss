@@ -1,0 +1,19 @@
+//# Functions
+//
+//*
+
+@function breakpoint($key: xl) {
+  @return map-get($grid-breakpoints, $key);
+}
+
+@function container($key: xl) {
+  @return map-get($container-max-widths, $key);
+}
+
+@function gutter($key: sm) {
+  @return map-get($gutters, $key);
+}
+
+@function offset($key: sm) {
+  @return map-get($offsets, $key);
+}
