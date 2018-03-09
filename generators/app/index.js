@@ -152,7 +152,7 @@ module.exports = yeoman.generators.Base.extend({
         },
 
         bower: function () {
-            this.bowerInstall(['bootstrap#^3.3', 'jquery#3.2.1']);
+            this.bowerInstall(['bootstrap', 'jquery#3.2.1']);
 
             if (this.slick) {
                 this.bowerInstall(['slick-carousel']);
