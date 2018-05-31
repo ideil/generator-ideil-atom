@@ -67,11 +67,17 @@ module.exports = yeoman.generators.Base.extend({
         atom: function () {
             mkdirp('static.www');
             mkdirp('static');
+            mkdirp('grunt');
             mkdirp('install');
 
             this.fs.copy(
                 this.templatePath('static/**/*'),
                 this.destinationPath('static/')
+            );
+
+            this.fs.copy(
+                this.templatePath('grunt/**/*'),
+                this.destinationPath('grunt/')
             );
 
             this.fs.copy(
