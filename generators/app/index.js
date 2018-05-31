@@ -128,7 +128,7 @@ module.exports = yeoman.generators.Base.extend({
             if (this.slick) {
                 this.fs.copy(
                     this.templatePath('plugins/slick/*.js'),
-                    this.destinationPath('static/src/js/')
+                    this.destinationPath('static/src/js/app/')
                 );
             }
 
@@ -139,7 +139,7 @@ module.exports = yeoman.generators.Base.extend({
                 );
                 this.fs.copy(
                     this.templatePath('plugins/photoswipe/*.twig'),
-                    this.destinationPath('static/layouts/_includes/_parts/')
+                    this.destinationPath('static/layouts/_includes/parts/photoswipe')
                 );
             }
         }
@@ -174,7 +174,7 @@ module.exports = yeoman.generators.Base.extend({
 
     end: {
         task: function () {
-            this.spawnCommand('grunt', ['bower', 'replace:bootstrap', 'concat', 'modernizr']);
+            this.spawnCommand('grunt', ['bower', 'replace:bootstrap']);
 
             if (this.slick) {
                 this.spawnCommand('grunt', ['slick']);
