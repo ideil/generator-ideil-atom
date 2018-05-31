@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        {% include '../parts/app-head.twig' %}
+    </head>
+
+    <body>
+        {% include '../parts/app-banner.twig' %}
+
+        {% block main %}{% endblock %}
+
+        {% include '../parts/app-footer.twig' %}
+
+        {# {% include '../parts/photoswipe.twig' %} #}
+
+        {% include '../parts/app-js.twig' %}
+    </body>
+</html>

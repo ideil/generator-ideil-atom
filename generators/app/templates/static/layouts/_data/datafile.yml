@@ -1,0 +1,9 @@
+
+app:
+  - title:  'Website Name'
+
+pages:
+  - id:     'home'
+    no:     '01'
+    title:  'Home'
+    href:   '01-home.html'

@@ -1,5 +1,15 @@
 {
     "preset": "crockford",
+    "disallowTrailingComma": false,
     "requireMultipleVarDecl": false,
-    "disallowKeywords": null
+    "disallowKeywords": null,
+
+    "requireSpaceBeforeBinaryOperators": [
+        "=", "+=", "-=", "*=", "/=", "%=", "<<=", ">>=", ">>>=",
+        "&=", "|=", "^=", "+=",
+
+        "+", "-", "*", "/", "%", "<<", ">>", ">>>", "&",
+        "|", "^", "&&", "||", "===", "==", ">=",
+        "<=", "<", ">", "!=", "!=="
+    ]
 }

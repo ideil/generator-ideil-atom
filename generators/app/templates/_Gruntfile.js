@@ -1,189 +1,341 @@
-// global module:false
-
-var jsList = [
-        // '<%= sourceDir %>/js/vendor/jquery-1.11.3.min.js',
-        // '<%= sourceDir %>/js/app.js',
-        // '<%= sourceDir %>/js/carousel.js'
-    ],
-    uncssIgnoreClass = [
-        /^textarea/,
-        //* Bootstrap
-        /^.active/,
-        /^.open/,
-        /^.modal/,
-        /^.in/,
-        /^.fade/,
-        //* App
-        /^.o-/,
-        /^.u-/,
-        /^.c-/,
-        /^.t-/,
-        /^.s-/,
-        /^.is-/,
-        /^.has-/,
-        /^.i-/,
-        //* Plugins
-        /^.slick/,      // slick
-        /^.lg/,         // light gallery
-        /^.clndr/,      // clndr
-        /^.table-clndr/
-    ];
+//# Grunt
+//
+//* Task manager
 
 module.exports = function (grunt) {
     'use strict';
 
+    require('time-grunt')(grunt);
     require('jit-grunt')(grunt, {
         sprite: 'grunt-spritesmith'
     });
-    require('time-grunt')(grunt);
+
+    const   SET =       require('./grunt/set'),
+            UNCSS =     SET.uncss;
+
+    // console.log(SET.sprite(data));
 
     grunt.initConfig({
-        baseDir: 'static',
-        sourceDir: '<%= baseDir %>/src',
-        publicDir: '<%= baseDir %>/pub',
+        //## Vars
 
-        watch: {
-            options: {
-                livereload: true,
-                spawn: false
-            },
+        //### Paths
+        pApp:   'static',
 
-            sass: {
-                files: ['<%= sourceDir %>/scss/**/*.scss'],
-                tasks: ['sass:dev', 'autoprefixer:sourcemap']
-            },
+        //#### Templates
+        pTpl:       '<%= pApp %>/layouts',
+        pTplData:   '<%= pTpl %>/_data',
+        pTwigTpl:   '<%= pTpl %>/_includes',
+        pDumpTpl:   '<%= pTpl %>/_dump',
 
-            twig: {
-                files: ['<%= baseDir %>/layouts/_includes/**/*'],
-                tasks: ['twigRender']
-            },
+        pTwigAppTpl:    '<%= pTwigTpl %>/pages',
+        pAppTpl:        '<%= pTpl %>/pages',
 
-            js: {
-                files: [
-                    '<%= sourceDir %>/js/**/*.js',
-                    '!<%= sourceDir %>/js/vendor/**/*',
-                    '!<%= sourceDir %>/js/atom/**/*'
-                ],
-                tasks: [
-                    'jshint:src',
-                    'jscs:src'
-                ]
-            },
+        pCritTpl:       '<%= pTpl %>/critical',
 
-            sprite: {
-                files: ['<%= sourceDir %>/img/ui-icons/**/*.png'],
-                tasks: ['sprite', 'sass:dev', 'autoprefixer:sourcemap']
-            }
-        },
+        //#### Source
+        pSrc:       '<%= pApp %>/src',
 
-        jshint: {
-            src: [
-                '<%= sourceDir %>/js/**/*.js',
-                '!<%= sourceDir %>/js/vendor/**/*',
-                '!<%= sourceDir %>/js/atom/**/*'
-            ],
+        pSassSrc:   '<%= pSrc %>/scss',
+        pCssSrc:    '<%= pSrc %>/css',
 
-            options: {
-                jshintrc: '.jshintrc'
-            }
-        },
+        //#### Public
+        pPub:       '<%= pApp %>/pub',
+        pDumpPub:   '<%= pPub %>/_dump',
 
-        jscs: {
-            src: [
-                '<%= sourceDir %>/js/**/*.js',
-                '!<%= sourceDir %>/js/vendor/**/*',
-                '!<%= sourceDir %>/js/atom/**/*'
-            ],
+        pSassPub:   '<%= pPub %>/scss',
+        pCssPub:    '<%= pPub %>/css',
 
-            options: {
-                config: '.jscsrc'
-            }
-        },
 
-        sprite: {
-            compile: {
-                src: '<%= sourceDir %>/img/ui-icons/**/*.png',
-                retinaSrcFilter: ['<%= sourceDir %>/img/ui-icons/**/*@2x.png'],
-                dest: '<%= sourceDir %>/img/sprites/ui-icons.png',
-                retinaDest: '<%= sourceDir %>/img/sprites/ui-icons@2x.png',
-                destCss: '<%= sourceDir %>/scss/~ui-icons.scss',
-                cssFormat: 'css_retina',
-                padding: 1,
-                cssTemplate: function (data) {
-                    var classMediaRespond = '.i-icon';
-                    var namespace = 'i-';
+        //## Setting Tasks
 
-                    var result =
-                        classMediaRespond + ' {\n\tbackground-image: url(' + data.spritesheet.image + ');\n}' +
-                        '\n\n@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {' +
-                        '\n\t' + classMediaRespond + ' {' +
-                        '\n\t\tbackground-image: url(' + data.retina_spritesheet.image + ');' +
-                        '\n\t\tbackground-size: ' + data.spritesheet.px.width + ' ' + data.spritesheet.px.height + ';\n\t}\n}';
-
-                    for (var i = 0; i < data.items.length; i++) {
-                        result +=
-                            '\n\n$' + namespace + data.items[i].name + '-bg-position: ' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
-                            '\n$' + namespace + data.items[i].name + '-width: ' + data.items[i].width + 'px;' +
-                            '\n$' + namespace + data.items[i].name + '-height: ' + data.items[i].height + 'px;' +
-                            '\n.' + namespace + data.items[i].name + ' {' +
-                            '\n\tbackground-position: ' + data.items[i].offset_x + 'px ' + data.items[i].offset_y + 'px;' +
-                            '\n\twidth: ' + data.items[i].width + 'px;' +
-                            '\n\theight: ' + data.items[i].height + 'px;' +
-                            '\n}';
-                    }
-
-                    return result;
-                }
-            }
-        },
-
-        sass: {
+        //### Browser Sync
+        browserSync: {
             dev: {
                 options: {
-                    sourceMap: true,
-                    sourceMapFilename: 'static/src/css/app.css.map',  // Path to save map
-                    sourceMapBasepath: 'static',                      // Deleting excessive prefixes
-                    sourceMapRootpath: '/'                            // Path prefix (*.map file)
+                    watchTask: true,
+                    // ghostMode: false,
+
+                    server: {
+                        directory:  true,
+
+                        baseDir:    '<%= pApp %>'
+                    }
                 },
 
-                files: {
-                    '<%= sourceDir %>/css/app.css': '<%= sourceDir %>/scss/app.scss'
-                }
-            },
+                bsFiles: {
+                    src : [
+                        '<%= pAppTpl %>/*',
 
-            production: {
-                files: {
-                    '<%= publicDir %>/css/app.min.css': '<%= sourceDir %>/scss/app.scss'
-                }
+                        '<%= pCssSrc %>/*.css',
+                        '<%= pSrc %>/js/own/*.js',
+
+                        '<%= pCssPub %>/*.css'
+                    ]
+                },
             }
         },
 
-        cssmin: {
+        //### Twig Render
+        twigRender: {
+
+            //#### Twig Devel
+            app: {
+                files : [{
+                    expand: true,
+
+                    data:   '<%= pTplData %>/datafile.yml',
+                    cwd:    '<%= pTwigAppTpl %>',
+                    src:    '*',
+                    dest:   '<%= pAppTpl %>',
+                    ext:    '.html',
+                }]
+            },
+
+            //#### Twig Uncss
+            uncssParts: {
+                files : [{
+                    expand: true,
+
+                    data: [
+                        '<%= pTplData %>/datafile.yml',
+                        '<%= pTplData %>/uncss.json'
+                    ],
+
+                    cwd:    '<%= pTwigAppTpl %>',
+                    src:    '*',
+                    dest:   '<%= pDumpTpl %>/uncss/',
+                    ext:    '.twig'
+                }]
+            },
+
+            uncssTpl: {
+                files : [{
+                    expand: true,
+
+                    data:   '<%= pTplData %>/datafile.yml',
+                    cwd:    '<%= pTwigTpl %>/templates',
+                    src:    '_uncss.twig',
+                    dest:   '<%= pDumpTpl %>',
+                    ext:    '.html'
+                }]
+            },
+
+            //#### Twig Critical Devel
+            criticalDev: {
+                files : [{
+                    expand: true,
+
+                    data: [
+                        '<%= pTplData %>/datafile.yml',
+                        '<%= pTplData %>/critical/base.json',
+                        '<%= pTplData %>/critical/dev.json'
+                    ],
+
+                    cwd:    '<%= pTwigAppTpl %>',
+                    src: [
+                        '01-*',
+                    ],
+                    dest:   '<%= pCritTpl %>',
+                    ext:    '-dev.html'
+                }]
+            },
+
+            //#### Twig Critical Public
+            criticalPub: {
+                files : [{
+                    expand: true,
+
+                    data: [
+                        '<%= pTplData %>/datafile.yml',
+                        '<%= pTplData %>/critical/base.json',
+                        '<%= pTplData %>/critical/pub.json'
+                    ],
+
+                    cwd:    '<%= pTwigAppTpl %>',
+                    src: [
+                        '01-*',
+                    ],
+                    dest:   '<%= pCritTpl %>',
+                    ext:    '.html'
+                }]
+            },
+        },
+
+        //### Prettify
+        prettify: {
             options: {
-                roundingPrecision: -1
+                indent: 4
+                // preserve_newlines: true,
+                // max_preserve_newlines: 1
             },
 
-            target: {
-                files: {
-                    '<%= publicDir %>/css/app.min.css': ['<%= publicDir %>/css/app.min.css']
-                }
-            }
+            app: {
+                expand: true,
+
+                src:    '<%= pAppTpl %>/*',
+                ext:    '.html'
+            },
+
+            critical: {
+                options: {
+                    unformatted: SET.prettify
+                },
+
+                expand: true,
+
+                src:    '<%= pCritTpl %>/*',
+                ext:    '.html'
+            },
         },
 
-        uncss: {
-            dist: {
+        //### Sass
+        sass: {
+            //#### Sass Bootstrap
+            bs: {
                 options: {
-                    ignore: uncssIgnoreClass,
-                    csspath: '../../../',
-                    stylesheets: ['<%= publicDir %>/css/app.min.css']
+                    sourceMap: true,
+                    sourceMapFilename:  '<%= pCssSrc %>/bs.map',
+                    sourceMapBasepath:  '<%= pSrc %>',
+                    sourceMapRootpath:  '../',
+                    sourceMapURL:       'bs.map',
                 },
 
                 files: {
-                    '<%= publicDir %>/css/app.min.css': ['<%= baseDir %>/layouts/render/*.html']
+                    '<%= pCssSrc %>/bs.css': [
+                        '<%= pSassSrc %>/bs.scss',
+                    ]
                 }
-            }
+            },
+
+            //#### Sass App
+            app: {
+                options: {
+                    sourceMap: true,
+                    sourceMapFilename:  '<%= pCssSrc %>/app.map',
+                    sourceMapBasepath:  '<%= pSrc %>',
+                    sourceMapRootpath:  '../',
+                    sourceMapURL:       'app.map',
+                },
+
+                files: {
+                    '<%= pCssSrc %>/app.css': [
+                        '<%= pSassSrc %>/app.scss'
+                    ]
+                }
+            },
+
+            //#### Sass Public
+            public: {
+                // options: {
+                //     plugins: [
+                //         new (require('less-plugin-autoprefix'))({
+                //             browsers: ['last 3 versions']
+                //         })
+                //         /*new (require('less-plugin-clean-css'))({
+                //             advanced: true,
+                //             roundingPrecision: -1
+                //             // keepBreaks: true
+                //         })*/
+                //     ]
+                // },
+
+                files: {
+                    '<%= pDumpPub %>/bs.public.css': [
+                        '<%= pSassSrc %>/bs.scss',
+                    ],
+                    '<%= pDumpPub %>/app.public.css': [
+                        '<%= pSassSrc %>/app.scss',
+                    ]
+                }
+            },
+
+            //#### Sass Critical Develop
+            criticalDev: {
+                // options: {
+                //     plugins: [
+                //         new (require('less-plugin-autoprefix'))({
+                //             browsers: ['last 3 versions']
+                //         })
+                //     ],
+                //
+                //     //** MOVED to cssmin
+                //     //** Absolute path
+                //     // rootpath: '/pub/_path-escape/'
+                //     //** Relative path
+                //     // rootpath: '../../pub/_path-escape/'
+                // },
+
+                files: {
+                    '<%= pDumpPub %>/critical.css': [
+                        '<%= pSassSrc %>/bs.scss',
+                        '<%= pSassSrc %>/app.scss',
+                        '<%= pSassSrc %>/critical/critical.scss',
+                    ]
+                }
+            },
+
+            //#### Sass Critical Public
+            criticalPub: {
+                // options: {
+                //     plugins: [
+                //         new (require('less-plugin-autoprefix'))({
+                //             browsers: ['last 3 versions']
+                //         })
+                //     ],
+                // },
+
+                files: {
+                    '<%= pDumpPub %>/critical.css': [
+                        '<%= pSassSrc %>/bs.scss',
+                        '<%= pSassSrc %>/app.scss',
+                        '<%= pSassSrc %>/critical/critical.scss',
+                    ],
+                }
+            },
         },
 
+        //### Sprites
+        sprite: {
+            ii: {
+                src:        [
+                        '<%= pSrc %>/sprites/tpl/ii/**/*.png',
+                    ],
+                retinaSrcFilter: [
+                        '<%= pSrc %>/sprites/tpl/ii/**/*@2x.png',
+                    ],
+                dest:           '<%= pSrc %>/sprites/ii.png',
+                retinaDest:     '<%= pSrc %>/sprites/ii@2x.png',
+                destCss:        '<%= pSassSrc %>/sprites/ii.scss',
+                imgPath:        '../sprites/ii.png',
+                retinaImgPath:  '../sprites/ii@2x.png',
+                cssFormat:      'css_retina',
+                padding:        1,
+                cssTemplate: function (data) {
+                    return SET.fn.sprite(data);
+                }
+            },
+
+            // _SPRITE_TPL_2_: {
+            //     src:        [
+            //             '<%= pSrc %>/sprites/tpl/_SPRITE_TPL_2_/**/*.png',
+            //         ],
+            //     retinaSrcFilter: [
+            //             '<%= pSrc %>/sprites/tpl/_SPRITE_TPL_2_/**/*@2x.png',
+            //         ],
+            //     dest:           '<%= pSrc %>/sprites/_SPRITE_TPL_2_.png',
+            //     retinaDest:     '<%= pSrc %>/sprites/_SPRITE_TPL_2_@2x.png',
+            //     destCss:        '<%= pSassSrc %>/sprites/_SPRITE_TPL_2_.scss',
+            //     imgPath:        '../sprites/_SPRITE_TPL_2_.png',
+            //     retinaImgPath:  '../sprites/_SPRITE_TPL_2_@2x.png',
+            //     cssFormat:      'css_retina',
+            //     padding:        1,
+            //     cssTemplate: function (data) {
+            //         return SET.fn.sprite(data, 'ii-_SPRITE_TPL_2_');
+            //     }
+            // },
+        },
+
+        //### Autoprefixer
         autoprefixer: {
             options: {
                 browsers: ['last 3 versions']
@@ -206,134 +358,364 @@ module.exports = function (grunt) {
             },
         },
 
-        twigRender: {
-            html: {
-                files : [{
-                    data: '<%= baseDir %>/layouts/_includes/__datafile.yml',
-                    expand: true,
-                    cwd: '<%= baseDir %>/layouts/_includes/',
-                    src: ['*.twig'],
-                    dest: '<%= baseDir %>/layouts/render/',
-                    ext: '.html'
-                }]
-            }
+        //### Uncss
+        uncss: {
+
+            //#### Uncss Public
+            publicBS: {
+                options: {
+                    ignore:     UNCSS.web,
+
+                    htmlroot:   '<%= pApp %>',
+                    stylesheets: [
+                        '/pub/_dump/bs.public.css'
+                    ]
+                },
+
+                files: {
+                    '<%= pDumpPub %>/bs.uncss.css': [
+                        '<%= pDumpTpl %>/_uncss.html'
+                    ]
+                }
+            },
+
+            publicApp: {
+                options: {
+                    ignore:     UNCSS.web,
+
+                    htmlroot:   '<%= pApp %>',
+                    stylesheets: [
+                        '/pub/_dump/app.public.css'
+                    ]
+                },
+
+                files: {
+                    '<%= pDumpPub %>/app.uncss.css': [
+                        '<%= pDumpTpl %>/_uncss.html'
+                    ]
+                }
+            },
+
+            //#### Uncss First Screen (FS) Home Page 00
+            criticalHome: {
+                options: {
+                    // ignore: UNCSS.web,
+                    htmlroot:   '<%= pApp %>',
+                    stylesheets: [
+                        '/pub/_dump/critical.css'
+                    ]
+                },
+
+                files: {
+                    '<%= pDumpPub %>/crt-home.uncss.css': [
+                        '<%= pCritTpl %>/01-*-dev.html'
+                    ]
+                }
+            },
         },
 
-        prettify: {
+        cssmin: {
             options: {
-                'indent': 4
+                level: 2,
+                roundingPrecision: false
+                // format: 'keep-breaks'
             },
 
-            all: {
-                expand: true,
-                cwd: '<%= baseDir %>/layouts/render/',
-                ext: '.html',
-                src: ['*.html'],
-                dest: '<%= baseDir %>/layouts/render/'
-            }
-        },
-
-        clean: {
-            css: ['<%= publicDir %>/css'],
-            js: ['<%= publicDir %>/js'],
-            img: ['<%= publicDir %>/img'],
-            srcjs: ['<%= sourceDir %>/js/*.js.gz']
-        },
-
-        copy: {
-            img: {
-                cwd: '<%= sourceDir %>/img/',
-                src: ['**/*',
-                    '!ui-icons',
-                    '!ui-icons/**/*',
-                    '!zzz',
-                    '!zzz/**/*'//,
-                    // '!atom',
-                    // '!atom/**/*'
-                ],
-                dest: '<%= publicDir %>/img/',
-                expand: true // required when using cwd
+            pubDev: {
+                files: {
+                    '<%= pPub %>/_css/bs.min.css':    ['<%= pPub %>/_css/bs.min.css'],
+                    '<%= pPub %>/_css/app.min.css':   ['<%= pPub %>/_css/app.min.css']
+                }
             },
 
-            font: {
-                cwd: '<%= sourceDir %>',
-                src: ['font/**/*'],
-                dest: '<%= publicDir %>/',
-                expand: true
-            }
+            public: {
+                files: {
+                    '<%= pCssPub %>/bs.min.css':    ['<%= pDumpPub %>/bs.uncss.css'],
+                    '<%= pCssPub %>/app.min.css':   ['<%= pDumpPub %>/app.uncss.css']
+                }
+            },
 
-        },
-
-        uglify: {
-            js: {
-                files: [
-                    {
-                        src: jsList,
-                        dest: '<%= publicDir %>/js/app.min.js'
+            criticalDev: {
+                options: {
+                    level: {
+                        1: {
+                            transform: function (propertyName, propertyValue) {
+                                if (
+                                    propertyName === 'background-image' ||
+                                    propertyName === 'src' &&
+                                    propertyValue.indexOf('../') > -1
+                                ) {
+                                    return propertyValue.replace('../', '/pub/');
+                                }
+                            }
+                        }
                     }
-                ]
-            }
+                },
+
+                files: {
+                    '<%= pCssPub %>/critical/home.min.css': [
+                        '<%= pDumpPub %>/crt-home.uncss.css'
+                    ],
+                    // '<%= pCssPub %>/critical/post.min.css': [
+                    //     '<%= pDumpPub %>/crt-post.uncss.css',
+                    // ],
+                }
+            },
+
+            //#### Cssmin Critical Public
+            criticalPub: {
+                options: {
+                    level: {
+                        1: {
+                            transform: function (propertyName, propertyValue) {
+                                if (
+                                    propertyName === 'background-image' ||
+                                    propertyName === 'src' &&
+                                    propertyValue.indexOf('../') > -1
+                                ) {
+                                    return propertyValue.replace('../', '/src/desktop/');
+                                }
+                            }
+                        }
+                    }
+                },
+
+                files: {
+                    '<%= pCssPub %>/critical/home.min.css': [
+                        '<%= pDumpPub %>/crt-home.uncss.css'
+                    ],
+                    // '<%= pCssPub %>/critical/post.min.css': [
+                    //     '<%= pDumpPub %>/crt-post.uncss.css',
+                    // ],
+                }
+            },
         },
 
+        //### Filerev
         filerev: {
             //  options: {
             //    algorithm: 'md5', // def: md5
             //    length: 8         // def: 8
             //  },
 
-            js: {
-                src: ['<%= publicDir %>/js/app.min.js'],
-                dest: '<%= publicDir %>/js/'
+            dev: {
+                files: [{
+                    src: [
+                        '<%= pPub %>/sprites/*'
+                    ],
+                }]
             },
 
-            css: {
-                src: ['<%= publicDir %>/css/app.min.css'],
-                dest: '<%= publicDir %>/css/'
+            pub: {
+                files: [{
+                    src: [
+                        '<%= pSrc %>/desktop/sprites/*'
+                    ],
+                }]
             },
-
-            img: {
-                src: '<%= publicDir %>/img/**/*.{jpg,jpeg,png,gif}'
-            }
         },
 
         filerev_assets: {
             dist: {
                 options: {
                     prettyPrint: true,
-                    cwd: '<%= publicDir %>/',
-                    dest: '<%= publicDir %>/manifest.json'
+                    cwd: '<%= pApp %>',
+                    // prefix: ,
+                    dest: '<%= pPub %>/manifest.json'
                 }
             }
         },
 
+        //### Usemin
         usemin: {
-            css: '<%= publicDir %>/**/*.css',
+            css: [
+                '<%= pDumpPub %>/crt-*.uncss.css',
+                '<%= pCssPub %>/bs.min.css',
+                '<%= pCssPub %>/app.min.css'
+            ],
+
+            html: [
+                '<%= pCritTpl %>/*.html'
+            ],
 
             options: {
-                assetsDirs: ['<%= publicDir %>'],
+                assetsDirs: [
+                    '<%= pApp %>',              // absolute css path
+                    '<%= pPub %>/_path-escape', // relative css path
+                ],
 
                 patterns: {
+                    //* 'Replacing reference to *.png, *.jpg, *.jpeg, *.gif'
                     css: [
-                        [/(img\/.*?\.(?:png|jpe?g|gif))/gm, 'Replacing reference to *.png, *.jpg, *.jpeg, *.gif']
+                        [/(img\/.*?\.(?:png|jpe?g|gif))/gm]
+                    ],
+                    html: [
+                        [/(img\/.*?\.(?:png|jpe?g|gif))/gm]
                     ]
                 }
             }
         },
 
+        //### Uglify
+        uglify: {
+            preload: {
+                files: [{
+                    src:    '<%= pSrc %>/js/vendor/loadCSS/cssrelpreload.js',
+                    dest:   '<%= pPub %>/js/vendor/preload.min.js'
+                }]
+            }
+        },
+
+        //### Clean
+        clean: {
+            tplDump: [
+                '<%= pDumpTpl %>'
+            ],
+            pubDump: [
+                '<%= pDumpPub %>'
+            ],
+
+            fonts: [
+                '<%= pPub %>/fonts/**/*'
+            ],
+
+            img: [
+                '<%= pPub %>/img/**/*',
+                '<%= pPub %>/sprites/*'
+            ],
+
+            fakeCriticalPub: [
+                '<%= pSrc %>/desktop'
+            ],
+        },
+
+        //### Copy
+        copy: {
+            fonts: {
+                expand: true,
+
+                cwd: '<%= pSrc %>/fonts/',
+                src: [
+                    '**/*.woff*',
+                    '!**/reserve/*',
+                ],
+                dest: '<%= pPub %>/fonts/',
+            },
+
+            img: {
+                expand: true,
+
+                cwd: '<%= pSrc %>',
+                src: [
+                    'sprites/*.png',
+                    // 'img/',
+                ],
+                dest: '<%= pPub %>',
+            },
+
+            fakeCriticalPub: {
+                expand: true,
+
+                cwd: '<%= pSrc %>',
+                src: [
+                    'sprites/*.png',
+                    // 'img/',
+                ],
+                dest: '<%= pSrc %>/desktop'
+            }
+        },
+
+        //### Watch
+        watch: {
+            options: {
+                livereload: true,
+                spawn:      false,
+            },
+
+            //#### Watch Twig App
+            appTpl: {
+                files: [
+                    '<%= pTplData %>/**/*',
+                    '<%= pTwigTpl %>/**/*'
+                ],
+
+                tasks: ['twigRender:app'] // 'prettify:app'
+            },
+
+            //#### Watch Twig Critical Devel
+            // criticalTpl: {
+            //     files: [
+            //         '<%= pTwigTpl %>/**/*',
+            //     ],
+
+            //     tasks: ['twigRender:criticalDev']
+            // },
+
+            //#### Watch Sass App Scr
+            bsSass: {
+                files: [
+                    '<%= pSassSrc %>/set/*',
+
+                    '<%= pSassSrc %>/bs.sass',
+                ],
+
+                tasks: [
+                    'sass:bs'
+                ]
+            },
+
+            //#### Watch Sass App
+            appSass: {
+                files: [
+                    '<%= pSassSrc %>/set/*',
+
+                    //** Tsn layouts
+                    '<%= pSassSrc %>/app.sass',
+                    '<%= pSassSrc %>/components/**/*'
+                ],
+                tasks: [
+                    'sass:app'
+                ]
+            },
+
+            //#### Watch Sprite
+            sprite: {
+                files: [
+                    '<%= pSrc %>/sprites/tpl/**/*.png'
+                ],
+
+                tasks: [
+                    'sprite',
+                    'sass:app'
+                ]
+            },
+
+            svg: {
+                files: [
+                    '<%= pSrc %>/svg/**/*.svg'
+                ],
+                tasks: [
+                    'twigRender:app'
+                ]
+            }
+        },
+
+        //### Modernizr
         modernizr: {
             dist: {
-                'crawl': false,
-                'dest': '<%= sourceDir %>/js/vendor/modernizr.min.js',
+                'crawl': false,
+                'dest': '<%= pSrc %>/js/vendor/modernizr.min.js',
                 'tests': [
-                    // 'touchevents'
+                    // 'touchevents',
+                    // 'csscalc'
                 ],
                 'options': [
-                    'domPrefixes',
-                    'prefixes',
-                    'testAllProps',
-                    'testProp',
-                    'testStyles',
-                    'setClasses'
+                    // 'domPrefixes',
+                    // 'prefixes',
+                    // 'testAllProps',
+                    // 'testProp',
+                    // 'testStyles',
+                    // 'setClasses'
                 ],
                 'uglify': true
             }
@@ -344,7 +726,10 @@ module.exports = function (grunt) {
                 options: {
                     mode: '755'
                 },
-                src: ['**/*', '!node_modules/**/*'],
+                src: [
+                    '**/*',
+                    '!node_modules/**/*'
+                ],
                 filter: 'isDirectory'
             },
 
@@ -355,33 +740,11 @@ module.exports = function (grunt) {
                 src: [
                     '**/*',
                     '!node_modules/**/*',
-                    '!artisan',
                     '!*.json' //* g.sus: for some reason `chmod:staticFiles` return error (Mac OSX)
                 ],
                 filter: 'isFile'
             }
         },
-
-        browserSync: {
-            dev: {
-                bsFiles: {
-                    src : [
-                        '<%= sourceDir %>/css/*.css',
-                        '<%= sourceDir %>/js/*.js',
-                        '<%= baseDir %>/layouts/render/*.html'
-                    ]
-                },
-
-                options: {
-                    watchTask: true,
-                    ghostMode: false,
-                    server: {
-                        baseDir: '<%= baseDir %>',
-                        directory: true
-                    }
-                }
-            }
-        }
     });
 
     //* Register tasks
@@ -392,22 +755,134 @@ module.exports = function (grunt) {
 
     grunt.registerTask('spritesheet', [
         'sprite',
-        'sass',
-        'autoprefixer:sourcemap'
+        'sass:app',
+        // 'autoprefixer:sourcemap'
+    ]);
+
+    grunt.registerTask('update-assets', [
+        //* Remove old
+        'clean:fonts',
+        'clean:img',
+        //* Add current
+        'copy:fonts',
+        'copy:img',
+    ]);
+
+    //### Filerev
+
+    grunt.registerTask('rev', [
+        'update-assets',
+        'filerev:dev',
+        'usemin',
+    ]);
+
+    grunt.registerTask('rev-fake-pub', [
+        'copy:fakeCriticalPub',
+        'filerev:pub',
+        'filerev_assets',
+        'usemin',
+        'clean:fakeCriticalPub',
+    ]);
+
+    //### Build
+
+    grunt.registerTask('build-css', [
+        'update-assets',
+
+        //* Sass to css + autoprefixer
+        'sass:public',
+
+        // //* Make uncss template(s)
+        // 'twigRender:uncssParts',
+        // 'twigRender:uncssTpl',
+        // //* Remove excessive styles
+        // 'uncss:publicBS',
+        // 'uncss:publicApp',
+
+        //* Minify css
+        //** We can use single Sass task, but EVERY BYTE is IMPORTANT (uncss leave own comment) :(
+        'cssmin:public',
+
+        //* Clean dump
+        'clean:tplDump',
+        'clean:pubDump',
+    ]);
+
+    grunt.registerTask('build-critical-dev', [
+        //* Prepare CSS
+        //** TR1 build tpl for uncss
+        'twigRender:criticalDev',
+        'sass:criticalDev',
+
+        'uncss:criticalHome',
+        // 'uncss:criticalPostSimple',
+        // 'uncss:criticalPostExtended',
+        // 'uncss:criticalPostGallery',
+        // 'uncss:criticalPostVideo',
+        // 'uncss:criticalCommonBannerTheme',
+
+        //* Filerev:css
+        'rev',
+
+        //* Minify css
+        'cssmin:criticalDev',
+
+        //* Output
+        //** TR2 inline css
+        'twigRender:criticalDev',
+        'prettify:critical',
+
+        //* Filerev:html
+        'rev',
+
+        //* Clean dump
+        'clean:pubDump',
+    ]);
+
+    grunt.registerTask('build-critical', [
+        //* Prepare CSS
+        //** TwigRender 1: build tpl for uncss
+        'twigRender:criticalPub',
+        'sass:criticalPub',
+
+        'uncss:criticalHome',
+        // 'uncss:criticalPostSimple',
+        // 'uncss:criticalPostExtended',
+        // 'uncss:criticalPostGallery',
+        // 'uncss:criticalPostVideo',
+
+        //* Filerev
+        'rev',
+
+        //* Minify css
+        'cssmin:criticalPub',
+
+        //* Output
+        //** TwigRender 2: inline css
+        'twigRender:criticalPub',
+        'prettify:critical',
+
+        //* Filerev:html
+        'rev-fake-pub',
+
+        //* Clean dump
+        'clean:pubDump',
+    ]);
+
+    grunt.registerTask('critical-full', [
+        //** Minify "loadCSS.js" – `[rel=preload]` polyfill
+        'uglify:preload',
+        'build-critical',
     ]);
 
     grunt.registerTask('build', [
-        'prettify',
-        'clean',
-        'uglify', // minify js
-        'sass:production', // minify css
-        'uncss',
-        'cssmin',
-        'autoprefixer:pub',
-        'copy:img',
-        'filerev:img',
-        'filerev:js', 'filerev:css', 'filerev_assets',
-        'usemin:css',
-        'copy:font'
+        'prettify:app',
+        'build-css',
+        'critical-full',
     ]);
+
+    // grunt.registerTask('buildDev', [
+    //     'sass:pubDev',
+    //     'cssmin:pubDev',
+    // ]);
 };

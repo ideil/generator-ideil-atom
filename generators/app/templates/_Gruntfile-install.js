@@ -39,10 +39,20 @@ module.exports = function (grunt) {
             variablesBootstrap: {
                 cwd: 'bower_components/bootstrap/scss/',
                 src: '_variables.scss',
-                dest: '<%= sourceDir %>/scss/',
+                dest: '<%= sourceDir %>/scss/set/',
                 expand: true,
                 rename: function(dest, src) {
                     return dest + src.replace('_variables', 'vars-bootstrap');
+                }
+            },
+
+            scssBS: {
+                cwd: '<%= sourceDir %>/scss/vendor/bootstrap/',
+                src: 'bootstrap.scss',
+                dest: '<%= sourceDir %>/scss/',
+                expand: true,
+                rename: function(dest, src) {
+                    return dest + src.replace('bootstrap.scss', 'bs.scss');
                 }
             },
 
@@ -105,16 +115,26 @@ module.exports = function (grunt) {
 
         replace: {
             bootstrap: {
-                src: ['<%= sourceDir %>/scss/vendor/bootstrap/bootstrap.scss'],
+                src: ['<%= sourceDir %>/scss/bs.scss'],
                 overwrite: true,
-                replacements: [{
-                    from: '@import "',
-                    to: '@import "vendor/bootstrap/'
-                },
-                {
-                    from: 'vendor/bootstrap/variables',
-                    to: 'vars-bootstrap'
-                }]
+                replacements:[
+                    {
+                        from:   '@import "',
+                        to:     '@import "vendor/bootstrap/'
+                    }, {
+                        from:   '@import "vendor/bootstrap/functions',
+                        to:     '@import "set/set"; // @import "vendor/bootstrap/functions'
+                    }, {
+                        from:   '@import "vendor/bootstrap/variables',
+                        to:     '// @import "set/vars-bootstrap'
+                    }, {
+                        from:   '@import "vendor/bootstrap/mixins',
+                        to:     '// @import "vendor/bootstrap/mixins'
+                    }, {
+                        from:   '/*!',
+                        to:     '/*'
+                    }
+                ]
             },
 
             photoswipe: {
@@ -125,38 +145,12 @@ module.exports = function (grunt) {
                     to: 'url(../img/'
                 }]
             }
-        },
-
-        concat: {
-            dist: {
-                src: ['<%= sourceDir %>/scss/vendor/bootstrap/bootstrap.scss', '<%= sourceDir %>/scss/app.scss'],
-                dest: '<%= sourceDir %>/scss/app.scss'
-            }
-        },
-
-        modernizr: {
-            dist: {
-                'crawl': false,
-                'dest': '<%= sourceDir %>/js/vendor/modernizr.min.js',
-                // 'tests': [],
-                'options': [
-                    'domPrefixes',
-                    'prefixes',
-                    'testAllProps',
-                    'testProp',
-                    'testStyles',
-                    'setClasses'
-                ],
-                'uglify': true
-            }
         }
     });
 
     // Load tasks
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-text-replace');
-    grunt.loadNpmTasks('grunt-modernizr');
 
     // Register tasks
     grunt.registerTask('bower', [
@@ -164,7 +158,8 @@ module.exports = function (grunt) {
         'copy:jsBootstrapFull',
         'copy:jsBoilerplate',
         'copy:scssBootstrap',
-        'copy:variablesBootstrap'
+        'copy:variablesBootstrap',
+        'copy:scssBS'
     ]);
 
     grunt.registerTask('slick', [
