@@ -1,6 +1,6 @@
 {
   "name": "generator-ideil-atom",
-  "version": "3.1.2a",
+  "version": "3.1.2c",
   "description": "Yeoman generator for Ideil Atom",
   "license": "MIT",
   "main": "app/index.js",

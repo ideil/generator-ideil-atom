@@ -33,6 +33,10 @@
     @return map-get($spacers, $key);
 }
 
-@function gutter($key: 2) {
-    @return map-get($gutters, $key);
+@function gap($key: 2) {
+    @return map-get($gaps, $key);
+}
+
+@function box($key: lg) {
+    @return map-get($container-max-widths, $key);
 }

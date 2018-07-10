@@ -656,7 +656,7 @@ module.exports = function (grunt) {
                 files: [
                     '<%= pSassSrc %>/set/*',
 
-                    '<%= pSassSrc %>/bs.sass',
+                    '<%= pSassSrc %>/bs.scss',
                 ],
 
                 tasks: [
@@ -670,7 +670,7 @@ module.exports = function (grunt) {
                     '<%= pSassSrc %>/set/*',
 
                     //** Tsn layouts
-                    '<%= pSassSrc %>/app.sass',
+                    '<%= pSassSrc %>/app.scss',
                     '<%= pSassSrc %>/components/**/*'
                 ],
                 tasks: [

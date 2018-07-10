@@ -96,16 +96,16 @@ $spacers: (
 $layout-w-min:      320px;
 $scrollbar-w:       26px;
 
-//### Gutters
-$grid-gutter-width: ceil($line-height-base-px / 2 + 4) * 2px;
-$gutter:            $grid-gutter-width;
-$gutters: (
+//### Gaps
+$grid-gutter-width: ceil($line-height-base-px * 1.2px);
+$gap:               $grid-gutter-width;
+$gaps: (
     0:  0,
-    1:  ($gutter * 0.25),
-    2:  ($gutter * 0.5),
-    3:  ($gutter),
-    4:  ($gutter * 1.5),
-    5:  ($gutter * 2)
+    1:  $gap * 0.25,
+    2:  $gap * 0.5,
+    3:  $gap,
+    4:  $gap * 1.5,
+    5:  $gap * )
 );
 
 

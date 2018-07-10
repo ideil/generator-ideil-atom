@@ -2,14 +2,11 @@
 //
 //*
 
-body {
-    max-width: $layout-max-width;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 .o-box {
-    @include make-container;
-
-    max-width: $content-max-width;
+    max-width: box();
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: gap();
+    padding-right: gap();
 }
