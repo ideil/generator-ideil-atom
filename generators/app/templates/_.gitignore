@@ -1,4 +1,4 @@
-### Ideil Atom ###
+# Ideil Atom
 
 ## OSX
 
@@ -6,17 +6,17 @@
 .AppleDouble
 .LSOverride
 
-# Icon must end with two \r
+## Icon must end with two \r
 Icon\r\r
 
-# Thumbnails
+## Thumbnails
 ._*
 
-# Files that might appear on external disk
+## Files that might appear on external disk
 .Spotlight-V100
 .Trashes
 
-# Directories potentially created on remote AFP share
+## Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
 Network Trash Folder
@@ -56,9 +56,6 @@ Thumbs.db
 *.tar
 *.zip
 
-
-## Atom files
-static/src/img/zzz/atom
 
 ## Project files
 /vendor

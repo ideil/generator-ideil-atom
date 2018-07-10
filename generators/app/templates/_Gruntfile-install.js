@@ -36,16 +36,6 @@ module.exports = function (grunt) {
                 expand: true
             },
 
-            variablesBootstrap: {
-                cwd: 'bower_components/bootstrap/scss/',
-                src: '_variables.scss',
-                dest: '<%= sourceDir %>/scss/set/',
-                expand: true,
-                rename: function(dest, src) {
-                    return dest + src.replace('_variables', 'vars-bootstrap');
-                }
-            },
-
             scssBS: {
                 cwd: '<%= sourceDir %>/scss/vendor/bootstrap/',
                 src: 'bootstrap.scss',
@@ -123,10 +113,10 @@ module.exports = function (grunt) {
                         to:     '@import "vendor/bootstrap/'
                     }, {
                         from:   '@import "vendor/bootstrap/functions',
-                        to:     '@import "set/set"; // @import "vendor/bootstrap/functions'
+                        to:     '@import "set/set";\n// @import "vendor/bootstrap/functions'
                     }, {
                         from:   '@import "vendor/bootstrap/variables',
-                        to:     '// @import "set/vars-bootstrap'
+                        to:     '// @import "vendor/bootstrap/variables'
                     }, {
                         from:   '@import "vendor/bootstrap/mixins',
                         to:     '// @import "vendor/bootstrap/mixins'

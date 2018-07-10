@@ -16,18 +16,20 @@
 //*
 
 @import "set/set";
+@import "set/bs-extends";
 @import "components/app-icons";
 
 //### Componnents
 
-@import "components/scaffolding";
+@import "components/reboot";
 @import "components/type";
 @import "components/grid";
-// @import "components/forms"; //* reserve
-// @import "components/buttons"; //* reserve
+// @import "components/forms";
+// @import "components/buttons";
 @import "components/app-banner";
 // @import "components/";
 
 // @import "components/app-footer";
 @import "components/utilities";
-// @import "components/misc"; //* reserve
+
+@import "components/misc";

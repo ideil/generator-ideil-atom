@@ -1,0 +1,12 @@
+//# Bootstrap transfers
+//
+//* Enable bootstrap @extend
+
+
+.sr-only {
+    @include sr-only();
+}
+
+.img-fluid {
+    @include img-fluid;
+}

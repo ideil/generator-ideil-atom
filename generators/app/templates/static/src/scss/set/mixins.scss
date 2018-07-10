@@ -1,0 +1,98 @@
+//# Mixins
+//
+//*
+
+
+//## Screens
+//
+//*
+
+//** Down
+@mixin screen-xs-max() {
+    @media (max-width: screen-down(sm)) {
+        @content;
+    }
+}
+
+@mixin screen-sm-max() {
+    @media (max-width: screen-down(md)) {
+        @content;
+    }
+}
+
+@mixin screen-md-max() {
+    @media (max-width: screen-down()) {
+        @content;
+    }
+}
+
+@mixin screen-lg-max() {
+    @media (max-width: screen-down('xl')) {
+        @content;
+    }
+}
+
+//** Up
+@mixin screen-xs() {
+    @media (min-width: screen('xs')) {
+        @content;
+    }
+}
+
+@mixin screen-sm() {
+    @media (min-width: screen('sm')) {
+        @content;
+    }
+}
+
+@mixin screen-md() {
+    @media (min-width: screen('md')) {
+        @content;
+    }
+}
+
+@mixin screen-lg() {
+    @media (min-width: screen()) {
+        @content;
+    }
+}
+
+@mixin screen-xl() {
+    @media (min-width: screen('xl')) {
+        @content;
+    }
+}
+
+
+//## Progress
+//
+//*
+
+// @mixin progress-bar($color) {
+//     //** Bar (Box)
+
+//     //*** Firefox/IE10+
+//     background: $color;
+
+//     //*** Blink/Webkit/
+//     &::-webkit-progress-bar {
+//         background: $color;
+//     }
+
+//     //*** Firefox
+//     &::-moz-progress-bar {
+//         background: $color;
+//     }
+// }
+
+// @mixin progress-value($color) {
+//     //** Value (indicator)
+
+//     //*** IE10+
+//     color: $color;
+
+//     //*** Blink/Webkit/Firefox
+//     &::-webkit-progress-value {
+//         background: $color;
+//     }
+// }

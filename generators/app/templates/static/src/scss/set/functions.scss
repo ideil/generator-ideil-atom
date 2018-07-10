@@ -1,0 +1,38 @@
+//# Functions
+//
+//*
+
+
+//## Helpers
+//
+//*
+
+@function digit($value) {
+    @return $value / ($value * 0 + 1);
+}
+
+
+//## Media Screens
+//
+//*
+
+@function screen($key: lg) {
+    @return map-get($grid-breakpoints, $key);
+}
+
+@function screen-down($key: lg) {
+    @return map-get($grid-breakpoints, $key) - 1;
+}
+
+
+//## Type & Grid
+//
+//*
+
+@function spacer($key: 2) {
+    @return map-get($spacers, $key);
+}
+
+@function gutter($key: 2) {
+    @return map-get($gutters, $key);
+}

@@ -3,16 +3,11 @@
 //*
 
 
-//## Grid
-//
-//*
-
-@import "vars-app";
+@import "functions";
+@import "app-vars";
 
 @import "../vendor/bootstrap/functions";
-@import "vars-bootstrap";
+@import "../vendor/bootstrap/variables";
 @import "../vendor/bootstrap/mixins";
 
-@import "../components/functions";
-// @import "../components/mixins"; //* reserve
-
+@import "mixins";
