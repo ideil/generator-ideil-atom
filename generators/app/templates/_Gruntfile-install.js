@@ -148,7 +148,6 @@ module.exports = function (grunt) {
         'copy:jsBootstrapFull',
         'copy:jsBoilerplate',
         'copy:scssBootstrap',
-        'copy:variablesBootstrap',
         'copy:scssBS'
     ]);
 
