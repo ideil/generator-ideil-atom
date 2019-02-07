@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="uk">
+    <head>
+        {% include '../app/_head.twig' %}
+    </head>
+
+    <body>
+        {% include '../app/_banner.twig' %}
+
+        {% for dump in pages %}
+            {% set file = dump.no ~ '-' ~ dump.id ~ '.twig' %}
+
+            {% include '../../_dump/uncss/' ~ file %}
+        {% endfor %}
+
+        {% include '../app/_footer.twig' %}
+    </body>
+</html>

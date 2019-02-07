@@ -67,9 +67,9 @@ module.exports = function (grunt) {
                         '<%= pAppTpl %>/*',
 
                         '<%= pCssSrc %>/*.css',
-                        '<%= pSrc %>/js/own/*.js',
+                        '<%= pSrc %>/js/**/*.js',
 
-                        '<%= pCssPub %>/*.css'
+                        '<%= pCssPub %>/*.css',
                     ]
                 },
             }
@@ -79,15 +79,37 @@ module.exports = function (grunt) {
         twigRender: {
 
             //#### Twig Devel
-            app: {
+            dev: {
                 files : [{
                     expand: true,
 
-                    data:   '<%= pTplData %>/datafile.yml',
-                    cwd:    '<%= pTwigAppTpl %>',
-                    src:    '*',
-                    dest:   '<%= pAppTpl %>',
-                    ext:    '.html',
+                    data: [
+                        '<%= pTplData %>/dvl.yml',
+                        '<%= pTplData %>/pages.yml',
+                        '<%= pTplData %>/data.yml',
+                    ],
+                    cwd: '<%= pTwigAppTpl %>',
+                    src: '*',
+                    dest: '<%= pAppTpl %>',
+                    ext: '.html',
+                }]
+            },
+
+            //#### Twig Pub
+            pub: {
+                files : [{
+                    expand: true,
+
+                    data: [
+                        '<%= pTplData %>/pub.yml',
+                        '<%= pTplData %>/pages.yml',
+                        '<%= pTplData %>/data.yml',
+                    ],
+
+                    cwd: '<%= pTwigAppTpl %>',
+                    src: '*',
+                    dest: '<%= pAppTpl %>',
+                    ext: '.html',
                 }]
             },
 
@@ -97,14 +119,16 @@ module.exports = function (grunt) {
                     expand: true,
 
                     data: [
-                        '<%= pTplData %>/datafile.yml',
-                        '<%= pTplData %>/uncss.json'
+                        '<%= pTplData %>/dvl.yml',
+                        '<%= pTplData %>/pages.yml',
+                        '<%= pTplData %>/data.yml',
+                        '<%= pTplData %>/uncss.yml',
                     ],
 
-                    cwd:    '<%= pTwigAppTpl %>',
-                    src:    '*',
-                    dest:   '<%= pDumpTpl %>/uncss/',
-                    ext:    '.twig'
+                    cwd: '<%= pTwigAppTpl %>',
+                    src: '*',
+                    dest: '<%= pDumpTpl %>/uncss/',
+                    ext: '.twig'
                 }]
             },
 
@@ -112,11 +136,15 @@ module.exports = function (grunt) {
                 files : [{
                     expand: true,
 
-                    data:   '<%= pTplData %>/datafile.yml',
-                    cwd:    '<%= pTwigTpl %>/templates',
-                    src:    '_uncss.twig',
-                    dest:   '<%= pDumpTpl %>',
-                    ext:    '.html'
+                    data: [
+                        '<%= pTplData %>/dvl.yml',
+                        '<%= pTplData %>/pages.yml',
+                        '<%= pTplData %>/data.yml',
+                    ],
+                    cwd: '<%= pTwigTpl %>/templates',
+                    src: '_uncss.twig',
+                    dest: '<%= pDumpTpl %>',
+                    ext: '.html'
                 }]
             },
 
@@ -126,17 +154,18 @@ module.exports = function (grunt) {
                     expand: true,
 
                     data: [
+                        '<%= pTplData %>/dvl.yml',
                         '<%= pTplData %>/datafile.yml',
                         '<%= pTplData %>/critical/base.json',
                         '<%= pTplData %>/critical/dev.json'
                     ],
 
-                    cwd:    '<%= pTwigAppTpl %>',
+                    cwd: '<%= pTwigAppTpl %>',
                     src: [
                         '01-*',
                     ],
-                    dest:   '<%= pCritTpl %>',
-                    ext:    '-dev.html'
+                    dest: '<%= pCritTpl %>',
+                    ext: '-dev.html'
                 }]
             },
 
@@ -146,17 +175,19 @@ module.exports = function (grunt) {
                     expand: true,
 
                     data: [
-                        '<%= pTplData %>/datafile.yml',
+                        '<%= pTplData %>/dvl.yml',
+                        '<%= pTplData %>/pages.yml',
+                        '<%= pTplData %>/data.yml',
                         '<%= pTplData %>/critical/base.json',
                         '<%= pTplData %>/critical/pub.json'
                     ],
 
-                    cwd:    '<%= pTwigAppTpl %>',
+                    cwd: '<%= pTwigAppTpl %>',
                     src: [
                         '01-*',
                     ],
-                    dest:   '<%= pCritTpl %>',
-                    ext:    '.html'
+                    dest: '<%= pCritTpl %>',
+                    ext: '.html'
                 }]
             },
         },
@@ -341,20 +372,24 @@ module.exports = function (grunt) {
                 browsers: ['last 3 versions']
             },
 
-            sourcemap: {
+            app: {
                 options: {
                     map: {
-                        prev: '<%= sourceDir %>/css/'
+                        prev: '<%= pCssSrc %>'
                     }
                 },
 
-                src: '<%= sourceDir %>/css/app.css',
-                dest: '<%= sourceDir %>/css/app.css'
+                files: [{
+                    expand: true,
+                    src: '<%= pCssSrc %>/*.css'
+                }]
             },
 
             pub: {
-                src: '<%= publicDir %>/css/app.min.css',
-                dest: '<%= publicDir %>/css/app.min.css'
+                files: [{
+                    expand: true,
+                    src: '<%= pCssPub %>/*.css'
+                }]
             },
         },
 
@@ -639,7 +674,7 @@ module.exports = function (grunt) {
                     '<%= pTwigTpl %>/**/*'
                 ],
 
-                tasks: ['twigRender:app'] // 'prettify:app'
+                tasks: [ 'twigRender:dev' ] // 'prettify:app'
             },
 
             //#### Watch Twig Critical Devel
@@ -660,7 +695,8 @@ module.exports = function (grunt) {
                 ],
 
                 tasks: [
-                    'sass:bs'
+                    'sass:bs',
+                    'autoprefixer:app',
                 ]
             },
 
@@ -669,12 +705,13 @@ module.exports = function (grunt) {
                 files: [
                     '<%= pSassSrc %>/set/*',
 
-                    //** Tsn layouts
                     '<%= pSassSrc %>/app.scss',
                     '<%= pSassSrc %>/components/**/*'
                 ],
+
                 tasks: [
-                    'sass:app'
+                    'sass:app',
+                    'autoprefixer:app',
                 ]
             },
 
@@ -695,7 +732,7 @@ module.exports = function (grunt) {
                     '<%= pSrc %>/svg/**/*.svg'
                 ],
                 tasks: [
-                    'twigRender:app'
+                    'twigRender:dev'
                 ]
             }
         },
@@ -756,7 +793,7 @@ module.exports = function (grunt) {
     grunt.registerTask('spritesheet', [
         'sprite',
         'sass:app',
-        // 'autoprefixer:sourcemap'
+        'autoprefixer:app',
     ]);
 
     grunt.registerTask('update-assets', [
@@ -787,21 +824,26 @@ module.exports = function (grunt) {
     //### Build
 
     grunt.registerTask('build-css', [
+        //* Replace media and fonts
         'update-assets',
 
         //* Sass to css + autoprefixer
         'sass:public',
 
-        // //* Make uncss template(s)
-        // 'twigRender:uncssParts',
-        // 'twigRender:uncssTpl',
-        // //* Remove excessive styles
-        // 'uncss:publicBS',
-        // 'uncss:publicApp',
+        //* Make uncss template(s)
+        'twigRender:uncssParts',
+        'twigRender:uncssTpl',
+
+        //* Remove excessive styles
+        'uncss:publicBS',
+        'uncss:publicApp',
 
         //* Minify css
         //** We can use single Sass task, but EVERY BYTE is IMPORTANT (uncss leave own comment) :(
         'cssmin:public',
+
+        //* Autoprefix CSS
+        'autoprefixer:pub',
 
         //* Clean dump
         'clean:tplDump',
@@ -879,6 +921,13 @@ module.exports = function (grunt) {
         'prettify:app',
         'build-css',
         'critical-full',
+    ]);
+
+    grunt.registerTask('build', [
+        'twigRender:pub',
+        'prettify:app',
+        'build-css',
+        // 'critical-full',
     ]);
 
     // grunt.registerTask('buildDev', [

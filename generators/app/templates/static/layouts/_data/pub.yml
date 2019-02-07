@@ -1,0 +1,10 @@
+IS_PUB: true
+
+
+PATH:
+  src: '../../pub/'
+  css: '../../pub/css/'
+  svg: '../../src/svg/'
+  img: '../../pub/img/'
+  js: '../../src/js/'
+  zzz: '../../src/img/zzz/'

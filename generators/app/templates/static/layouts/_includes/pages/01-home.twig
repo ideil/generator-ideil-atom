@@ -1,26 +1,33 @@
 {% if UNCSS %}
-    {% extends '../templates/uncssDump.twig' %}
+    {% extends '../templates/_uncss-dump.twig' %}
 {% else %}
-    {% extends '../templates/base.twig' %}
+    {% extends '../templates/_base.twig' %}
 {% endif %}
 
 {% set PID = 'home' %}
 
+{% set PAGE = '' %}
+{% for data in pages %}
+    {% if data.id == PID %}
+        {% set PAGE = data %}
+    {% endif %}
+{% endfor %}
+
 {% block main %}
     <main>
-        <h1>Page heading</h1>
+        <h1>{{ PAGE.title }}</h1>
 
-        <a href="{% include '../_path' with { PID: 'home' } %}">Link Home</a>
+        <a href="{% include '../misc/_path.twig' with { PID: 'home' } %}">Link Home</a>
 
-        {% include '../parts/modal/btn.twig' with {
-            class:  'btn btn-primary',
-            text:   'Button modal',
+        {% include '../modal/_btn.twig' with {
+            class: 'btn btn-primary',
+            text: 'Button modal',
             target: 'DemoModal'
         } %}
     </main>
 
-    {% include '../parts/modal/_tpl-base.twig' with {
-        id:     'DemoModal'
+    {% include '../modal/_tpl-base.twig' with {
+        id: 'DemoModal'
     } %}
 
 {% endblock %}

@@ -1,0 +1,23 @@
+{% for scripts in APP.scripts %}
+    {% if
+        IS_DVL
+        or
+        IS_PUB and
+        not (scripts.id == 'develop')
+    %}
+        <!-- {{ scripts.id }} -->
+
+        {% for script in scripts.list %}
+            <script src="{{ PATH.js ~ scripts.id ~ '/' ~ script ~ '.js' }}"></script>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+<!--
+<script>
+    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto'); ga('send', 'pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+ -->

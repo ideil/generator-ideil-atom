@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="{{ APP.lang }}">
+    <head>
+        {% include '../app/_head.twig' %}
+    </head>
+
+    <body>
+        {% include '../app/_banner.twig' %}
+
+        {% block main %}{% endblock %}
+
+        {% include '../app/_footer.twig' %}
+
+        {# {% include '../parts/photoswipe.twig' %} #}
+
+        {% include '../app/_js.twig' %}
+    </body>
+</html>

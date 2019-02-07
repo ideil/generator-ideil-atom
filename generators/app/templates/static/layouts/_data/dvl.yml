@@ -1,0 +1,10 @@
+IS_DVL: true
+
+
+PATH:
+  src: '../../src/'
+  css: '../../src/css/'
+  svg: '../../src/svg/'
+  img: '../../src/img/'
+  js: '../../src/js/'
+  zzz: '../../src/img/zzz/'

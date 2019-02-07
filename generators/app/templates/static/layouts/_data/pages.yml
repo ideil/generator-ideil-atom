@@ -1,0 +1,10 @@
+pages:
+  - id: 'index'
+    no: '00'
+    title: 'App Pages'
+    href: 'index.html'
+
+  - id: 'home'
+    no: '01'
+    title: 'Home'
+    href: '01-home.html'
