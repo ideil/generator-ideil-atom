@@ -1,0 +1,23 @@
+pages:
+  script:
+  - mkdir .public
+  - mkdir .public/layouts
+  - mkdir .public/layouts/pages
+  - mkdir .public/src
+  - mkdir .public/src/js
+  - mkdir .public/src/js/vendor
+  - mkdir .public/pub
+  - cp -r static/layouts/pages .public/layouts
+  - cp -r static/src/css .public/src/css
+  - cp -r static/src/img .public/src/img
+  - cp -r static/src/svg .public/src/svg
+  - cp static/src/js/vendor/jquery.min.js .public/src/js/vendor/jquery.min.js
+  - cp -r static/src/js/build .public/src/js/build
+  # - cp -r static/src/js/dev .public/src/js/dev
+  - cp -r static/pub .public
+  - mv .public public
+  artifacts:
+    paths:
+    - public
+  only:
+  - develop

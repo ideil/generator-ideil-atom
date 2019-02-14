@@ -91,13 +91,23 @@ module.exports = yeoman.generators.Base.extend({
             );
 
             this.fs.copy(
-                this.templatePath('_.jshintrc'),
-                this.destinationPath('.jshintrc')
+                this.templatePath('_.gitlab-ci.yml'),
+                this.destinationPath('.gitlab-ci.yml')
             );
 
             this.fs.copy(
                 this.templatePath('_.jscsrc'),
                 this.destinationPath('.jscsrc')
+            );
+
+            this.fs.copy(
+                this.templatePath('_.jshintrc'),
+                this.destinationPath('.jshintrc')
+            );
+
+            this.fs.copy(
+                this.templatePath('_Gruntfile-install.js'),
+                this.destinationPath('install/Gruntfile.js')
             );
 
             this.fs.copy(
@@ -111,8 +121,8 @@ module.exports = yeoman.generators.Base.extend({
             );
 
             this.fs.copy(
-                this.templatePath('_README.md'),
-                this.destinationPath('README.md')
+                this.templatePath('_package-install.json'),
+                this.destinationPath('install/package.json')
             );
 
             this.fs.copyTpl(
@@ -122,13 +132,8 @@ module.exports = yeoman.generators.Base.extend({
             );
 
             this.fs.copy(
-                this.templatePath('_Gruntfile-install.js'),
-                this.destinationPath('install/Gruntfile.js')
-            );
-
-            this.fs.copy(
-                this.templatePath('_package-install.json'),
-                this.destinationPath('install/package.json')
+                this.templatePath('_README.md'),
+                this.destinationPath('README.md')
             );
 
             if (this.slick) {
@@ -158,7 +163,7 @@ module.exports = yeoman.generators.Base.extend({
         },
 
         bower: function () {
-            this.bowerInstall(['bootstrap', 'jquery#3.2.1']);
+            this.bowerInstall(['bootstrap', 'jquery#3.3.1']);
 
             if (this.slick) {
                 this.bowerInstall(['slick-carousel']);
@@ -168,11 +173,11 @@ module.exports = yeoman.generators.Base.extend({
                 this.bowerInstall(['https://github.com/dimsemenov/PhotoSwipe.git']);
             }
 
-            if (this.library == 1) {
+            if (this.library === 1) {
                 this.bowerInstall(['lodash']);
             }
 
-            if (this.library == 2) {
+            if (this.library === 2) {
                 this.bowerInstall(['underscore']);
             }
         }
@@ -190,11 +195,11 @@ module.exports = yeoman.generators.Base.extend({
                 this.spawnCommand('grunt', ['photoswipe']);
             }
 
-            if (this.library == 1) {
+            if (this.library === 1) {
                 this.spawnCommand('grunt', ['lodash']);
             }
 
-            if (this.library == 2) {
+            if (this.library === 2) {
                 this.spawnCommand('grunt', ['underscore']);
             }
         },

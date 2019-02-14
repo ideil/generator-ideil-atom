@@ -1,14 +1,21 @@
-// Application variables
+//# Application variables
 //
+//*
+
+
+//## Global
 //
+//*
+
+$font-smothing: true;
 
 
 //## Helpers
 //
 //*
 
-$_fs-browser:   16;
-$_1px:          (1 / $_fs-browser) * 1rem;
+$_fs-browser: 16;
+$_px: (1 / $_fs-browser) * 1rem;
 
 
 //## Colors
@@ -16,34 +23,34 @@ $_1px:          (1 / $_fs-browser) * 1rem;
 //*
 
 //### Base
-$white:         #fff;
-// $gray-100:      ;
-// $gray-200:      ;
-// $gray-300:      ;
-// $gray-400:      ;
-// $gray-500:      ;
-// $gray-600:      ;
-// $gray-700:      ;
-// $gray-800:      ;
-// $gray-900:      ;
-$black:         #000;
+$white: #fff;
+// $gray-100: ;
+// $gray-200: ;
+// $gray-300: ;
+// $gray-400: ;
+// $gray-500: ;
+// $gray-600: ;
+// $gray-700: ;
+// $gray-800: ;
+// $gray-900: ;
+$black: #000;
 
-// $primary:       ;
-// $light:         ;
-// $dark:          ;
+// $primary: ;
+// $light: ;
+// $dark: ;
 
-$body-bg:       $white;
-// $body-color:    $gray-900;
+$body-bg: $white;
+// $body-color: $gray-900;
 
-// $body-bg-inverse:    $body-color;
-$body-color-inverse:    $body-bg;
+// $body-bg-inverse: $body-color;
+$body-color-inverse: $body-bg;
 
 //### Socials
 $socials: (
-    'fb':    #3b5998,
-    'tlg':   #0088cc,
-    'tw':    #1da1f2,
-    'yt':    #ff3d00
+    'fb': #3b5998,
+    'tlg': #0088cc,
+    'tw': #1da1f2,
+    'yt': #ff3d00
 );
 
 
@@ -51,61 +58,61 @@ $socials: (
 //
 //*
 
-// $link-color:                $primary;
-// $link-decoration:           none !default;
-// $link-hover-color:          darken($link-color, 15%) !default;
-// $link-hover-decoration:     underline !default;
+// $link-color: $primary;
+// $link-decoration: none !default;
+// $link-hover-color: darken($link-color, 15%) !default;
+// $link-hover-decoration: underline !default;
 
 
 //## Components
 //
 //*
 
-// $border-radius:     0;
+// $border-radius: 0;
 
 
 //## Type
 //
 //*
 
-$font-size-base-px:     16;
-$line-height-base-px:   32;
+$font-size-base-px: 16;
+$line-height-base-px: 32;
 
-$font-size-base:        $font-size-base-px * $_1px;
-$line-height-base:      $line-height-base-px / $font-size-base-px;
+$font-size-base: $font-size-base-px * $_px;
+$line-height-base: $line-height-base-px / $font-size-base-px;
 
-$spacer:            $font-size-base * $line-height-base;
+$spacer: $font-size-base * $line-height-base;
 
 $spacers: (
-    0:  0,
-    1:  $spacer * 0.25,
-    2:  $spacer * 0.5,
-    3:  $spacer,
-    4:  $spacer * 1.5,
-    5:  $spacer * 2
+    0: 0,
+    1: $spacer * 0.25,
+    2: $spacer * 0.5,
+    3: $spacer,
+    4: $spacer * 1.5,
+    5: $spacer * 2
 );
 
-// $headings-margin-bottom:    spacer();
-// $paragraph-margin-bottom:   spacer();
+// $headings-margin-bottom: spacer();
+// $paragraph-margin-bottom: spacer();
 
 
 //## Grid
 //
 //
 
-$layout-w-min:      320px;
-$scrollbar-w:       26px;
+$layout-w-min: 320px;
+$scrollbar-w: 26px;
 
 //### Gaps
 $grid-gutter-width: ceil($line-height-base-px * 1.2px);
-$gap:               $grid-gutter-width;
+$gap: $grid-gutter-width;
 $gaps: (
-    0:  0,
-    1:  $gap * 0.25,
-    2:  $gap * 0.5,
-    3:  $gap,
-    4:  $gap * 1.5,
-    5:  $gap * 2
+    0: 0,
+    1: $gap * 0.25,
+    2: $gap * 0.5,
+    3: $gap,
+    4: $gap * 1.5,
+    5: $gap * 2
 );
 
 
@@ -113,15 +120,15 @@ $gaps: (
 //
 //*
 
-$transition:            0.16s;
+$transition: 0.16s;
 
-$transition-fade:       $transition;
+$transition-fade: $transition;
 
 
 //## Misc
 //
 //*
 
-$tappable-size:         44 * $_1px;
-$tappable-size-md:      36 * $_1px;
-$tappable-size-sm:      28 * $_1px;
+$tappable-size: 44 * $_px;
+$tappable-size-md: 36 * $_px;
+$tappable-size-sm: 28 * $_px;

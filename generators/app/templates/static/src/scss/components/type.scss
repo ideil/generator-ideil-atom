@@ -10,8 +10,7 @@
 // h1, .h1,
 // h2, .h2,
 // h3, .h3 {
-//     margin-top: offset(lg);
-//     margin-bottom: $offset;
+//     margin-bottom: $paragraph-margin-bottom;
 // }
 
 
@@ -20,7 +19,7 @@
 //*
 
 // p {
-//     margin-bottom: $offset;
+//     margin-bottom: $paragraph-margin-bottom;
 // }
 
 
@@ -30,15 +29,29 @@
 
 //### Unordered and Ordered lists
 
-// ul,
-// ol {
-//     margin-bottom: $offset;
+// ul, ol {
+//     margin-bottom: $paragraph-margin-bottom;
 // }
+
+// .c-text {
+//     li {
+//         margin-bottom: (spacer(1) / 2);
+//     }
+
+//     ul, ol {
+//         margin: -(spacer(1)) 0 (spacer() + spacer(1));
+
+//         ul, ol {
+//             margin: (spacer(1) / 2) 0 spacer(1);
+//         }
+//     }
+// }
+
 
 //### Determination list
 
 // dl {
-//     margin-bottom: $offset;
+//     margin-bottom: $paragraph-margin-bottom;
 // }
 
 

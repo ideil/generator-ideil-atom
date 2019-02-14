@@ -5,7 +5,13 @@
 
 body {
     fill: $body-color;
+
+    @if $font-smothing {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 }
+
 
 //## Transitions
 //
