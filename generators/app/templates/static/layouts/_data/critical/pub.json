@@ -1,6 +1,6 @@
 {
     "CRITICAL": {
-        "PUB":  true,
-        "path": "/src/mobile"
+        "PUB": true,
+        "path": "/src/mobile",
     },
 }

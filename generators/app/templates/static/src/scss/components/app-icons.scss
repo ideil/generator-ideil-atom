@@ -25,3 +25,10 @@
     fill: inherit;
 }
 
+@each $item, $map in $socials {
+    .i-#{ $item } {
+        &:before {
+            @include pseudo-svg($map);
+        }
+    }
+}

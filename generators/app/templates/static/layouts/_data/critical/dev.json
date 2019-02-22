@@ -1,6 +1,6 @@
 {
     "CRITICAL": {
-        "DEV":  true,
+        "DEV": true,
         // "path": "../../pub",
         "path": "/pub",
     },

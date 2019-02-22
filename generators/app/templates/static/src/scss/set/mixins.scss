@@ -64,6 +64,92 @@
 }
 
 
+//## Graphics
+//
+//*
+
+//### Filters
+
+@mixin filter($state) {
+    @if $state == 'black' {
+        filter: brightness(0);
+    }
+
+    @if $state == 'white' {
+        filter: brightness(0) invert(1);
+    }
+
+    @if $state == 'off' {
+        filter: none;
+    }
+}
+
+//### Sizing
+
+@mixin scale-size($w-original, $h-original, $w) {
+    width: $w;
+    height: ceil(($w / $w-original) * $h-original);
+}
+
+//### SVG
+
+@mixin pseudo-svg(
+        $map,
+        $w: false,
+        $h: false,
+        $c: false
+    )
+{
+    $size: map-get($map, 'size');
+    $width: map-get($map, 'width');
+    $height: map-get($map, 'height');
+
+    $scaleSize: map-get($map, 'scaleSize');
+    $scaleWidth: map-get($map, 'scaleWidth');
+    $scaleHeight: map-get($map, 'scaleHeight');
+
+    $color: map-get($map, 'color');
+
+    @if not $w {
+        @if $size {
+            $w: $size;
+            $h: $size;
+        } @else {
+            $w: $width;
+            $h: $height;
+        }
+
+        @if $scaleSize {
+            $w: $scaleSize;
+            $h: $scaleSize;
+        }
+
+        @if $scaleWidth {
+            $w: $scaleWidth;
+            $h: $scaleHeight;
+        }
+    }
+
+    @if not $c {
+        $c: gray('800');
+
+        @if $color {
+            $c: $color;
+        }
+    }
+
+    content: '';
+    display: block;
+    width: $w;
+    height: $h;
+    background: svg-url($map, $c) no-repeat 50% 50%;
+}
+
+@mixin bg-svg($map, $color: gray('800')) {
+    background: svg-url($map, $color) no-repeat 50% 50%;
+}
+
+
 //## Progress
 //
 //*
