@@ -1,0 +1,14 @@
+# Base
+
+PAGES:
+  index:
+    no: '00'
+    id: 'index'
+  home:
+    no: '01'
+    id: 'home'
+    title: 'App homepage title'
+    # scripts:
+    #   - id: 'build'
+    #     list:
+    #       - ''

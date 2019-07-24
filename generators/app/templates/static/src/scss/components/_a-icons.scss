@@ -1,0 +1,26 @@
+//# Application Icons
+//
+//*
+
+//** atomREVIEW: rm?
+@import "../sprites/ii";
+
+
+//## Generate base
+//
+//*
+
+@each $item, $map in $i-dump {
+    .i-#{ $item } {
+        @include svg($map);
+    }
+}
+
+
+//## HTML Inline SVG
+//
+//*
+
+.i-svg {
+    fill: inherit;
+}

@@ -2,16 +2,28 @@
 //
 //*
 
-//** Backend requirement
+'use strict';
+
+
+//## Backend requirement
+//
+//*
+
 window.App = {
     staticUrl: 'http://localhost:3000/'
 };
 
-//** Disable Demo Links Click
-function disableHashLinks() {
-    const $links = document.getElementsByTagName('a');
 
-    let $linkHash,
+//## Disable Demo Links Click
+//
+//*
+
+function disableHashLinks() {
+    const
+        $links = document.getElementsByTagName('a');
+
+    let
+        $linkHash,
         LinksHash = [];
 
     for (let i = 0; i < $links.length; i++) {
@@ -20,6 +32,8 @@ function disableHashLinks() {
 
             $linkHash.addEventListener('click', (e) => {
                 e.preventDefault();
+
+                console.log('link#' + i);
             });
 
             LinksHash.push($linkHash);
@@ -28,4 +42,5 @@ function disableHashLinks() {
 
     return LinksHash;
 }
+
 disableHashLinks();

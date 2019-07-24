@@ -1,16 +1,1 @@
-APP:
-  title: 'Praca'
-  lang: 'uk'
-  css:
-    - 'bs'
-    - 'app'
-  scripts:
-    - id: 'develop'
-      list:
-        - 'misc'
-    # - id: 'vendor'
-    #   list:
-    #     - 'jquery.min'
-    # - id: 'build'
-    #   list:
-    #     - 'common'
+# Components data

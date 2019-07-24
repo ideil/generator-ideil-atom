@@ -1,0 +1,164 @@
+//# Functions
+//
+//*
+
+
+//## Helpers
+//
+//*
+
+@function unit-rem($value, $factor: 1) {
+    @return ($value * $_rem * $factor);
+}
+
+@function get-unit($value) {
+    @return $value / ($value * 0 + 1);
+}
+
+@function percentage($value, $points: 1) {
+    $factor: 100;
+
+    @for $i from 1 through $points {
+        $factor: $factor * 10;
+    }
+
+    @return (round(get-unit($value) * $factor) / $factor) * 100%;
+}
+
+@function round-to($value, $points: 2, $mode: 'round') {
+    $factor: 1;
+
+    @for $i from 1 through $points {
+        $factor: $factor * 10;
+    }
+
+    $result: ($value * $factor);
+
+    @if $mode == 'round' {
+        $result: round($result) / $factor;
+    } @else if $mode == 'ceil' {
+        $result: ceil($result) / $factor;
+    } @else if $mode == 'floor' {
+        $result: floor($result) / $factor;
+    }
+
+    @return $result;
+}
+
+@function scale-size($map, $value, $side: 'width') {
+    $width: map-get($map, 'width');
+    $height: map-get($map, 'height');
+
+    @if $side == 'width' {
+        $height-scaled: (($value / $width) * $height);
+
+        @if unit($value) == 'px' {
+            $height-scaled: ceil($height-scaled);
+        }
+
+        @return $height-scaled;
+    }
+
+    @if $side == 'height' {
+        $width-scaled: (($value / $height) * $width);
+
+        @if unit($value) == 'px' {
+            $width-scaled: ceil($width-scaled);
+        }
+
+        @return $width-scaled;
+    }
+}
+
+
+//## Colors
+//
+//*
+
+@function shade($key: 1) {
+    @return map-get($grays, $key + '00');
+}
+
+
+//## Type & Grid
+//
+//*
+
+@function spacer($key: 2) {
+    @return map-get($spacers, $key);
+}
+
+@function gap($key: 2) {
+    @return map-get($gaps, $key);
+}
+
+@function box($key: lg) {
+    @return map-get($container-max-widths, $key);
+}
+
+@function heading($index) {
+    @return map-get($headings-font-size, $index);
+}
+
+
+//## Graphics
+//
+//*
+
+@function svg-to-css($html) {
+    @return str-replace(
+        str-replace(
+            str-replace(
+                'data:image/svg+xml;charset=utf8,' + $html,
+                '#', '%23'
+            ),
+            '>', '%3E'
+        ),
+        '<', '%3C'
+    );
+}
+
+@function svg-base($content, $width, $height) {
+    @return svg-to-css("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 #{ get-unit($width) } #{ get-unit($height) }'>#{ $content }</svg>");
+}
+
+@function svg-simple($map, $color: null, $path: null) {
+    $size: map-get($map, 'size');
+    $width: null;
+    $height: null;
+
+    @if $size {
+        $width: get-unit($size);
+        $height: get-unit($size);
+    } @else {
+        $width: get-unit(map-get($map, 'width'));
+        $height: get-unit(map-get($map, 'height'));
+    }
+
+    @if not $path {
+        $path: map-get($map, 'path');
+    }
+
+    @if not $color {
+        $color: map-get($map, 'color');
+    }
+
+    @if not $color {
+        $color: $i-color-base;
+    }
+
+    @return svg-to-css("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 #{ $width } #{ $height }'><path d='#{ $path }' fill='#{ $color }'/></svg>");
+}
+
+
+//## Media Screens
+//
+//*
+
+@function screen($key: lg) {
+    @return map-get($grid-breakpoints, $key);
+}
+
+@function screen-down($key: lg) {
+    @return map-get($grid-breakpoints, $key) - 1;
+}

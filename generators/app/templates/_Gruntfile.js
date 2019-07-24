@@ -10,8 +10,9 @@ module.exports = function (grunt) {
         sprite: 'grunt-spritesmith'
     });
 
-    const   SET =       require('./grunt/set'),
-            UNCSS =     SET.uncss;
+    const
+        SET = require('./grunt/set'),
+        UNCSS = SET.uncss;
 
     // console.log(SET.sprite(data));
 
@@ -19,31 +20,31 @@ module.exports = function (grunt) {
         //## Vars
 
         //### Paths
-        pApp:   'static',
+        pApp: 'static',
 
         //#### Templates
-        pTpl:       '<%= pApp %>/layouts',
-        pTplData:   '<%= pTpl %>/_data',
-        pTwigTpl:   '<%= pTpl %>/_includes',
-        pDumpTpl:   '<%= pTpl %>/_dump',
+        pTpl: '<%= pApp %>/layouts',
+        pTplData: '<%= pTpl %>/_data',
+        pTwigTpl: '<%= pTpl %>/_includes',
+        pDumpTpl: '<%= pTpl %>/_dump',
 
-        pTwigAppTpl:    '<%= pTwigTpl %>/pages',
-        pAppTpl:        '<%= pTpl %>/pages',
+        pTwigAppTpl: '<%= pTwigTpl %>/pages',
+        pAppTpl: '<%= pTpl %>/pages',
 
-        pCritTpl:       '<%= pTpl %>/critical',
+        pCritTpl: '<%= pTpl %>/critical',
 
         //#### Source
-        pSrc:       '<%= pApp %>/src',
+        pSrc: '<%= pApp %>/src',
 
-        pSassSrc:   '<%= pSrc %>/scss',
-        pCssSrc:    '<%= pSrc %>/css',
+        pSassSrc: '<%= pSrc %>/scss',
+        pCssSrc: '<%= pSrc %>/css',
 
         //#### Public
-        pPub:       '<%= pApp %>/pub',
-        pDumpPub:   '<%= pPub %>/_dump',
+        pPub: '<%= pApp %>/pub',
+        pDumpPub: '<%= pPub %>/_dump',
 
-        pSassPub:   '<%= pPub %>/scss',
-        pCssPub:    '<%= pPub %>/css',
+        pSassPub: '<%= pPub %>/scss',
+        pCssPub: '<%= pPub %>/css',
 
 
         //## Setting Tasks
@@ -56,9 +57,9 @@ module.exports = function (grunt) {
                     // ghostMode: false,
 
                     server: {
-                        directory:  true,
+                        directory: true,
 
-                        baseDir:    '<%= pApp %>'
+                        baseDir: '<%= pApp %>'
                     }
                 },
 
@@ -84,9 +85,9 @@ module.exports = function (grunt) {
                     expand: true,
 
                     data: [
-                        '<%= pTplData %>/dvl.yml',
-                        '<%= pTplData %>/pages.yml',
+                        '<%= pTplData %>/base.yml',
                         '<%= pTplData %>/data.yml',
+                        '<%= pTplData %>/dev.yml',
                     ],
                     cwd: '<%= pTwigAppTpl %>',
                     src: '*',
@@ -102,7 +103,7 @@ module.exports = function (grunt) {
 
                     data: [
                         '<%= pTplData %>/pub.yml',
-                        '<%= pTplData %>/pages.yml',
+                        '<%= pTplData %>/base.yml',
                         '<%= pTplData %>/data.yml',
                     ],
 
@@ -119,9 +120,9 @@ module.exports = function (grunt) {
                     expand: true,
 
                     data: [
-                        '<%= pTplData %>/dvl.yml',
-                        '<%= pTplData %>/pages.yml',
+                        '<%= pTplData %>/base.yml',
                         '<%= pTplData %>/data.yml',
+                        '<%= pTplData %>/dev.yml',
                         '<%= pTplData %>/uncss.yml',
                     ],
 
@@ -137,9 +138,9 @@ module.exports = function (grunt) {
                     expand: true,
 
                     data: [
-                        '<%= pTplData %>/dvl.yml',
-                        '<%= pTplData %>/pages.yml',
+                        '<%= pTplData %>/base.yml',
                         '<%= pTplData %>/data.yml',
+                        '<%= pTplData %>/dev.yml',
                     ],
                     cwd: '<%= pTwigTpl %>/templates',
                     src: '_uncss.twig',
@@ -154,8 +155,8 @@ module.exports = function (grunt) {
                     expand: true,
 
                     data: [
-                        '<%= pTplData %>/dvl.yml',
-                        '<%= pTplData %>/datafile.yml',
+                        '<%= pTplData %>/data.yml',
+                        '<%= pTplData %>/dev.yml',
                         '<%= pTplData %>/critical/base.json',
                         '<%= pTplData %>/critical/dev.json'
                     ],
@@ -175,9 +176,9 @@ module.exports = function (grunt) {
                     expand: true,
 
                     data: [
-                        '<%= pTplData %>/dvl.yml',
-                        '<%= pTplData %>/pages.yml',
+                        '<%= pTplData %>/base.yml',
                         '<%= pTplData %>/data.yml',
+                        '<%= pTplData %>/dev.yml',
                         '<%= pTplData %>/critical/base.json',
                         '<%= pTplData %>/critical/pub.json'
                     ],
@@ -203,8 +204,8 @@ module.exports = function (grunt) {
             app: {
                 expand: true,
 
-                src:    '<%= pAppTpl %>/*',
-                ext:    '.html'
+                src: '<%= pAppTpl %>/*',
+                ext: '.html'
             },
 
             critical: {
@@ -214,8 +215,8 @@ module.exports = function (grunt) {
 
                 expand: true,
 
-                src:    '<%= pCritTpl %>/*',
-                ext:    '.html'
+                src: '<%= pCritTpl %>/*',
+                ext: '.html'
             },
         },
 
@@ -225,10 +226,10 @@ module.exports = function (grunt) {
             bs: {
                 options: {
                     sourceMap: true,
-                    sourceMapFilename:  '<%= pCssSrc %>/bs.map',
-                    sourceMapBasepath:  '<%= pSrc %>',
-                    sourceMapRootpath:  '../',
-                    sourceMapURL:       'bs.map',
+                    sourceMapFilename: '<%= pCssSrc %>/bs.map',
+                    sourceMapBasepath: '<%= pSrc %>',
+                    sourceMapRootpath: '../',
+                    sourceMapURL: 'bs.map',
                 },
 
                 files: {
@@ -242,10 +243,10 @@ module.exports = function (grunt) {
             app: {
                 options: {
                     sourceMap: true,
-                    sourceMapFilename:  '<%= pCssSrc %>/app.map',
-                    sourceMapBasepath:  '<%= pSrc %>',
-                    sourceMapRootpath:  '../',
-                    sourceMapURL:       'app.map',
+                    sourceMapFilename: '<%= pCssSrc %>/app.map',
+                    sourceMapBasepath: '<%= pSrc %>',
+                    sourceMapRootpath: '../',
+                    sourceMapURL: 'app.map',
                 },
 
                 files: {
@@ -328,19 +329,19 @@ module.exports = function (grunt) {
         //### Sprites
         sprite: {
             ii: {
-                src:        [
+                src: [
                         '<%= pSrc %>/sprites/tpl/ii/**/*.png',
                     ],
                 retinaSrcFilter: [
                         '<%= pSrc %>/sprites/tpl/ii/**/*@2x.png',
                     ],
-                dest:           '<%= pSrc %>/sprites/ii.png',
-                retinaDest:     '<%= pSrc %>/sprites/ii@2x.png',
-                destCss:        '<%= pSassSrc %>/sprites/ii.scss',
-                imgPath:        '../sprites/ii.png',
-                retinaImgPath:  '../sprites/ii@2x.png',
-                cssFormat:      'css_retina',
-                padding:        1,
+                dest: '<%= pSrc %>/sprites/ii.png',
+                retinaDest: '<%= pSrc %>/sprites/ii@2x.png',
+                destCss: '<%= pSassSrc %>/sprites/ii.scss',
+                imgPath: '../sprites/ii.png',
+                retinaImgPath: '../sprites/ii@2x.png',
+                cssFormat: 'css_retina',
+                padding: 1,
                 cssTemplate: function (data) {
                     return SET.fn.sprite(data);
                 }
@@ -399,9 +400,9 @@ module.exports = function (grunt) {
             //#### Uncss Public
             publicBS: {
                 options: {
-                    ignore:     UNCSS.web,
+                    ignore: UNCSS.web,
 
-                    htmlroot:   '<%= pApp %>',
+                    htmlroot: '<%= pApp %>',
                     stylesheets: [
                         '/pub/_dump/bs.public.css'
                     ]
@@ -416,9 +417,9 @@ module.exports = function (grunt) {
 
             publicApp: {
                 options: {
-                    ignore:     UNCSS.web,
+                    ignore: UNCSS.web,
 
-                    htmlroot:   '<%= pApp %>',
+                    htmlroot: '<%= pApp %>',
                     stylesheets: [
                         '/pub/_dump/app.public.css'
                     ]
@@ -435,7 +436,7 @@ module.exports = function (grunt) {
             criticalHome: {
                 options: {
                     // ignore: UNCSS.web,
-                    htmlroot:   '<%= pApp %>',
+                    htmlroot: '<%= pApp %>',
                     stylesheets: [
                         '/pub/_dump/critical.css'
                     ]
@@ -458,15 +459,15 @@ module.exports = function (grunt) {
 
             pubDev: {
                 files: {
-                    '<%= pPub %>/_css/bs.min.css':    ['<%= pPub %>/_css/bs.min.css'],
-                    '<%= pPub %>/_css/app.min.css':   ['<%= pPub %>/_css/app.min.css']
+                    '<%= pPub %>/_css/bs.min.css': ['<%= pPub %>/_css/bs.min.css'],
+                    '<%= pPub %>/_css/app.min.css': ['<%= pPub %>/_css/app.min.css']
                 }
             },
 
             public: {
                 files: {
-                    '<%= pCssPub %>/bs.min.css':    ['<%= pDumpPub %>/bs.uncss.css'],
-                    '<%= pCssPub %>/app.min.css':   ['<%= pDumpPub %>/app.uncss.css']
+                    '<%= pCssPub %>/bs.min.css': ['<%= pDumpPub %>/bs.uncss.css'],
+                    '<%= pCssPub %>/app.min.css': ['<%= pDumpPub %>/app.uncss.css']
                 }
             },
 
@@ -575,8 +576,8 @@ module.exports = function (grunt) {
 
             options: {
                 assetsDirs: [
-                    '<%= pApp %>',              // absolute css path
-                    '<%= pPub %>/_path-escape', // relative css path
+                    '<%= pApp %>', //* absolute css path
+                    '<%= pPub %>/_path-escape', //* relative css path
                 ],
 
                 patterns: {
@@ -595,8 +596,8 @@ module.exports = function (grunt) {
         uglify: {
             preload: {
                 files: [{
-                    src:    '<%= pSrc %>/js/vendor/loadCSS/cssrelpreload.js',
-                    dest:   '<%= pPub %>/js/vendor/preload.min.js'
+                    src: '<%= pSrc %>/js/vendor/loadCSS/cssrelpreload.js',
+                    dest: '<%= pPub %>/js/vendor/preload.min.js'
                 }]
             }
         },
@@ -660,11 +661,29 @@ module.exports = function (grunt) {
             }
         },
 
+        //### SVG Minifier
+        svgmin: {
+            options: {
+                plugins: [
+                    { removeViewBox: false },
+                    { sortAttrs: true },
+                    // { mergePaths: true },
+                    // { removeUselessStrokeAndFill: false },
+                ]
+            },
+            dist: {
+                expand: true,
+
+                src: '<%= pSrc %>/svg/**/*',
+                ext: '.svg',
+            }
+        },
+
         //### Watch
         watch: {
             options: {
                 livereload: true,
-                spawn:      false,
+                spawn: false, //** reload browser after all files processed
             },
 
             //#### Watch Twig App
@@ -727,12 +746,13 @@ module.exports = function (grunt) {
                 ]
             },
 
+            //#### Watch SVG
             svg: {
                 files: [
                     '<%= pSrc %>/svg/**/*.svg'
                 ],
                 tasks: [
-                    'twigRender:dev'
+                    'svgmin'
                 ]
             }
         },
@@ -824,10 +844,15 @@ module.exports = function (grunt) {
     //### Build
 
     grunt.registerTask('build-css', [
+        //* Dev sass to css + autoprefixer
+        'sass:bs',
+        'sass:app',
+        'autoprefixer:app',
+
         //* Replace media and fonts
         'update-assets',
 
-        //* Sass to css + autoprefixer
+        //* Pub sass to css + autoprefixer
         'sass:public',
 
         //* Make uncss template(s)

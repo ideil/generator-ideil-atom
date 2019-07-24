@@ -1,9 +1,8 @@
 {% for scripts in APP.scripts %}
     {% if
-        IS_DVL
+        IS_DEV
         or
-        IS_PUB and
-        not (scripts.id == 'develop')
+        IS_PUB and not (scripts.id == 'develop')
     %}
         <!-- {{ scripts.id }} -->
 
@@ -13,11 +12,18 @@
     {% endif %}
 {% endfor %}
 
+{% for scripts in PAGE.scripts %}
+    <!-- {{ PAGE.no ~ ' ' ~ PAGE.id ~ ' ' ~ scripts.id }} -->
+    {% for script in scripts.list %}
+        <script src="{{ PATH.js ~ scripts.id ~ '/' ~ script ~ '.js' }}"></script>
+    {% endfor %}
+{% endfor %}
+
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
 <!--
 <script>
     window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('send', 'pageview')
+    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set','transport','beacon'); ga('send', 'pageview')
 </script>
 <script src="https://www.google-analytics.com/analytics.js" async defer></script>
  -->

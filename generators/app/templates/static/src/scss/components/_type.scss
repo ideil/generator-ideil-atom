@@ -18,16 +18,14 @@
 //
 //*
 
+// p,
+// ol, ul, dl {
+//     margin-bottom: spacer();
+// }
+
 // p {
 //     margin-bottom: $paragraph-margin-bottom;
 // }
-
-
-//## Lists
-//
-//*
-
-//### Unordered and Ordered lists
 
 // ul, ol {
 //     margin-bottom: $paragraph-margin-bottom;
@@ -46,9 +44,6 @@
 //         }
 //     }
 // }
-
-
-//### Determination list
 
 // dl {
 //     margin-bottom: $paragraph-margin-bottom;

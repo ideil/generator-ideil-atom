@@ -1,10 +1,12 @@
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-<title>{{ PAGE.no ~ ' ' ~ PAGE.title ~ ' | ' ~ APP.title }}</title>
+<title>{{ PAGE.no ~ ' ' ~ PAGE.id|capitalize ~ ' — ' ~ APP.title }}</title>
 
 <meta name="description" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{# <meta name="viewport" content="viewport-fit=cover, initial-scale=1"> #}
 
 {# Favicon #}
 <!-- <link rel="manifest" href="site.webmanifest"> -->

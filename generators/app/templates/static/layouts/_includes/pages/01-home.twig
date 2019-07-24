@@ -4,30 +4,26 @@
     {% extends '../templates/_base.twig' %}
 {% endif %}
 
-{% set PID = 'home' %}
-
-{% set PAGE = '' %}
-{% for data in pages %}
-    {% if data.id == PID %}
-        {% set PAGE = data %}
-    {% endif %}
-{% endfor %}
+{% set PAGE = PAGES.home %}
 
 {% block main %}
     <main>
         <h1>{{ PAGE.title }}</h1>
 
-        <a href="{% include '../misc/_path.twig' with { PID: 'home' } %}">Link Home</a>
+        <ul>
+            <li>{% include '../misc/_link.twig' with { PID: 'home' } %}</li>
 
-        {% include '../modal/_btn.twig' with {
-            class: 'btn btn-primary',
-            text: 'Button modal',
-            target: 'DemoModal'
+            <li>
+                {% spaceless %}{% include '../modal/_btn.twig' with {
+                    class: 'btn btn-primary',
+                    text: 'Button modal',
+                    target: 'DemoModal'
+                } %}{% endspaceless %}
+            </li>
+        </ul>
+
+        {% include '../modal/_tpl-base.twig' with {
+            id: 'DemoModal'
         } %}
     </main>
-
-    {% include '../modal/_tpl-base.twig' with {
-        id: 'DemoModal'
-    } %}
-
 {% endblock %}

@@ -1,21 +1,25 @@
 {% extends '../templates/_base.twig' %}
 
-{% set PID = 'index' %}
-
-{% set PAGE = '' %}
-{% for data in pages %}
-    {% if data.id == PID %}
-        {% set PAGE = data %}
-    {% endif %}
-{% endfor %}
+{% set PAGE = PAGES.index %}
 
 {% block main %}
-    <main class="container">
-        <ol style="padding-top: 1rem;">
-            {% for page in pages %}
+    <style>
+        a:not([href]) {
+            opacity: .2;
+            pointer-events: none;
+        }
+    </style>
+
+    <main class="o-box u-pt-banner">
+        <ol>
+            {% for page in PAGES %}
                 {% if loop.index > 1 %}
                     <li>
-                        <a href="{{ page.href }}" title="{{ page.no }}">{{ page.title }}</a>
+                        {% include '../misc/_link.twig' with {
+                            PID: page.id,
+                            linkTitle: page.id|capitalize ~ ' (' ~ page.no ~ ')',
+                            isLinkDisabled: not page.isFinished,
+                        } %}
                     </li>
                 {% endif %}
             {% endfor %}

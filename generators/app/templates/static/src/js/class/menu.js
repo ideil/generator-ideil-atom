@@ -2,116 +2,124 @@
 //
 //*
 
-import ClosestIndex from '@front/class/closest-index';
+'use strict';
 
-export default class Menu {
-    constructor(id) {
-        this.id = id;
+import { ScreenMatch } from '@js/class/utilities';
+
+export default class {
+    constructor(classRoot) {
+        this.classRoot = classRoot;
+        this.class = {
+            elActive: 'c-' + this.classRoot + '-active',
+            bodyActive: 'v-' + this.classRoot + '-active',
+        };
+        this.selector = {
+            btn: '.js-' + this.classRoot + '-btn',
+            box: '.js-' + this.classRoot + '-box',
+        };
+        this.data = {
+            // ref: 'data-' + this.classRoot + '-ref',
+            visible: 'data-' + this.classRoot + '-visible',
+            view: 'data-' + this.classRoot + '-view',
+        };
+        this.menu = {
+            $btns: document.querySelectorAll(this.selector.btn),
+            $boxes: document.querySelectorAll(this.selector.box),
+            iActive: null,
+        };
+        this.fn = {
+            hide: null
+        };
+    }
+
+    toggleAccessibility($box, state) {
+        $box.setAttribute('aria-hidden', state);
+
+        return $box;
+    }
+
+    accessibility(iSelf) {
+        const
+            $box = this.menu.$boxes[iSelf],
+            dataThreshold = $box.getAttribute(this.data.visible),
+            hasAccessibility = dataThreshold !== null,
+            updateAccessibility = () => {
+                const
+                    isActive = iSelf === this.menu.iActive,
+                    isVisible = new ScreenMatch(dataThreshold).define();
+
+                if (!isActive) {
+                    this.toggleAccessibility($box, !isVisible);
+                }
+            };
+
+        if (hasAccessibility) {
+            updateAccessibility();
+
+            window.addEventListener('resize', updateAccessibility);
+        }
+
+        return hasAccessibility;
+    }
+
+    toggle(index, state = true) {
+        const
+            action = state ? 'add' : 'remove',
+            $btn = this.menu.$btns[index],
+            $box = this.menu.$boxes[index];
+
+        [$btn, $box].forEach($el => $el.classList[action](this.class.elActive));
+
+        if ($btn.getAttribute(this.data.view) === 'true') {
+            document.body.classList[action](this.class.bodyActive);
+        }
+
+        this.toggleAccessibility($box, !state);
+
+        if (!state) {
+            index = null;
+        }
+
+        return index;
+    }
+
+    hide(index) {
+        this.toggle(index, false);
+
+        this.menu.iActive = null;
+        document.removeEventListener('click', this.fn.hide);
+
+        return index;
+    }
+
+    hideOut(e, index) {
+        if (e.target.closest(this.selector.box) === null) {
+            this.hide(index);
+        }
+
+        return index;
     }
 
     init() {
-        const
-            Class = {
-                active: 'c-' + this.id + '-active',
-            },
-            Selector = {
-                btn: '.js-' + this.id + '-btn',
-                box: '.js-' + this.id + '-box',
-            },
-            Attribute = {
-                wrap: 'data-menu-body',
-            },
-            $btns = document.querySelectorAll(Selector.btn),
-            $boxes = document.querySelectorAll(Selector.box);
-
-        function menuClick($btn) {
+        this.menu.$btns.forEach(($btn, iSelf) => {
             const
-                index = Array.from($btns).indexOf($btn),
-                wrap = $btn.getAttribute(Attribute.wrap),
-                $box = $boxes[index],
-                isBoxVisible = $btn.getAttribute('data-visible') === 'true';
+                toggle = () => {
+                    if (this.menu.iActive !== iSelf) {
+                        this.menu.iActive = this.toggle(iSelf);
 
-            let $wrap = $box,
-                $wrapBtns,
-                isActive;
+                        setTimeout(() => {
+                            this.fn.hide = (e) => {
+                                return this.hideOut(e, iSelf);
+                            };
 
-            if (wrap !== null) {
-                $wrap = document.body;
-
-                if (wrap.length) {
-                    $wrapBtns =
-                        document.querySelectorAll(
-                            Selector.btn +
-                            '[' +
-                            Attribute.wrap +
-                            '="' +
-                            wrap +
-                            '"]'
-                        );
-
-                    $wrap =
-                        document.querySelectorAll(wrap)[
-                            Array.from($wrapBtns).indexOf($btn)
-                        ];
-                }
-            }
-
-            isActive = $wrap.classList.contains(Class.active);
-
-            function hide(e) {
-                const
-                    target = e.target,
-                    isClosestBox =
-                        e ?
-                        new ClosestIndex(target, Selector.box, index)
-                            .check() :
-                        false,
-                    isClosestBtn =
-                        e ?
-                        new ClosestIndex(target, Selector.btn, index)
-                            .check() :
-                        false;
-
-                if (!isClosestBox || isClosestBtn) {
-                    document.removeEventListener(
-                        'click',
-                        hide,
-                        false
-                    );
-
-                    $wrap.classList.remove(Class.active);
-
-                    if (!isBoxVisible) {
-                        $box.setAttribute('aria-hidden', true);
+                            document.addEventListener('click', this.fn.hide);
+                        }, 0);
                     }
-                }
-            }
+                };
 
-            function show() {
-                $wrap.classList.add(Class.active);
+            $btn.addEventListener('click', toggle);
 
-                $box.removeAttribute('aria-hidden');
-            }
-
-            if (!isActive) {
-                show();
-
-                setTimeout(() => {
-                    document.addEventListener(
-                        'click',
-                        hide,
-                        false
-                    );
-                }, 0);
-            }
-        }
-
-        $btns.forEach(($btn) => {
-            $btn.addEventListener('click', () => {
-                menuClick($btn);
-            }, false);
+            this.accessibility(iSelf);
         });
-
-        return $btns;
     }
 }

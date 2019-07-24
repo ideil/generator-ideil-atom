@@ -1,0 +1,44 @@
+//# Aplication contentinfo
+//
+//*
+
+
+//## Copyrights
+//
+//*
+
+// .c-copy {}
+
+
+//## Mabe in Ideil
+//
+//*
+
+.c-ideil {
+    display: flex;
+    align-items: flex-start;
+    font-weight: normal;
+
+    img {
+        @include scale-rect($i-ideil, 39px);
+        // @include scale-rect($i-ideil, 13px, 'height');
+
+        transform: translateY(-2px);
+    }
+}
+
+.c-ideil-link {
+    color: $body-color;
+
+    @include hover-focus {
+        text-decoration: none;
+        color: #ed2024;
+    }
+}
+
+
+//## Root
+//
+//*
+
+// .c-footer {}

@@ -13,11 +13,11 @@ pages:
   - cp -r static/src/svg .public/src/svg
   - cp static/src/js/vendor/jquery.min.js .public/src/js/vendor/jquery.min.js
   - cp -r static/src/js/build .public/src/js/build
-  # - cp -r static/src/js/dev .public/src/js/dev
-  - cp -r static/pub .public
+  - cp -r static/src/js/develop .public/src/js/develop
+  # - cp -r static/pub .public
   - mv .public public
   artifacts:
     paths:
     - public
   only:
-  - develop
+  - gitlab-ci

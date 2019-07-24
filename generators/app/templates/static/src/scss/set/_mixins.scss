@@ -63,6 +63,12 @@
     }
 }
 
+@mixin screen-retina() {
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+        @content;
+    }
+}
+
 
 //## Graphics
 //
@@ -86,20 +92,32 @@
 
 //### Sizing
 
-@mixin scale-size($w-original, $h-original, $w) {
-    width: $w;
-    height: ceil(($w / $w-original) * $h-original);
+@mixin scale-rect($map, $value, $side: 'width') {
+    $width: map-get($map, 'width');
+    $height: map-get($map, 'height');
+
+    @if $side == 'width' {
+        width: round-to($value);
+        height: scale-size($map, $value, $side);
+    }
+
+    @if $side == 'height' {
+        width: scale-size($map, $value, $side);
+        height: round-to($value);
+    }
 }
 
 //### SVG
 
-@mixin pseudo-svg(
-        $map,
-        $w: false,
-        $h: false,
-        $c: false
-    )
-{
+@mixin svg($map, $el: null) {
+    $pseudoEl: map-get($map, 'el');
+    @if $el {
+        $pseudoEl: $el;
+    }
+    @if not $pseudoEl {
+        $pseudoEl: 'before';
+    }
+
     $size: map-get($map, 'size');
     $width: map-get($map, 'width');
     $height: map-get($map, 'height');
@@ -108,45 +126,28 @@
     $scaleWidth: map-get($map, 'scaleWidth');
     $scaleHeight: map-get($map, 'scaleHeight');
 
-    $color: map-get($map, 'color');
-
-    @if not $w {
-        @if $size {
-            $w: $size;
-            $h: $size;
-        } @else {
-            $w: $width;
-            $h: $height;
-        }
-
-        @if $scaleSize {
-            $w: $scaleSize;
-            $h: $scaleSize;
-        }
-
-        @if $scaleWidth {
-            $w: $scaleWidth;
-            $h: $scaleHeight;
-        }
+    @if $size {
+        $width: $size;
+        $height: $size;
     }
 
-    @if not $c {
-        $c: gray('800');
-
-        @if $color {
-            $c: $color;
-        }
+    @if $scaleSize {
+        $width: $scaleSize;
+        $height: $scaleSize;
     }
 
-    content: '';
-    display: block;
-    width: $w;
-    height: $h;
-    background: svg-url($map, $c) no-repeat 50% 50%;
-}
+    @if $scaleWidth {
+        $width: $scaleWidth;
+        $height: $scaleHeight;
+    }
 
-@mixin bg-svg($map, $color: gray('800')) {
-    background: svg-url($map, $color) no-repeat 50% 50%;
+    &:#{ $pseudoEl } {
+        content: '';
+        display: block;
+        width: $width;
+        height: $height;
+        background: url(svg-simple($map)) no-repeat 50% 50%;
+    }
 }
 
 

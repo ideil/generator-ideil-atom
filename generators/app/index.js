@@ -136,6 +136,11 @@ module.exports = yeoman.generators.Base.extend({
                 this.destinationPath('README.md')
             );
 
+            this.fs.copy(
+                this.templatePath('_webpack.mix.js'),
+                this.destinationPath('webpack.mix.js')
+            );
+
             if (this.slick) {
                 this.fs.copy(
                     this.templatePath('plugins/slick/*.js'),

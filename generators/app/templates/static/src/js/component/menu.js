@@ -2,23 +2,26 @@
 //
 //* atomTODO: update script
 
-import Menu from '@front/class/menu';
+'use strict';
+
+import Menu from '@js/class/menu';
 
 const NAV = () => {
-    const DropdownList = [
-        'menu',
-    ];
+    const
+        NavIds = [
+            'nav',
+        ];
 
-    let $dropdownList = [];
+    let Navs = [];
 
-    for (let i = 0; i < DropdownList.length; i++) {
-        let $nav = new Menu(DropdownList[i]).init();
+    for (let i = 0; i < NavIds.length; i++) {
+        let $nav = new Menu(NavIds[i]).init();
 
-        $dropdownList.push($nav);
+        Navs.push($nav);
     }
 
-    return $dropdownList;
+    return Navs;
 };
 
-NAV();
 // console.log(NAV());
+NAV();

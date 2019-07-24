@@ -16,9 +16,8 @@
 //*
 
 @import "set/set";
-@import "set/svg-vars";
-@import "set/bs-extends";
-@import "components/app-icons";
+@import "set/b-extends";
+@import "components/a-icons";
 
 //### Componnents
 
@@ -26,11 +25,10 @@
 @import "components/type";
 @import "components/grid";
 // @import "components/forms";
-// @import "components/buttons";
-@import "components/app-banner";
+@import "components/a-banner";
 // @import "components/";
 
-// @import "components/app-footer";
+// @import "components/a-contentinfo";
 @import "components/utilities";
 
 @import "components/misc";

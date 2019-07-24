@@ -1,7 +1,1 @@
-{% set path = icon %}
-
-{% if folder %}
-    {% set path = folder ~ '/' ~ icon %}
-{% endif %}
-
-{% include '../../../../src/svg/' ~ path ~ '.svg' %}
+{% include '../../../src/svg/' ~ icon ~ '.svg' %}

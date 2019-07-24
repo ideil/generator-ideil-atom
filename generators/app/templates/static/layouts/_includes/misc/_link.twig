@@ -1,0 +1,10 @@
+{% set linkData = PAGES[PID] %}
+{% set linkDataTitle = linkData.navTitle ?: linkData.title|default('Link') %}
+
+{% set href %}
+    {% if not isLinkDisabled %}
+        href="{{ PID starts with '#' ? PID : linkData.no ~ '-' ~ linkData.id ~ '.html' }}"
+    {% endif %}
+{% endset %}
+
+<a{{ href }}{{ linkClass ? ' class="' ~ linkClass ~ '"' }}{{ linkAttr ? ' ' ~ linkAttr }}>{{ linkTitle ?: linkDataTitle }}</a>
